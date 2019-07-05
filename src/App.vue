@@ -57,7 +57,7 @@
   @import './assets/slick/slick-theme.css';
   @import './assets/css/fonts.css';
   @import './assets/css/style.css';
-  @import './assets/css/mobileApp2.css';
   @import './assets/css/media.css';
+  @import './assets/css/mobileApp2.css';
 
 </style>

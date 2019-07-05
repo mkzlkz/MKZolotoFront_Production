@@ -17,7 +17,7 @@
         </div>
         <div class="map-search">
           <span><img :src="require('@/assets/img/circle.png')" alt="">Ближайший к вам офис в радиусе</span>
-          <select v-if="selectedCity == myCity" v-bind:disabled="disableSelect" v-model="selected" name="" id="">
+          <select v-bind:disabled="disableSelect" v-model="selected" name="" id="">
             <option value="1">1 км</option>
             <option value="2">2 км</option>
             <option value="5">5 км</option>
@@ -25,9 +25,9 @@
             <option value="all">Все</option>
           </select>
           <!-- <div class="nen"> -->
-            <select v-if="show" disabled name="" id="">
+            <!-- <select v-if="show" disabled name="" id="">
               <option value="all">Все</option>
-            </select>
+            </select> -->
             <!-- </div> -->
           </div>
         </div>
@@ -109,7 +109,10 @@
     data() {
       return {
         title_page: '',
+        title_page_default: '',
         description_page: '',
+        description_page_default: '',
+        title_city: '',
         contacts: '',
         center: {
           lat: 43.231907,
@@ -141,7 +144,7 @@
         infoWindowPos: null,
         currentPlace: null,
         visible: true,
-        show: false,
+        // show: false,
         closestPoint: [],
         mapDisable: ''
       }
@@ -150,11 +153,16 @@
       return {
         title: this.title_page,
         meta: [
-        { name: 'description', content: this.description_page }
+        { name: 'description', content: this.description_page}
         ]
       }
     },
     mounted() {
+      if (this.$route.path === '/location/' + this.$route.params.city_name) {
+        this.getTitle();
+        this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+      }
       this.getAllCities()
       this.getMyLocation()
       this.reloadPage()
@@ -168,27 +176,35 @@
           this.getCurrentLocations()
         }
       },
-      selectedCity: function () {
-        if (this.selectedCity.city != this.myCity.city) {
-          this.disableSelect = true
-          this.getSelectedCity()
-// this.disableSelect = 'all'
-this.show = true
+      $route: function () {
+// console.log(this.$route);
+if (this.$route.path === '/location/' + this.$route.params.city_name) {
+    //alert(this.$route.params.city_name);
+
+  this.getTitle();
+  //this.title_page = this.title_page.replace("[CITY]", this.title_city);
+}
+},
+selectedCity: function () {
+  if (this.selectedCity.city != this.myCity.city) {
+    this.disableSelect = true
+    this.selected = 'all'
+    this.getSelectedCity()
+    // this.show = true
 } else {
   if (!this.mapDisable) {
     this.selected = '10'
     this.getCurrentLocations()
     this.disableSelect = false
-    this.show = false
+    this.getSelectedCity()
+    // this.show = false
   } else {
-    this.show = false
+    // this.show = false
     this.markers = []
     this.disableSelect = true
     this.selected = 'all'
-// this.getCity()
-
+    this.getSelectedCity()
 }
-
 }
 },
 
@@ -232,9 +248,9 @@ if (markers.length === 0) {
 }
 }
 },
-              created() {
-        this.getContacts();
-      },
+created() {
+  this.getContacts();
+},
 methods: {
   getMenus () {
     this.$axios.get('/menus')
@@ -244,12 +260,31 @@ methods: {
         console.log($response)
       } else {
         this.title_page = $response.data[12].title_page
+        this.title_page_default = $response.data[12].title_page
         this.description_page = $response.data[12].description
+        this.description_page_default = $response.data[12].description
       }
     })
     .catch((e) => console.log(e))
   },
-    getContacts () {
+  getTitle() {
+    let obj = {}
+    obj.city = this.$route.params.city_name
+    this.$axios.post('/title_city', obj)
+    .then((response) => {
+      let $response = response.data
+      if ($response.code === 0) {
+        console.log($response)
+      } else {
+        //alert()
+        this.title_city = $response.data.city
+        this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+      }
+    })
+    .catch((e) => console.log(e))
+  },
+  getContacts () {
     this.$axios.get('/contact_details')
     .then((response) => {
       let $response = response.data
@@ -447,7 +482,7 @@ reloadPage() {
   if (navigator.userAgent.search(/Safari/) > 0) {
 // alert('safari')
 };
-}
+},
 }
 }
 

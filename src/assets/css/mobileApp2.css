@@ -4,7 +4,6 @@
 .mobileapp .block-left{
     display: none !important;
 }
-
 @media (max-height: 610px) {
     .box .img {
         width: 180px !important;
@@ -43,4 +42,33 @@
     .box{
         display: none;
     }
+    .mobileapp  .block-right .tab-pane1 .tab-text {
+    padding-top: 20px;
+    height: 100vh;
+    padding-bottom: 20px !important;
+}
+.mobileapp  #rule-block {
+   height: 75%;
+    margin-bottom: 30px;
+}
+.mobileapp  .mCustomScrollBox {
+    height: calc(100vh - 30%) !important;
+}
+.mobileapp  .PageNotFound {
+    top: 380px;
+}
+.mobileapp .rules-new #rule-block {
+    height: 48%;
+    margin-bottom: 30px;
+}
+}
+@media (max-height: 570px) {
+    .mobileapp #rule-block {
+    height: 70%;
+    margin-bottom: 30px;
+}
+.mobileapp .rules-new #rule-block {
+    height: 41%;
+    margin-bottom: 30px;
+}
 }

@@ -1,7 +1,7 @@
 <template>
           <div>
     <banner-component></banner-component>
-    <div class="tab-pane1">
+    <div class="tab-pane1 rules-new">
         <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
         </router-link> -->
         <div class="tab-text">
