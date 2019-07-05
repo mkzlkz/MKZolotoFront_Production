@@ -6,7 +6,7 @@
             <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt=""></router-link> -->
             <div class="tab-text height-mob">
                 <div class="dflex-title">
-                    <div class="title-mb">Новичкам на пробу</div>
+                    <!-- <div class="title-mb">Новичкам на пробу</div> -->
                     <div>
                         <h1 class="title">ПЛАТИ МЕНЬШЕ!</h1>
                         <div class="title-text">Получи деньги под 0,2% и погаси дорогой заем</div>

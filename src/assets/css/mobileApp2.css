@@ -4,6 +4,12 @@
 .mobileapp .block-left{
     display: none !important;
 }
+.jivo_disnone #jivo_custom_widget, .jivo_disnone .wrap_mW{
+    display: none !important;
+}
+.jivo_disnone div#jivo-iframe-container.jivo-iframe-container-bottom.jivo-c-mobile {
+    display: none !important;
+}
 @media (max-height: 610px) {
     .box .img {
         width: 180px !important;
@@ -60,6 +66,9 @@
 .mobileapp .rules-new #rule-block {
     height: 48%;
     margin-bottom: 30px;
+}
+.mobileapp .bg-calc .content_block{
+height: calc(100% - 30px);
 }
 }
 @media (max-height: 570px) {
