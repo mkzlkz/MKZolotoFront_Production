@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="qiwi">
         <banner-component></banner-component>
         <div  class="tab-pane1">
             <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt=""></router-link> -->
@@ -44,6 +44,7 @@
                         <div class="titlem1">Через сайт или приложение Qiwi:</div>
                         <img :src="require('@/assets/img/t4.png')" alt="">
                     </div>
+                    <Social> </Social>
                 </div>
                 <div class="box box5" v-if="visible">
                     <div class="closes_box closes_box5" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')" alt="" ></div>
@@ -56,10 +57,12 @@
 
 <script>
     import BannerComponent from '@/components/BannerComponent.vue'
+    import Social from '@/components/Social.vue'
     export default {
         name: "qiwi-component",
         components: {
-            BannerComponent
+            BannerComponent,
+            Social
         },
         data () {
             return {

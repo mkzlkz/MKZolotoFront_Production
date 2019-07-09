@@ -34,7 +34,7 @@ import money from 'v-money'
 
 // register directive v-money and component <money>
 Vue.use(money, {precision: 4})
-axios.defaults.baseURL = 'https://www.mk-zoloto-lombard.kz/api'
+axios.defaults.baseURL = 'https://mk-zoloto-lombard.kz/api'
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyDv5d2b-p7QbxQtM7kYETzdBte3mogtPOY'

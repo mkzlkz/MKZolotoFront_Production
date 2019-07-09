@@ -41,6 +41,7 @@
                     <div class="block1-mobile-img">
                         <img :src="require('@/assets/img/t6.png')" alt="">
                     </div>
+                    <Social> </Social>
                 </div>
                 <div class="box box7" v-if="visible">
                     <div class="closes_box closes_box7" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')" alt="" ></div>
@@ -53,10 +54,12 @@
 
 <script>
     import BannerComponent from '@/components/BannerComponent.vue'
+    import Social from '@/components/Social.vue'
     export default {
         name: "percent-component",
         components: {
-            BannerComponent
+            BannerComponent,
+            Social
         },
         data () {
             return {

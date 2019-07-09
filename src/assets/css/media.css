@@ -1886,6 +1886,18 @@ height: calc(100vh - 90%) !important;
     white-space: normal;
     width: 100%;
 }
+.social {
+    position: relative;
+    bottom: auto;
+    margin-top: 20px;
+}
+.social ul{
+    flex-wrap: wrap;
+    width:266px;
+}
+.social .appl a {
+    margin-bottom: 10px;
+}
 }
 @media (max-width: 360px) {
     .mobile .menu-mob .disable {

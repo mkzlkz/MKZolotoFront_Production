@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-8" transform="translate(-264.000000, -14.000000)">
+            <g id="Group-4">
+                <g transform="translate(140.000000, 8.000000)">
+                    <g id="Group-7" transform="translate(124.000000, 6.000000)">
+                        <g id="Group-6">
+                            <g id="Group-5">
+                                <g id="Group">
+                                    <rect id="Rectangle" fill="#FFFFFF" fill-rule="nonzero" x="0" y="0" width="20" height="20" rx="10"></rect>
+                                    <g id="001-facebook" transform="translate(6.000000, 3.000000)" fill="#3B5998">
+                                        <path d="M6.42495575,7.31752212 L4.65327434,7.31752212 L4.65327434,13.8081416 L1.96902655,13.8081416 L1.96902655,7.31752212 L0.692389381,7.31752212 L0.692389381,5.03646018 L1.96902655,5.03646018 L1.96902655,3.56035398 C1.96902655,2.50477876 2.47044248,0.851858407 4.67716814,0.851858407 L6.66548673,0.860176991 L6.66548673,3.07433628 L5.22283186,3.07433628 C4.98619469,3.07433628 4.65345133,3.19256637 4.65345133,3.69610619 L4.65345133,5.03858407 L6.65946903,5.03858407 L6.42495575,7.31752212 Z" id="Path"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

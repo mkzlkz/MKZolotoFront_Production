@@ -40,6 +40,7 @@
                     <div class="block1-mobile-img">
                         <img :src="require('@/assets/img/t2.png')" alt="">
                     </div>
+                    <Social> </Social>
                 </div>
                 <div class="box box3" v-if="visible">
                     <div class="closes_box closes_box3" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')" alt="" ></div>
@@ -52,10 +53,12 @@
 
 <script>
     import BannerComponent from '@/components/BannerComponent.vue'
+    import Social from '@/components/Social.vue'
     export default {
         name: "no-scratches-component",
         components: {
-            BannerComponent
+            BannerComponent,
+            Social
         },
         data () {
             return {

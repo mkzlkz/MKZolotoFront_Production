@@ -51,6 +51,7 @@
               </div>
             </form>
           </div>
+          <Social> </Social>
         </div>
         <div class="box box1" v-if="visible">
           <div class="closes_box closes_box1" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
@@ -64,6 +65,7 @@
 </template>
 <script>
   import BannerComponent from '@/components/BannerComponent.vue'
+  import Social from '@/components/Social.vue'
   import {
     TheMask
   } from 'vue-the-mask'
@@ -74,7 +76,8 @@
   export default {
     components: {
       TheMask,
-      BannerComponent
+      BannerComponent,
+      Social
     },
     name: "calculate-component",
     data() {
