@@ -66,14 +66,19 @@
                 showPopover: false,
                 visible: true,
                 title_page: '',
-                description_page: ''
+                description_page: '',
+                opengraph_image: ''
             }
         },
                 metaInfo() {
             return {
                 title: this.title_page,
                 meta: [
-                { name: 'description', content: this.description_page }
+                { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
+        { name: 'description', content: this.description_page },
+        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+        { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+        { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
                 ]
             }
         },
@@ -90,6 +95,7 @@
                     } else {
                         this.title_page = $response.data[8].title_page
                         this.description_page = $response.data[8].description
+                        this.opengraph_image = $response.data[8].opengraph_image
                     }
                 })
                 .catch((e) => console.log(e))

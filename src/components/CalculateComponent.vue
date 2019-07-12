@@ -1,6 +1,7 @@
 <template>
               <div>
     <banner-component></banner-component>
+
   <div class="bg-1 tab-pane1">
     <div class="bg-calc">
       <!--<button class="closes"><img :src="require('@/assets/img/close.svg')" alt=""></button>-->
@@ -101,15 +102,19 @@
         num:'',
         defaultDays:'',
         title_page: '',
-        description_page: ''
+        description_page: '',
+        opengraph_image: ''
       }
     },
         metaInfo() {
       return {
         title: this.title_page,
         meta: [
+        { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
         { name: 'description', content: this.description_page },
-        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'}
+        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+        { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+        { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
         ]
       }
     },
@@ -237,6 +242,7 @@
       } else {
         this.title_page = $response.data[1].title_page
         this.description_page = $response.data[1].description
+        this.opengraph_image = $response.data[1].opengraph_image
       }
     })
     .catch((e) => console.log(e))

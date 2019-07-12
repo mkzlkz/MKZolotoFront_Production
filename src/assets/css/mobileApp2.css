@@ -1,8 +1,8 @@
-.mobileapp .menu-mobile, .mobileapp .menu-mob{
-    display: none;
-}
 .mobileapp .block-left{
     display: none !important;
+}
+.webapp .block-left{
+    display: block !important;
 }
 .jivo_disnone #jivo_custom_widget, .jivo_disnone .wrap_mW{
     display: none !important;

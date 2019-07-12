@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-bind:class="{'mobileapp' : this.$route.query.from === 'app'}">
+  <div id="app" v-bind:class="{'webapp' : this.$route.query.from !== 'app', 'mobileapp' : this.$route.query.from === 'app'}">
     <div class="block">
       <aside-component></aside-component>
       <div class="block-right">

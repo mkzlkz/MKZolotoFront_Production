@@ -1,5 +1,5 @@
 <template>
-  <div class="block-left">
+  <div class="block-left" v-if="this.$route.query.from !== 'app'">
     <aside>
       <div class="top-menu">
         <div class="mob-menu">

@@ -25,7 +25,8 @@ textarea:hover, textarea:focus, textarea:active {
             box-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
     height: 100vh;
-    z-index: 2; }
+    z-index: 2;
+    display: none; }
     .block-left .logo {
       cursor: pointer;
       display: block;
@@ -1357,6 +1358,8 @@ input[type='number'] {
 .slider_banner {
   height: 290px;
   background: #fff; }
+  .slider_banner .slick-slide, .slider_banner .slick-track {
+    width: 100% !important; }
   .slider_banner .slick-dots {
     bottom: 15px;
     padding-right: 0;

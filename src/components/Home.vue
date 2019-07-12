@@ -57,7 +57,7 @@
                     </video>
                     <div class="slide-text">
                         <div class="text">Без денег жить <br> нельзя на свете,</div>
-                          <div class="title">нет, нельзя!</div>
+                        <div class="title">нет, нельзя!</div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -87,7 +87,7 @@
 
 <script>
     import Slick from 'vue-slick'
-import { setTimeout } from 'timers';
+    import { setTimeout } from 'timers';
 
     export default {
         name: 'home',
@@ -106,15 +106,20 @@ import { setTimeout } from 'timers';
                     infinite: true,
                     speed: 300
                 },
-                    title_page: '',
-                    description_page: ''
+                title_page: '',
+                description_page: '',
+                opengraph_image: ''
             }
         },
-                        metaInfo() {
+        metaInfo() {
             return {
                 title: this.title_page,
                 meta: [
-                { name: 'description', content: this.description_page }
+                { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
+                { name: 'description', content: this.description_page },
+                { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+                { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+                { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
                 ]
             }
         },
@@ -145,52 +150,53 @@ import { setTimeout } from 'timers';
         watch: {
             slideIndex: function (val) {
 
-            $('#v0').get(0).pause()
-            $('#v1').get(0).pause()
-            $('#v2').get(0).pause()
-            $('#v3').get(0).pause()
-            $('#v4').get(0).pause()
-            $('#v5').get(0).pause()
-            $('#v6').get(0).pause()
-            $('#v7').get(0).pause()
+                $('#v0').get(0).pause()
+                $('#v1').get(0).pause()
+                $('#v2').get(0).pause()
+                $('#v3').get(0).pause()
+                $('#v4').get(0).pause()
+                $('#v5').get(0).pause()
+                $('#v6').get(0).pause()
+                $('#v7').get(0).pause()
 
-            $('#v0').get(0).currentTime = 0
-            $('#v1').get(0).currentTime = 0
-            $('#v2').get(0).currentTime = 0
-            $('#v3').get(0).currentTime = 0
-            $('#v4').get(0).currentTime = 0
-            $('#v5').get(0).currentTime = 0
-            $('#v6').get(0).currentTime = 0
-            $('#v7').get(0).currentTime = 0
-            setTimeout(function() {
-                if($('#v'+val).get(0).readyState < 3){
-                    $('#v'+val).get(0).load();
-                }
-                $('#v'+val).get(0).play();
-            },100)
-            $(".slick-dots button").unbind("click")
-            $('.slick-active button').bind("click",function () {
-                $(".slick-slider").slick('slickNext');
-            });
+                $('#v0').get(0).currentTime = 0
+                $('#v1').get(0).currentTime = 0
+                $('#v2').get(0).currentTime = 0
+                $('#v3').get(0).currentTime = 0
+                $('#v4').get(0).currentTime = 0
+                $('#v5').get(0).currentTime = 0
+                $('#v6').get(0).currentTime = 0
+                $('#v7').get(0).currentTime = 0
+                setTimeout(function() {
+                    if($('#v'+val).get(0).readyState < 3){
+                        $('#v'+val).get(0).load();
+                    }
+                    $('#v'+val).get(0).play();
+                },100)
+                $(".slick-dots button").unbind("click")
+                $('.slick-active button').bind("click",function () {
+                    $(".slick-slider").slick('slickNext');
+                });
             }
         },
-              created() {
-        this.GetKeyWords();
-      },
-        methods: {
-                    GetKeyWords() {
-          this.$axios.get('/keywords')
-            .then((response) => {
-              let $response = response.data
-              if ($response.code === 0) {
-                // console.log($response)
-              } else {
-                this.title_page = $response.data.main_page_title
-                this.description_page = $response.data.description
-              }
-            })
-            .catch((e) => console.log(e))
+        created() {
+            this.GetKeyWords();
         },
+        methods: {
+            GetKeyWords() {
+                this.$axios.get('/keywords')
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+// console.log($response)
+} else {
+    this.title_page = $response.data.main_page_title
+    this.description_page = $response.data.description
+    this.opengraph_image = $response.data.opengraph_image
+}
+})
+                .catch((e) => console.log(e))
+            },
             next() {
                 this.$refs.slicks.next()
             },

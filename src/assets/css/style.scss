@@ -40,6 +40,7 @@ textarea:hover, textarea:focus, textarea:active{
 		background-color: #ffffff;
 		height: 100vh;
 		z-index: 2;
+		display: none;
 		.logo{
 			cursor: pointer;
 			display: block;
@@ -1409,6 +1410,9 @@ white-space: nowrap;
 .slider_banner{
 	height: 290px;
 	background: #fff;
+	.slick-slide, .slick-track{
+		width: 100% !important;
+	}
 	.slick-dots {
 		bottom: 15px;
 		padding-right: 0;
