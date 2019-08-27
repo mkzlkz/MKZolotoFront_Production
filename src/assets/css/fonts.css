@@ -1,0 +1,36 @@
+@font-face{
+    font-family:'FranklinGothicBook';
+     src:url('../fonts/FranklinGothicBook.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicMedium';
+     src:url('../fonts/FranklinGothicMedium.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicHeavy';
+     src:url('../fonts/FranklinGothicHeavy.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemiCond';
+     src:url('../fonts/FranklinGothicDemiCond.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicBook-Italic';
+     src:url('../fonts/FranklinGothicBook-Italic.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemi';
+     src:url('../fonts/FranklinGothicDemi.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemiItalic';
+     src:url('../fonts/FranklinGothicDemiItalic.ttf');
+}
+@font-face{
+    font-family:'stroke-medium';
+     src:url('../fonts/stroke-medium.otf');
+}
+@font-face{
+    font-family:'Roboto-Medium';
+     src:url('../fonts/Roboto-Medium.ttf');
+}
