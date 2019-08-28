@@ -1,0 +1,83 @@
+.mobileapp .block-left{
+    display: none !important;
+}
+.webapp .block-left{
+    display: block !important;
+}
+.jivo_disnone #jivo_custom_widget, .jivo_disnone .wrap_mW{
+    display: none !important;
+}
+.jivo_disnone div#jivo-iframe-container.jivo-iframe-container-bottom.jivo-c-mobile {
+    display: none !important;
+}
+@media (max-height: 610px) {
+    .box .img {
+        width: 180px !important;
+    }
+    .box .closes_box {
+        top: -10px !important;
+    }
+}
+@media (max-width: 1500px) {
+    .box .img {
+        width: 320px;
+    }
+    .box .closes_box {
+        top: 20px;
+    }
+    .box, .block-right .tab-pane1 .closes {
+        right: 25px;
+    }
+}
+
+@media (max-width: 1399px) {
+    .box .img {
+        width: 260px;
+    }
+}
+
+@media (max-width: 1220px) {
+    .box .img {
+        width: 200px;
+    }
+    .box, .block-right .tab-pane1 .closes {
+        right: 15px;
+    }
+}
+@media (max-width: 767px) {
+    .box{
+        display: none;
+    }
+    .mobileapp  .block-right .tab-pane1 .tab-text {
+    padding-top: 20px;
+    height: 100vh;
+    padding-bottom: 20px !important;
+}
+.mobileapp  #rule-block {
+   height: 75%;
+    margin-bottom: 30px;
+}
+.mobileapp  .mCustomScrollBox {
+    height: calc(100vh - 30%) !important;
+}
+.mobileapp  .PageNotFound {
+    top: 380px;
+}
+.mobileapp .rules-new #rule-block {
+    height: 48%;
+    margin-bottom: 30px;
+}
+.mobileapp .bg-calc .content_block{
+height: calc(100% - 30px);
+}
+}
+@media (max-height: 570px) {
+    .mobileapp #rule-block {
+    height: 70%;
+    margin-bottom: 30px;
+}
+.mobileapp .rules-new #rule-block {
+    height: 41%;
+    margin-bottom: 30px;
+}
+}
