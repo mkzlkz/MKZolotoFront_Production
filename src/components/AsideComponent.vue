@@ -83,30 +83,18 @@
           }
         },
         created () {
-          this.getMenus()
-          this.GetSecondMenus()
+          this.getLayout();
         },
         methods: {
-          getMenus () {
-            this.$axios.get('/menus')
+         getLayout () {
+            this.$axios.get('/layout-data')
             .then((response) => {
               let $response = response.data
               if ($response.code === 0) {
                 console.log($response)
               } else {
-                this.menus = $response.data
-              }
-            })
-            .catch((e) => console.log(e))
-          },
-          GetSecondMenus () {
-            this.$axios.get('/second_menus')
-            .then((response) => {
-              let $response = response.data
-              if ($response.code === 0) {
-                console.log($response)
-              } else {
-                this.menul = $response.data
+                this.menus = $response.data.menus
+                this.menul = $response.data.second_menus
               }
             })
             .catch((e) => console.log(e))

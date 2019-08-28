@@ -30,17 +30,17 @@
       }
     },
       created() {
-        this.GetKeyWords();
+        this.getLayout();
       },
       methods: {
-        GetKeyWords() {
-          this.$axios.get('/keywords')
+        getLayout() {
+          this.$axios.get('/layout-data')
             .then((response) => {
               let $response = response.data
               if ($response.code === 0) {
                 // console.log($response)
               } else {
-                this.keycon = $response.data.keywords
+                this.keycon = $response.data.keywords.keywords
               }
             })
             .catch((e) => console.log(e))

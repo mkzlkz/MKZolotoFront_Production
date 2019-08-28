@@ -62,35 +62,23 @@
       }
     },
     created () {
-      this.GetBanners()
-      this.GetAutoscrolling()
+      this.getLayout()
     },
     methods: {
-      GetBanners () {
-        this.$axios.get('/banners')
-        .then((response) => {
-          let $response = response.data
-          if ($response.code === 0) {
-            console.log($response)
-          } else {
-            this.banners = $response.data
+                getLayout () {
+            this.$axios.get('/layout-data')
+            .then((response) => {
+              let $response = response.data
+              if ($response.code === 0) {
+                console.log($response)
+              } else {
+                this.banners = $response.data.banners
+                this.scroll = $response.data.autoscrolling
+            this.slickOptions.autoplaySpeed = $response.autoscrolling.value
+              }
+            })
+            .catch((e) => console.log(e))
           }
-        })
-        .catch((e) => console.log(e))
-      },
-      GetAutoscrolling () {
-        this.$axios.get('/autoscrolling')
-        .then((response) => {
-          let $response = response.data
-          if ($response.code === 0) {
-            console.log($response)
-          } else {
-            this.scroll = $response.data
-            this.slickOptions.autoplaySpeed = $response.value
-          }
-        })
-        .catch((e) => console.log(e))
-      }
     }
   }
 </script>
