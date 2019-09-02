@@ -119,9 +119,7 @@
       }
     },
     created() {
-      this.getMaxData();
-      this.GetGoldprobes();
-      this.getDefaultDate();
+      this.getLayout();
     },
     watch: {
       days: function (newDays, oldDays) {
@@ -238,13 +236,48 @@ methods: {
       if ($response.code === 0) {
         console.log($response)
       } else {
+        setTimeout(()=>{
+          this.defaultDays = Number($response.data.default_term.value)
+        },100);
+        setTimeout(()=>{
+          this.days = this.defaultDays
+        },500);
+
+        this.maxTerm = Number($response.data.max_term.value)
+        this.maxTermLength = Number($response.data.max_term.value.length)
+
+        this.maxWeight = Number($response.data.max_weight.value)
+
         this.rates = $response.data.rates
         this.title_page = $response.data.menus[1].title_page
         this.description_page = $response.data.menus[1].description
         this.opengraph_image = $response.data.menus[1].opengraph_image
+
+        this.probes = $response.data.probes
+        this.GoldProbes = $response.data.probes[0].value
+        this.postedPrice
+        for (let i = 0; i < this.probes.length; i++) {
+          if (this.probes[i].key == 'AU999') {
+            let obj = {}
+            obj.title = 'AU 999'
+            obj.value = this.probes[i].value
+            this.postedPrice.push(obj)
+          } else if (this.probes[i].key == 'AU750') {
+            let obj = {}
+            obj.title = 'AU 750'
+            obj.value = this.probes[i].value
+            this.postedPrice.push(obj)
+          } else
+          if (this.probes[i].key == 'AU585') {
+            let obj = {}
+            obj.title = 'AU 585'
+            obj.value = this.probes[i].value
+            this.postedPrice.push(obj)
+            this.GoldProbes = this.probes[i].value
+          }
+        }
       }
-    })
-    .catch((e) => console.log(e))
+    }).catch((e) => console.log(e))
   },
   getkeyDays(evt) {
 
@@ -347,68 +380,6 @@ if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 190 && c
   return true;
 }
 }
-},
-getDefaultDate() {
-  this.$axios.get('/default_term')
-  .then(response => {
-    setTimeout(()=>{
-      this.defaultDays = Number(response.data.value)
-    },100);
-    setTimeout(()=>{
-      this.days = this.defaultDays
-    },500);
-  })
-
-},
-getMaxData() {
-  this.$axios.get('/max_term')
-  .then(maxTerm => {
-    this.maxTerm = Number(maxTerm.data.value)
-    this.maxTermLength = Number(maxTerm.data.value.length)
-    this.$axios.get('/max_weight')
-    .then(maxWeight => {
-      this.maxWeight = Number(maxWeight.data.value)
-
-    }).catch((err) => {
-      console.log(err);
-    })
-  }).catch((err) => {
-    console.log(err);
-  })
-},
-GetGoldprobes() {
-  this.$axios.get('/probes')
-  .then((response) => {
-    let $response = response.data
-    if ($response.code === 0) {
-      console.log($response)
-    } else {
-      this.probes = $response.data
-      this.GoldProbes = $response.data[0].value
-      this.postedPrice
-      for (let i = 0; i < this.probes.length; i++) {
-        if (this.probes[i].key == 'AU999') {
-          let obj = {}
-          obj.title = 'AU 999'
-          obj.value = this.probes[i].value
-          this.postedPrice.push(obj)
-        } else if (this.probes[i].key == 'AU750') {
-          let obj = {}
-          obj.title = 'AU 750'
-          obj.value = this.probes[i].value
-          this.postedPrice.push(obj)
-        } else
-        if (this.probes[i].key == 'AU585') {
-          let obj = {}
-          obj.title = 'AU 585'
-          obj.value = this.probes[i].value
-          this.postedPrice.push(obj)
-          this.GoldProbes = this.probes[i].value
-        }
-      }
-    }
-  })
-  .catch((e) => console.log(e))
 }
 }
 }

@@ -16,7 +16,6 @@ import VueLodash from 'vue-lodash'
 import VueImg from 'v-img';
 import Meta from 'vue-meta'
 import VueTheMask from 'vue-the-mask'
-import store from './store/store'
 Vue.use(VueTheMask)
 Vue.use(Meta)
 Vue.use(VueImg);
@@ -47,7 +46,6 @@ Vue.use(VueGoogleMaps, {
 new Vue({
   el: '#app',
   router,
-  store,
   components: { App },
   template: '<App/>'
 })

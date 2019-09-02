@@ -74,7 +74,7 @@
               } else {
                 this.banners = $response.data.banners
                 this.scroll = $response.data.autoscrolling
-            this.slickOptions.autoplaySpeed = $response.autoscrolling.value
+            this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
               }
             })
             .catch((e) => console.log(e))

@@ -22,17 +22,17 @@
             }
         },
         created() {
-            this.getSocial();
+            this.getLayout();
         },
         methods: {
-            getSocial () {
-                this.$axios.get('/social')
+            getLayout () {
+                this.$axios.get('/layout-data')
                 .then((response) => {
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
                     } else {
-                        this.socials = $response.data
+                        this.socials = $response.data.social
                     }
                 })
                 .catch((e) => console.log(e))

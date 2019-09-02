@@ -218,7 +218,7 @@ textarea:hover, textarea:focus, textarea:active {
   opacity: 0; }
 
 .bg-1 {
-  background: url(../img/bg1.png) !important; }
+  background: url(../img/bg1.jpg) !important; }
 
 .bg-calc {
   /*	background: url(../img/bg-calc.png);
@@ -266,7 +266,7 @@ textarea:hover, textarea:focus, textarea:active {
   width: 106px;
   text-align: center;
   margin-left: -4px;
-  background: url(../img/bg1.png); }
+  background: url(../img/df2.jpg); }
 
 .calc-form {
   max-width: 638px;
@@ -802,7 +802,7 @@ select:disabled {
      object-fit: scale-down;
   background: #F1EDF1; }
 .slider .slick-prev {
-  background-image: url(../img/left.png);
+  background-image: url(../img/left.svg);
   width: 66px;
   height: 66px;
   background-position: left;
@@ -816,7 +816,7 @@ select:disabled {
   z-index: 1;
   position: absolute; }
 .slider .slick-next {
-  background-image: url(../img/right.png);
+  background-image: url(../img/right.svg);
   width: 66px;
   height: 66px;
   background-position: right;
@@ -836,7 +836,7 @@ select:disabled {
   display: none !important; }
 
 .slick-first .slick-next {
-  background-image: url(../img/play.png) !important;
+  background-image: url(../img/play.svg) !important;
   width: 66px !important;
   height: 66px !important;
   background-position: right !important;
@@ -890,7 +890,7 @@ select:disabled {
     -webkit-transform: scale(1.1);
             transform: scale(1.1); } }
 .slick-end .slick-next {
-  background-image: url(../img/restart.png) !important;
+  background-image: url(../img/restart.svg) !important;
   width: 66px !important;
   height: 66px !important;
   background-position: right !important;

@@ -239,7 +239,7 @@ textarea:hover, textarea:focus, textarea:active{
 	opacity: 0;
 }
 .bg-1{
-	background: url(../img/bg1.png) !important;
+	background: url(../img/bg1.jpg) !important;
 }
 .bg-calc{
 /*	background: url(../img/bg-calc.png);
@@ -289,7 +289,7 @@ textarea:hover, textarea:focus, textarea:active{
 		width: 106px;
 		text-align: center;
 		margin-left: -4px;
-		background: url(../img/bg1.png);
+		background: url(../img/df2.jpg);
 	}
 }
 
@@ -872,7 +872,7 @@ select:disabled{
 		background: #F1EDF1;
 	}
 	.slick-prev{
-		background-image: url(../img/left.png);
+		background-image: url(../img/left.svg);
 		width: 66px;
 		height: 66px;
 		background-position: left;
@@ -887,7 +887,7 @@ select:disabled{
 		position: absolute;
 	}
 	.slick-next{
-		background-image: url(../img/right.png);
+		background-image: url(../img/right.svg);
 		width: 66px;
 		height: 66px;
 		background-position: right;
@@ -910,7 +910,7 @@ select:disabled{
 	display: none !important;
 }
 .slick-first .slick-next{
-	background-image: url(../img/play.png) !important;
+	background-image: url(../img/play.svg) !important;
 	width: 66px !important;
 	height: 66px !important;
 	background-position: right !important;
@@ -937,7 +937,7 @@ select:disabled{
 }
 
 .slick-end .slick-next{
-	background-image: url(../img/restart.png) !important;
+	background-image: url(../img/restart.svg) !important;
 	width: 66px !important;
 	height: 66px !important;
 	background-position: right !important;
