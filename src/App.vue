@@ -18,34 +18,7 @@
     components: {
       AsideComponent,
       ExpressExtension
-    },
-    data() {
-      return {
-        keycon: ''
-      }
-    },
-    metaInfo() {
-      return {
-        meta: [{name: 'keywords', content: this.keycon}]
-      }
-    },
-      created() {
-        this.getLayout();
-      },
-      methods: {
-        getLayout() {
-          this.$axios.get('/layout-data')
-            .then((response) => {
-              let $response = response.data
-              if ($response.code === 0) {
-                // console.log($response)
-              } else {
-                this.keycon = $response.data.keywords.keywords
-              }
-            })
-            .catch((e) => console.log(e))
-        }
-      }
+    }
     }
 </script>
 

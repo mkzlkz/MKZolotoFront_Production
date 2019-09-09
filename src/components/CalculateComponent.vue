@@ -1,6 +1,35 @@
 <template>
   <div>
-    <banner-component></banner-component>
+    <div class="desktop-banner">
+      <slick ref="slick" :options="slickOptions" class="slider_banner">
+        <div class="banner" v-for="banner in banners">
+          <a v-if="banner.link" :href="banner.link" target="_blank" class="banner-flex">
+            <div class="text">
+              <div class="text1">{{banner.text1}}</div>
+              <div class="text2">{{banner.text2}}</div>
+              <div class="text3">{{banner.text3}}</div>
+              <div class="text4">{{banner.text4}}</div>
+            </div>
+            <div class="img">
+              <img :src="banner.desktop" alt="" class="img-deck_i">
+              <img :src="banner.mobile" alt="" class="img-mob_b">
+            </div>
+          </a>
+          <div v-else class="banner-flex">
+            <div class="text">
+              <div class="text1">{{banner.text1}}</div>
+              <div class="text2">{{banner.text2}}</div>
+              <div class="text3">{{banner.text3}}</div>
+              <div class="text4">{{banner.text4}}</div>
+            </div>
+            <div class="img">
+              <img :src="banner.desktop" alt="" class="img-deck_i">
+              <img :src="banner.mobile" alt="" class="img-mob_b">
+            </div>
+          </div>
+        </div>
+      </slick>
+    </div>
 
     <div class="bg-1 tab-pane1">
       <div class="bg-calc">
@@ -13,10 +42,10 @@
               <div class="calc-dflex">
                 <div v-for="(pP, index) in  postedPrice" class="df"><span class="df1">{{pP.title}}</span><span class="df2">{{nicePrice(pP.value)}}</span></div>
               </div>
-              <form action="" class="calc-form">
+              <form class="calc-form">
                 <div class="form-1">
                   <span>Проба золота:</span>
-                  <select v-model="GoldProbes" name="" id="">
+                  <select v-model="GoldProbes">
                     <option v-for="(probe, index) in probes" :key="probe.id" :value="probe.value">{{ probe.key }}
                     </option>
                   </select>
@@ -36,7 +65,7 @@
   <!-- <the-mask v-model="days" @focus="getAnsverDays" @blur="saveEditDays" :masked="true" mask="##" /> -->
 <!-- <input type="text" min="0" placeholder="0" @focus="getAnsverDays" @blur="saveEditDays" @keydown="getkeyDays"
   v-model="days"> -->
-  <input type="text" min="0" placeholder="0" @blur="saveEditDays" @keydown="getkeyDays"
+  <input type="text"  placeholder="0" @blur="saveEditDays" @keydown="getkeyDays"
   v-model="days">
   <div v-if="showAnsverDays && maxTerm && defaultDays && days != 0" class="hint-cl">
     Срок займа не может превышать {{maxTerm}} дней
@@ -52,7 +81,18 @@
 </div>
 </form>
 </div>
-<Social> </Social>
+<div class="social">
+  <ul v-if="this.$route.path == '/'">
+    <li v-for="social in socials" :key="social.id" v-bind:class="{appl : social.isApplication == true}">
+      <a :href="social.link" target="_blank"><img :src="social.img_white" alt=""></a>
+    </li>
+  </ul>
+  <ul v-else>
+    <li v-for="social in socials" :key="social.id" v-bind:class="{appl : social.isApplication == true}">
+      <a :href="social.link" target="_blank"><img :src="social.img_dark" alt=""></a>
+    </li>
+  </ul>
+</div>
 </div>
 <div class="box box1" v-if="visible">
   <div class="closes_box closes_box1" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
@@ -65,8 +105,7 @@
 </div>
 </template>
 <script>
-  import BannerComponent from '@/components/BannerComponent.vue'
-  import Social from '@/components/Social.vue'
+  import Slick from 'vue-slick'
   import {
     TheMask
   } from 'vue-the-mask'
@@ -77,8 +116,7 @@
   export default {
     components: {
       TheMask,
-      BannerComponent,
-      Social
+      Slick
     },
     name: "calculate-component",
     data() {
@@ -103,7 +141,17 @@
         defaultDays:'',
         title_page: '',
         description_page: '',
-        opengraph_image: ''
+        opengraph_image: '',
+        slickOptions: {
+          dots: true,
+          arrows: false,
+          fade: false,
+          autoplay: false,
+          infinite: true,
+          autoplaySpeed: 5000
+        },
+        banners: {},
+        socials: ''
       }
     },
     metaInfo() {
@@ -116,6 +164,16 @@
         { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
         { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
         ]
+      }
+    },
+    beforeUpdate() {
+      if (this.$refs.slick) {
+        this.$refs.slick.destroy();
+      }
+    },
+    updated() {
+      if (this.$refs.slick && !this.$refs.slick.$el.classList.contains('slick-initialized')) {
+        this.$refs.slick.create();
       }
     },
     created() {
@@ -274,6 +332,10 @@ methods: {
             obj.value = this.probes[i].value
             this.postedPrice.push(obj)
             this.GoldProbes = this.probes[i].value
+            this.banners = $response.data.banners
+            this.scroll = $response.data.autoscrolling
+            this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
+            this.socials = $response.data.social
           }
         }
       }

@@ -1,6 +1,35 @@
 <template>
     <div>
-        <banner-component></banner-component>
+                        <div class="desktop-banner">
+            <slick ref="slick" :options="slickOptions" class="slider_banner">
+                <div class="banner" v-for="banner in banners">
+                    <a v-if="banner.link" :href="banner.link" target="_blank" class="banner-flex">
+                        <div class="text">
+                            <div class="text1">{{banner.text1}}</div>
+                            <div class="text2">{{banner.text2}}</div>
+                            <div class="text3">{{banner.text3}}</div>
+                            <div class="text4">{{banner.text4}}</div>
+                        </div>
+                        <div class="img">
+                            <img :src="banner.desktop" alt="" class="img-deck_i">
+                            <img :src="banner.mobile" alt="" class="img-mob_b">
+                        </div>
+                    </a>
+                    <div v-else class="banner-flex">
+                        <div class="text">
+                            <div class="text1">{{banner.text1}}</div>
+                            <div class="text2">{{banner.text2}}</div>
+                            <div class="text3">{{banner.text3}}</div>
+                            <div class="text4">{{banner.text4}}</div>
+                        </div>
+                        <div class="img">
+                            <img :src="banner.desktop" alt="" class="img-deck_i">
+                            <img :src="banner.mobile" alt="" class="img-mob_b">
+                        </div>
+                    </div>
+                </div>
+            </slick>
+        </div>
         <div class="tab-pane1">
 <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
 </router-link> -->
@@ -90,7 +119,7 @@
 </template>
 
 <script>
-    import BannerComponent from '@/components/BannerComponent.vue'
+    import Slick from 'vue-slick'
     import MaskedInput from 'vue-masked-input'
     import {
         error
@@ -100,7 +129,7 @@
         name: 'form-component',
         components: {
             MaskedInput,
-            BannerComponent
+            Slick
         },
         data() {
             return {
@@ -115,7 +144,16 @@
                 faq: '',
                 title_page: '',
                 description_page: '',
-                opengraph_image: ''
+                opengraph_image: '',
+                slickOptions: {
+                    dots: true,
+                    arrows: false,
+                    fade: false,
+                    autoplay: false,
+                    infinite: true,
+                    autoplaySpeed: 5000
+                },
+                banners: {}
             }
         },
                 metaInfo() {
@@ -130,6 +168,16 @@
                 ]
             }
         },
+                beforeUpdate() {
+            if (this.$refs.slick) {
+                this.$refs.slick.destroy();
+            }
+        },
+        updated() {
+            if (this.$refs.slick && !this.$refs.slick.$el.classList.contains('slick-initialized')) {
+                this.$refs.slick.create();
+            }
+        },
         mounted() {
             $(".qa-content").mCustomScrollbar({
                 autoHideScrollbar:true,
@@ -138,23 +186,27 @@
         },
         created () {
             this.getFaq();
-            this.getMenus();
+            this.getLayout();
         },
         methods: {
-                        getMenus () {
-                this.$axios.get('/menus')
+                        getLayout () {
+                this.$axios.get('/layout-data')
                 .then((response) => {
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
                     } else {
-                        this.title_page = $response.data[13].title_page
-                        this.description_page = $response.data[13].description
-                        this.opengraph_image = $response.data[13].opengraph_image
+                        this.title_page = $response.data.menus[13].title_page
+                        this.description_page = $response.data.menus[13].description
+                        this.opengraph_image = $response.data.menus[13].opengraph_image
+                        this.banners = $response.data.banners
+                        this.scroll = $response.data.autoscrolling
+                        this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
                     }
                 })
                 .catch((e) => console.log(e))
             },
+
             setCurrentIndex(i) {
                 this.currentIndex=i;
             },

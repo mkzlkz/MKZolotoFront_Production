@@ -33,7 +33,36 @@
       </aside>
       <div class="mobile">
         <div class="mobile-banner" v-if="this.$route.path !== '/animation'">
-          <banner-component></banner-component>
+          <div class="desktop-banner">
+            <slick ref="slick" :options="slickOptions" class="slider_banner">
+              <div class="banner" v-for="banner in banners">
+                <a v-if="banner.link" :href="banner.link" target="_blank" class="banner-flex">
+                  <div class="text">
+                    <div class="text1">{{banner.text1}}</div>
+                    <div class="text2">{{banner.text2}}</div>
+                    <div class="text3">{{banner.text3}}</div>
+                    <div class="text4">{{banner.text4}}</div>
+                  </div>
+                  <div class="img">
+                    <img :src="banner.desktop" alt="" class="img-deck_i">
+                    <img :src="banner.mobile" alt="" class="img-mob_b">
+                  </div>
+                </a>
+                <div v-else class="banner-flex">
+                  <div class="text">
+                    <div class="text1">{{banner.text1}}</div>
+                    <div class="text2">{{banner.text2}}</div>
+                    <div class="text3">{{banner.text3}}</div>
+                    <div class="text4">{{banner.text4}}</div>
+                  </div>
+                  <div class="img">
+                    <img :src="banner.desktop" alt="" class="img-deck_i">
+                    <img :src="banner.mobile" alt="" class="img-mob_b">
+                  </div>
+                </div>
+              </div>
+            </slick>
+          </div>
         </div>
         <div class="mobile-header-mobil">
           <div class="ddflex">
@@ -41,8 +70,8 @@
             <router-link :to="{ name: 'Home' }" v-if="this.$route.path !== '/animation'"><img :src="require('@/assets/img/ds.png')" alt="" class="ds"></router-link>
           </div>
           <div class="express-extension" v-if="this.$route.path !== '/animation'" >
-        <button data-toggle="modal" data-target="#modalExtension" class="button-yellow button-ex">Экспресс-продление</button>
-      </div>
+            <button data-toggle="modal" data-target="#modalExtension" class="button-yellow button-ex">Экспресс-продление</button>
+          </div>
         </div>
         <transition name="slide-fade">
           <div v-if="showPopover" v-on-click-outside="close" class="menu-mob">
@@ -63,18 +92,33 @@
     </template>
 
     <script>
-      import BannerComponent from '@/components/BannerComponent.vue'
       import ClickOutside from 'vue-click-outside'
+      import Slick from 'vue-slick'
       export default {
         name: 'aside-component',
         components: {
-          BannerComponent
+          Slick
         },
         data () {
           return {
             menus: '',
             menul: '',
-            showPopover: false
+            showPopover: false,
+            slickOptions: {
+              dots: true,
+              arrows: false,
+              fade: false,
+              autoplay: false,
+              infinite: true,
+              autoplaySpeed: 5000
+            },
+            banners: {},
+            keycon: ''
+          }
+        },
+        metaInfo() {
+          return {
+            meta: [{name: 'keywords', content: this.keycon}]
           }
         },
         watch:{
@@ -82,11 +126,22 @@
             this.showPopover = false;
           }
         },
+        beforeUpdate() {
+          if (this.$refs.slick) {
+            this.$refs.slick.destroy();
+          }
+        },
+        updated() {
+          if (this.$refs.slick && !this.$refs.slick.$el.classList.contains('slick-initialized')) {
+            this.$refs.slick.create();
+          }
+        },
         created () {
           this.getLayout();
         },
         methods: {
-         getLayout () {
+
+          getLayout () {
             this.$axios.get('/layout-data')
             .then((response) => {
               let $response = response.data
@@ -95,6 +150,10 @@
               } else {
                 this.menus = $response.data.menus
                 this.menul = $response.data.second_menus
+                this.banners = $response.data.banners
+                this.scroll = $response.data.autoscrolling
+                this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
+                this.keycon = $response.data.keywords.keywords
               }
             })
             .catch((e) => console.log(e))
