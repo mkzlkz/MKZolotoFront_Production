@@ -1,51 +1,45 @@
 <template>
-  <div id="app" v-bind:class="{'webapp' : this.$route.query.from !== 'app', 'mobileapp' : this.$route.query.from === 'app'}">
+  <div id="app" v-bind:class="{'webapp' : this.$route.query.from !== 'app', 'mobileapp' : this.$route.query.from === 'app', 'lg-kz' : this.$auth.getLanguage() === 'kz', 'lg-qaz' : this.$auth.getLanguage() === 'qaz'}">
     <div class="block">
-      <aside-component></aside-component>
+      <AsideComponent v-if="!this.$auth.isLoggedIn()"></AsideComponent>
+      <AsideAdmin v-if="this.$auth.isLoggedIn()"> </AsideAdmin>
       <div class="block-right">
         <router-view />
       </div>
     </div>
     <ExpressExtension></ExpressExtension>
+    <Auth></Auth>
+    <AvatarChange></AvatarChange>
   </div>
 </template>
 
+
 <script>
   import AsideComponent from "@/components/AsideComponent.vue";
+  import AsideAdmin from "@/components/admin/AsideAdmin.vue";
   import ExpressExtension from "@/components/ExpressExtension.vue";
+  import Auth from "@/components/Auth.vue";
+  import AvatarChange from "@/components/admin/AvatarChange.vue";
   export default {
     name: 'App',
     components: {
-      AsideComponent,
-      ExpressExtension
+     AsideComponent,
+      AsideAdmin,
+      ExpressExtension,
+      Auth,
+      AvatarChange
     },
-    data() {
-      return {
-        keycon: ''
-      }
+    created(){
+this.pageReload();
     },
-    metaInfo() {
-      return {
-        meta: [{name: 'keywords', content: this.keycon}]
+methods: {
+  pageReload(){
+          let admin = this.$route.path.split('/')[1]
+      if( admin !== "admin" ){
+localStorage.clear();
       }
-    },
-      created() {
-        this.GetKeyWords();
-      },
-      methods: {
-        GetKeyWords() {
-          this.$axios.get('/keywords')
-            .then((response) => {
-              let $response = response.data
-              if ($response.code === 0) {
-                // console.log($response)
-              } else {
-                this.keycon = $response.data.keywords
-              }
-            })
-            .catch((e) => console.log(e))
-        }
-      }
+  }
+}
     }
 </script>
 
@@ -59,5 +53,7 @@
   @import './assets/css/style.css';
   @import './assets/css/media.css';
   @import './assets/css/mobileApp2.css';
+  @import './assets/css/language.css';
+
 
 </style>

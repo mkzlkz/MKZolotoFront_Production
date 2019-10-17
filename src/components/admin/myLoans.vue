@@ -1,0 +1,660 @@
+<template>
+    <div>
+        <div v-if="loader" class="loader loader-admin">
+            <img :src="require('@/assets/img/loader1.gif')" alt="">
+        </div>
+        <div class="loan-block1">
+            <button class="button-bg-none" @click="topScroll()"><img :src="require('@/assets/img/icon/top.svg')" alt=""></button>
+            <div class="loan-list">
+                <div>
+                    <div class="loan-box" v-for="(loan, index) in loans" :key="loan.loan_id">
+                        <div class="loan">
+                            <div class="loan-title">
+                                <div class="zb"><span>{{$t('security_ticket')}}</span> <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
+                                <div class="switch" @click="toggleSwitch(index)" v-bind:class="{disabledSwitch : loan.default_pay === 0}">
+                                    <switches v-model="loan.switch" type-bold="true" ></switches>
+                                </div>
+                            </div>
+                            <div class="p-24">
+                                <div class="prog-bar">
+                                    <div class="green"></div>
+                                    <div class="pb" :class="{greens : loan.green === true, yellows : loan.yellow === true, oranges : loan.orange === true, red : loan.reds === true}">
+                                        <progress-bar size="medium" :val="`${String(loan.days)}0`" :max="`${String(loan.maxDays)}0`" min="1"></progress-bar>
+                                    </div>
+                                    <div class="gray" v-if="loan.red === false"></div>
+                                </div>
+                            </div>
+                            <div class="loan-content p-24">
+                                <div class="dflex green-d" v-if="loan.green === true">
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval1.svg')" alt="" class="rd"> {{$t('guaranteed_time')}}</div>
+                                    <div class="l2">{{loan.loan_term}}</div>
+                                </div>
+                                <div class="dflex red-d" v-if="loan.red === true">
+                                    <div class="red l1"><img :src="require('@/assets/img/icon/oval.svg')" alt="" class="rd"> {{$t('guaranteed_expired')}}</div>
+                                    <div class="red l2">{{loan.guaranty_time}}</div>
+                                </div>
+                                <div class="dflex yellow-d" v-if="loan.yellow === true">
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval2.svg')" alt="" class="rd"> {{$t('guaranteed_time')}}</div>
+                                    <div class="l2">{{loan.guaranty_time}}</div>
+                                </div>
+                                <div class="dflex orange-d" v-if="loan.orange === true">
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval3.svg')" alt="" class="rd"> {{$t('guaranteed_expired_1')}}</div>
+                                    <div class="l2">{{loan.guaranty_time}}</div>
+                                </div>
+
+                                <div class="dflex">
+                                    <div class="l1">{{$t('loan_balance')}}</div>
+                                    <div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div>
+                                </div>
+                                <div class="dflex">
+                                    <div class="l1">{{$t('on_loan')}}</div>
+                                    <div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div>
+                                </div>
+                                <div class="dflex">
+                                    <div class="l1">{{$t('for_delay')}}</div>
+                                    <div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div>
+                                </div>
+                                <div class="dflex">
+                                    <div class="l1 bold">{{$t('interest_payable')}}</div>
+                                    <div class="l2 bold">{{nicePrice(loan.percent_pay)}} ₸ </div>
+                                </div>
+                                <div class="button-gray">
+                                    <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
+                                    <button v-on:click="closeDetail(index)" v-if="detail.includes(index)"><img :src="require('@/assets/img/icon/right-arrow.svg')" alt=""></button>
+                                </div>
+                            </div>
+                            <div class="loan-down" v-if="!loan.amountHide">
+                                <div class="dflex">
+                                    <div class="l1 bold" v-if="loan.operation_type_1">{{$t('pay_for_renewal')}}</div>
+                                    <div class="l1 bold" v-if="loan.operation_type_2">{{$t('for_partial_repayment')}}</div>
+
+                                    <div class="l2 bold">{{nicePrice(loan.default_pay)}} ₸ </div>
+                                </div>
+                                <button class="button-yellow" v-bind:class="{ activeLoan: payments.includes(index)}" v-on:click="openPayments(index); expAmount(loan)" >{{$t('change_operation_parameters')}}</button>
+                                <div class="button-gray">
+                                    <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
+                                    <button v-on:click="closeDetail(index)" v-if="detail.includes(index)">{{$t('hide')}}</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="loan-1" v-if="payments.includes(index)">
+                            <div class="dflex dflex3">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" v-bind:class="{disabledDropdown : operations.length === 1}">
+                                        <span v-if="renewal">{{$t('renewal')}}</span>
+                                        <span v-if="partial_repayment">{{$t('partial_repayment')}}</span>
+                                        <span class="bg"><span class="caret"></span></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li v-if="operations.length > 1">
+                                                <a v-on:click="openPay">
+                                                    <span v-if="!partial_repayment">{{$t('partial_repayment')}}</span>
+                                                    <span v-if="!renewal">{{$t('renewal')}}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class="close-l" v-on:click="closePayments(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
+                                </div>
+                                <div class="ch-pog" v-if="partial_repayment">
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('new_loan_term')}}</div>
+                                        <div class="l2">{{ moment(loan.partial_date).format('DD.MM.YYYY') }}</div>
+                                    </div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('remuneration_amount')}}</div>
+                                        <div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div>
+                                    </div>
+                                    <div class="dflex dflex2">
+                                        <div class="l1"><div v-html="$t('partial_redemption_amount')"></div>
+                                        <span :class="{red : red_min === true}">{{$t('from')}} {{nicePrice(loan.min_amount_pay)}}</span>
+                                        <span :class="{red : red_max === true}">{{$t('before')}} {{nicePrice(loan.max_amount_pay)}} ₸</span>
+                                    </div>
+                                    <div class="l2">
+                                        <input type="number" :class="{red_border : red_max === true || red_min === true}" name="payment_sum" v-model="loan.payment_sum" v-on:keyup="checkSum(loan)">
+                                    </div>
+                                </div>
+                                <div class="dflex">
+                                    <div class="l1" v-html="$t('balance_loan_amount')"></div>
+                                    <div class="l2"> {{nicePrice(loan.total_osz)}} ₸</div>
+                                </div>
+                                <div class="loan-down">
+                                    <div class="dflex">
+                                        <div class="l1 bold">{{$t('total_payment')}}</div>
+                                        <div class="l2 bold"> {{nicePrice(loan.total_iko)}} ₸</div>
+                                    </div>
+                                    <button class="button-yellow" v-on:click="changeDataLoans(loan);
+                                    closePayments(index);">{{$t('to_apply')}}</button>
+                                </div>
+                            </div>
+                            <div class="prodl" v-if="renewal">
+                                <div class="pr-title">{{$t('how_many_days')}}</div>
+                                <div class="exten-slider" >
+                                    <div class="ex-flex">
+                                        <div class="min-ex">{{loan.min_days_extension}}</div>
+                                        <div class="max-ex">{{loan.max_days_extension}}</div>
+                                    </div>
+                                    <vue-slider v-model="loan.count_days" :min='loan.min_days_extension' :max='loan.max_days_extension' :tooltip="'always'" @change="dayFunc(loan,index)"/>
+                                    <div class="border"></div>
+                                </div>
+                                <div class="prod-input">
+                                    <input type="number" :min="loan.min_days_extension" :max="loan.max_days_extension" v-model="loan.count_days" @change="defaultValue(loan);dayFunc(loan,index); " @input="dayFunc(loan,index)" @keyUp="dayFunc(loan,index)" name="input-vue-slider">
+                                </div>
+                                <div class="prod-text">
+                                    <div class="pl-txt2"><span class="span">{{$t('new_term')}}</span>
+                                        <div class="datepic" @click="datepickerFunc(loan)">
+                                            <datepicker
+                                            v-model="loan.partial_date"
+                                            :format="formatDate"
+                                            :language="ru"
+                                            :monday-first="true"
+                                            :disabled-dates="disabled"
+                                            v-on:selected="changeDate(loan,index)"
+                                            ></datepicker>
+                                            <img :src="require('@/assets/img/icon/calendar.svg')" alt="" class="img">
+                                        </div>
+                                    </div>
+
+                                    <div class="pl-txt"><span>{{$t('pay_loan_extension')}}</span> {{nicePrice(loans[index].amount)}} ₸</div>
+                                </div>
+                                <button class="button-yellow" v-on:click="changeDataLoansProd(loan); closePayments(index)">{{$t('to_apply')}}</button>
+                            </div>
+                        </div>
+                        <div class="loan-2" v-if="detail.includes(index)">
+                            <div class="loan2-1" v-if="description.length==0">
+                                <div class="dflex2">{{$t('security_ticket')}} №{{loan.loan_id}}</div>
+                                <div class="dflex">
+                                    <div class="l1">{{$t('branch')}}</div>
+                                    <div class="l2">
+                                        <span >
+                                            <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/admin/map?branch=${branch.id}`">{{branch.alias}}</router-link>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="dflex"><div class="l1">{{$t('loan_term')}}</div><div class="l2">{{loan.loan_term}}</div></div>
+                                <div class="dflex"><div class="l1">{{$t('guaranteed_term')}}</div><div class="l2">{{loan.guaranty_time}}</div></div>
+                                <div class="dflex"><div class="l1">{{$t('loan_balance')}}</div><div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div></div>
+                                <div class="dflex"><div class="l1">{{$t('interest_payable')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
+                                <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
+                                <div class="dflex"><div class="l1">{{$t('for_delay')}}</div><div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div></div>
+                                <div class="dflex"><div class="l1 bold">{{$t('total_return')}}</div><div class="l2 bold">{{nicePrice(loan.return_total)}} ₸</div></div>
+                            </div>
+
+                            <div class="loan2-3" v-if="description.includes(index)" v-for="(product,index) in loan.products" :key="product.id">
+                                <div class="dflex">
+                                    <img v-img :src="product.image" alt="" class="img">
+
+                                    <button class="close-l" v-on:click="closeDescription(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
+                                </div>
+                                <div class="name">
+                                    <p>{{$t('name')}}</p>
+                                    <span>{{product.name}}</span>
+                                </div>
+                                <div class="text">
+                                    <span class="des">{{$t('description')}}</span>
+                                    <div class="text-p">{{product.description}}</div>
+                                    <!-- <button class="button-yellow" data-toggle="modal" data-target="#modal-edit">{{$t('edit')}}</button> -->
+                                    <div class="modal-edit">
+                                        <div id="modal-edit" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="modal-head">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
+                                                            <div class="title">{{$t('product_description')}}</div>
+                                                        </div>
+                                                        <textarea class="textarea" v-model='product.description' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
+                                                        <div class="modal-foot">
+                                                            <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
+                                                            <button class="button-yellow" :disabled="clickable">{{$t('save')}}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loan2-2">
+                                <button class="close-l" v-on:click="closeDetail(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
+                                <div class="table-1">
+                                    <table>
+                                        <tr><th>{{$t('products')}}</th><th>{{$t('probe')}}</th><th>{{$t('weight')}}</th><th>{{$t('content')}} <br> AU 999, {{$t('gr')}}</th></tr>
+                                        <tr v-for="(product,index) in loan.products" :key="product.id">
+                                            <td><button v-on:click="openDescription(index)">{{product.name}}</button></td><td>AU {{product.probe}}</td>
+                                            <td>{{product.weight}}</td>
+                                            <td>{{product.au999content}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="button-bg-none" @click="bottomScroll()"><img :src="require('@/assets/img/icon/bottom.svg')" alt=""></button>
+            <button class="button-yellow button-yellow-loan" @click="payAllLoans()">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
+        </div>
+    </div>
+</template>
+
+<script>
+    import ProgressBar from 'vue-simple-progress'
+    import VueSlider from 'vue-slider-component'
+    import 'vue-slider-component/theme/antd.css'
+    import moment from 'moment'
+    import Switches from 'vue-switches';
+    import Datepicker from 'vuejs-datepicker';
+    import {en, ru, kk} from 'vuejs-datepicker/dist/locale'
+    export default {
+        name: 'myLoans',
+        components: {
+            ProgressBar,
+            VueSlider,
+            Datepicker,
+            Switches
+        },
+        data() {
+            return {
+                payments: [],
+                description: [],
+                detail: [],
+                message: 'Кольцо, белое золото, маленькое, родовое, тётя Гаухар подарила на день рождения в 1983 году, Айке передарю как подрастет немножко.',
+                letter: '',
+                maxLetter: 250,
+                hasError: false,
+                clickable: false,
+                loans: [],
+                errorLog: '',
+                partial_repayment: true,
+                renewal: false,
+                en: en,
+                ru: ru,
+                kk: kk,
+                red_min: false,
+                red_max: false,
+                total: '',
+                disabled: {
+                    to: '',
+                    from: '',
+                },
+                enabled: false,
+                branch: '',
+                payAll: 0,
+                operations: [],
+                loader: true
+            }
+        },
+        mounted() {
+            if(window.screen.width > 767) {
+                $(".loan-list").mCustomScrollbar({
+                    autoHideScrollbar:true,
+                    theme:"rounded"
+                });
+                $(".dropdown-menu").click(function(e){
+                    e.stopPropagation();
+                })
+            }
+        },
+        created() {
+            this.charCount();
+            this.getLoans();
+            this.operationTypes();
+        },
+        watch:{
+            'loans': {
+                handler: function (after, before) {
+                },
+                deep: true
+            }
+        },
+        filters:{
+            subStr: function(loan_id) {
+                var loan_string = String(loan_id)
+                return loan_string = loan_string.substring(0,8) + loan_string.substring(8).bold();
+            }
+        },
+        methods: {
+            toggleSwitch: function(i) {
+                var tempLoans = this.loans;
+                this.loans[i].switch = !this.loans[i].switch
+                if (this.loans[i].switch == false) {
+                    this.loans[i].amountHide = true
+                }
+                if (this.loans[i].switch == true) {
+                    this.loans[i].amountHide = false
+                }
+                this.loans = [];
+                this.loans = tempLoans;
+                this.payAmount();
+            },
+            changeDate: function(data,i,x){
+                var obj = this
+                setTimeout(function(){
+                    obj.loans[i].total.map(function (item) {
+                        if(moment(obj.loans[i].partial_date).format("YYYY-MM-DD")==item.new_term) {
+                            obj.loans[i].amount = item.amount;
+                            obj.loans[i].count_days = item.id;
+                        }
+                    })
+                    var tempLoans = obj.loans
+                    obj.loans=[];
+                    obj.loans=tempLoans;
+                    if (!x) {
+                        obj.changeDate(data,i,1)
+                    }
+                },100)
+
+            },
+            checkSum: function(loan) {
+                if (loan.payment_sum >loan.max_amount_pay) {
+                    this.red_max = true
+                    this.red_min = false
+                } else if(loan.payment_sum < loan.min_amount_pay) {
+                    this.red_min = true
+                    this.red_max = false
+                } else {
+                    this.red_min = false
+                    this.red_max = false
+                    loan.total_osz = loan.loan_balance - Number(String(loan.payment_sum));
+                    loan.total_iko = loan.loan_percent + Number(String(loan.payment_sum));
+                }
+            },
+            changeDataLoans: function(loan){
+                loan.operation_type_1 = false;
+                loan.operation_type_2 = true;
+                loan.operation_type = 2;
+                loan.default_pay = loan.total_iko;
+                this.payAmount();
+
+            },
+            changeDataLoansProd: function(loan){
+                loan.operation_type_1 = true;
+                loan.operation_type_2 = false;
+                loan.operation_type = 1;
+                loan.default_pay = loan.amount;
+                this.payAmount();
+            },
+            openPayments(index) {
+                const inx = this.payments.indexOf(index);
+                const ins = this.detail.indexOf(index);
+                if (inx > -1) {
+                    this.payments.splice(inx, 1)
+                } else {
+                    this.payments=[index]
+// this.partial_repayment = false
+// this.renewal = true
+this.detail.splice(ins, 1)
+}
+},
+closePayments(index) {
+    const inx = this.payments.indexOf(index);
+    this.payments.splice(inx, 1)
+},
+openDescription(index){
+    const inx = this.description.indexOf(index);
+    console.log(this.description)
+    if (inx > -1) {
+        this.description.splice(inx, 1)
+    } else {
+        this.description=[index]
+
+    }
+},
+closeDescription(index){
+    const inx = this.description.indexOf(index);
+    this.description.splice(inx, 1)
+},
+openDetail(index){
+    const inx = this.detail.indexOf(index);
+    const ins = this.payments.indexOf(index);
+    if (inx > -1) {
+        this.detail.splice(inx, 1)
+    } else {
+        this.detail.push(index)
+        this.payments.splice(ins, 1)
+    }
+},
+closeDetail(index) {
+    const inx = this.detail.indexOf(index);
+    const ind = this.description.indexOf(index);
+    this.detail.splice(inx, 1);
+    this.description.splice(ind, 1)
+},
+charCount: function(){
+    this.letter = this.message.length;
+    this.hasError = this.letter > this.maxLetter;
+    this.clickable = this.hasError;
+},
+getLoans() {
+    this.$axios.get('/auth/loans')
+    .then((response) => {
+        let $response = response.data
+        if ($response.code === 0) {
+            console.log($response)
+        } else {
+            this.loans = $response.data
+            this.loader = false
+            this.gradientFunc();
+            for(var i=0; i<this.loans.length;i++){
+                if(this.loans[i].default_pay == null){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                }
+                if(this.loans[i].amount == null){
+                   this.loans[i].amount = 0;
+                   this.loans[i].default_pay = 0;
+                   this.loans[i].loan_percent = 0;
+                   this.loans[i].amount = 0;
+                   this.loans[i].amount = 0;
+                }
+            }
+        }
+    })
+    .catch((e) => {
+        this.errorLog = e.response.status;
+        if(this.errorLog == 401){
+            localStorage.clear()
+            window.location.reload()
+        }
+        console.log(e)
+    })
+},
+gradientFunc(){
+    this.todays = moment();
+    this.today = moment().format('DD.MM.YYYY');
+    for(var i=0; i<this.loans.length;i++){
+        var startDate = moment(this.loans[i].start_date,"DD.MM.YYYY");
+        var guarantyTime = moment(this.loans[i].guaranty_time,"DD.MM.YYYY")
+        var loanTerm = moment(this.loans[i].loan_term,"DD.MM.YYYY")
+        var minTen = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('DD.MM.YYYY')
+        var date1 = moment(this.loans[i].loan_term,"DD.MM.YYYY").format('YYYY-MM-DD')
+        var date2 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('YYYY-MM-DD')
+        var date3 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").format('YYYY-MM-DD')
+        var loan_bal = this.loans[i].loan_balance
+        var max_amount = this.loans[i].max_amount_pay
+        var loan_percent = this.loans[i].loan_percent
+        var max_days = this.loans[i].max_days_extension
+        var min_days = this.loans[i].min_days_extension
+        var min_date = moment(this.loans[i].partial_date).subtract(max_days,'days').format('YYYY-MM-DD')
+
+        this.loans[i].operation_type = 1
+        this.loans[i].operation_type_1 = true
+        this.loans[i].operation_type_2 = false
+        this.loans[i].min_date = min_date
+        this.loans[i].total_osz = loan_bal - max_amount
+        this.loans[i].total_iko = max_amount + loan_percent
+        this.loans[i].payment_sum = this.loans[i].max_amount_pay
+        this.loans[i].amount = loan_percent
+        this.loans[i].switch = true
+        this.loans[i].amountHide = false
+        this.loans[i].count_days = max_days
+        this.loans[i].days=this.todays.diff(startDate, 'days')
+        this.loans[i].maxDays = guarantyTime.diff(startDate, 'days')
+
+        this.loans[i].green = moment().isSameOrBefore(loanTerm, 'day');
+        this.loans[i].yellow = moment().isAfter(date1, 'day') && moment().isBefore(date2, 'day');
+        this.loans[i].orange = moment().isAfter(date2, 'day') && moment().isBefore(date3, 'day');
+        this.loans[i].red = moment().isSameOrAfter(guarantyTime, 'day');
+        this.payAll += this.loans[i].default_pay;
+    }
+},
+openPay() {
+    if(this.partial_repayment == true && this.renewal == false){
+        this.partial_repayment = false
+        this.renewal = true
+    } else if (this.renewal == true && this.partial_repayment == false) {
+        this.partial_repayment = true
+        this.renewal = false
+    }
+},
+nicePrice(money) {
+    var nice = String(money).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
+    return nice
+},
+formatDate (date) {
+    return moment(date).format('DD.MM.YYYY')
+},
+expAmount(loan) {
+    let obj = {}
+    obj['loan_id'] = loan.loan_id
+    this.$axios.post('/auth/calculation', obj)
+    .then((response) => {
+        let $response = response.data
+        if ($response.code === 0) {
+            console.log($response.error)
+        } else {
+            loan.total = $response.data
+        }
+    })
+    .catch((e) => {
+        this.errorLog = e.response.status;
+        if(this.errorLog == 401){
+            localStorage.clear()
+            window.location.reload()
+        }
+        console.log(e)
+    })
+},
+dayFunc(loan,i){
+    if(loan.count_days > loan.max_days_extension) {
+        loan.count_days=loan.max_days_extension
+    }
+    if (loan.count_days >= loan.min_days_extension) {
+        this.loans[i].amount = this.loans[i].total[loan.count_days - 1].amount
+        this.loans[i].partial_date = this.loans[i].total[loan.count_days - 1].new_term
+
+        var tempLoans = this.loans
+        this.loans=[];
+        this.loans=tempLoans
+    }
+
+},
+defaultValue(loan) {
+    if (loan.count_days.length == 0) {
+        loan.count_days = loan.min_days_extension
+    }
+    if (loan.count_days < loan.min_days_extension) {
+        loan.count_days = loan.min_days_extension
+    }
+    if(loan.count_days > loan.max_days_extension){
+        loan.count_days = loan.max_days_extension
+    }
+},
+datepickerFunc(loan){
+    let min_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.min_days_extension,'days').format('YYYY-MM-DD');
+    let min_day_moment = moment(min_day,"YYYY-MM-DD").format('YYYY/MM/DD');
+    let max_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.max_days_extension + 1,'days').format('YYYY-MM-DD');
+    let max_day_moment = moment(max_day,"YYYY-MM-DD").format('YYYY/MM/DD');
+    this.disabled = {
+        to: new Date(min_day_moment),
+        from: new Date(max_day_moment),
+    }
+},
+payAmount(){
+    this.payAll=0;
+    for(var i=0; i<this.loans.length; i++){
+        if (this.loans[i].amountHide==false) {
+            this.payAll += this.loans[i].default_pay;
+        }
+    }
+},
+payAllLoans(){
+    let obj = {}
+    let objArr=[]
+    for(var i=0; i<this.loans.length;i++){
+        if(this.loans[i].switch == false){
+
+        }else {
+            obj = {};
+            obj['loan_id'] = this.loans[i].loan_id
+            obj['operation_type'] = this.loans[i].operation_type
+            obj['count_days'] = this.loans[i].count_days
+            objArr.push(obj)
+        }
+    }
+    var data = {
+        "loans":objArr
+    }
+    this.$axios.post('/auth/regular_pay_order', data)
+    .then((response) => {
+        let $response = response.data
+        if ($response.code === 0) {
+            console.log($response.error)
+        } else {
+            var orderId=$response.data[0].order;
+            console.log($response.data[0])
+            this.$axios.post('/auth/req_pay', {"order_id":orderId}).then((r) => {
+                location.href = r.data.data.url;
+            })
+        }
+    })
+    .catch((e) => {
+        this.errorLog = e.response.status;
+        if(this.errorLog == 401){
+            localStorage.clear()
+            window.location.reload()
+        }
+        console.log(e)
+    })
+
+},
+bottomScroll(){
+    let first = this.loans.shift();
+    this.loans.push(first);
+},
+topScroll(){
+    let first = this.loans.pop();
+    this.loans.unshift(first);
+},
+operationTypes(){
+    this.$axios.get('/operation_types')
+    .then((response) => {
+        let $response = response.data
+        if ($response.code === 0) {
+            console.log($response)
+        } else {
+            this.operations = $response.data
+            for(var i=0; i<this.operations.length;i++){
+                if(this.operations.length == 1){
+                    if(this.operations[i].id == 1){
+                        this.partial_repayment = false
+                        this.renewal = true
+                    }
+                    if(this.operations[i].id == 2){
+                        this.partial_repayment = true
+                        this.renewal = false
+                    }
+                }
+            }
+        }
+    })
+    .catch((e) => console.log(e))
+}
+}
+}
+</script>
+
+<style scoped>
+
+</style>

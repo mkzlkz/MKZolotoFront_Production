@@ -6,7 +6,9 @@
             <slick ref="slicks" :options="slickOption" @afterChange="handleAfterChange" class="slider">
                 <div class="s-img">
                     <video id="v0" width="100%" height="100%" autoplay autobuffer muted loop playsinline :poster="require('@/assets/mp4/0_000.jpg')">
-                        <source :src="require('@/assets/mp4/0.mp4')"  type="video/mp4" />
+                        <source v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/mp4/0.mp4')"  type="video/mp4" />
+                        <source v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/mp4/0k.mp4')"  type="video/mp4" />
+                        <source v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/mp4/0q.mp4')"  type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
                 </div>
@@ -16,8 +18,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="title">Как это?</div>
-                        <div class="text">Запусти круговорот <br> Золото → деньги → <br> золото</div>
+                        <div class="title" v-html="textLoc.video2_title"></div>
+                        <div class="text" v-html="textLoc.video2_subtitle"></div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -26,8 +28,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="text">А почем сегодня</div>
-                        <div class="title">золото на <br> бирже?</div>
+                        <div class="text" v-html="textLoc.video3_title"></div>
+                        <div class="title" v-html="textLoc.video3_subtitle"></div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -36,8 +38,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="title">Надо же!</div>
-                        <div class="text">Прямо как в аптеке до <br> 0,01 грамма взвешивают золото..</div>
+                        <div class="title" v-html="textLoc.video4_title"></div>
+                        <div class="text" v-html="textLoc.video4_subtitle"></div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -46,8 +48,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="title">Вот жена <br> обрадуется,</div>
-                        <div class="text">что ее кольцо целое <br> и невредимое…</div>
+                        <div class="title" v-html="textLoc.video5_title"></div>
+                        <div class="text" v-html="textLoc.video5_subtitle"></div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -56,8 +58,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="text">Без денег жить <br> нельзя на свете,</div>
-                        <div class="title">нет, нельзя!</div>
+                        <div class="text" v-html="textLoc.video6_title"></div>
+                        <div class="title" v-html="textLoc.video6_subtitle"></div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -66,8 +68,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="title">Ух ты, как <br> новенькое!</div>
-                        <div class="text">Просто класс эта <br> УльтраЧистка…</div>
+                        <div class="title" v-html="textLoc.video7_title">Ух ты, как <br> новенькое!</div>
+                        <div class="text" v-html="textLoc.video7_subtitle">Просто класс эта <br> УльтраЧистка…</div>
                     </div>
                 </div>
                 <div class="s-img">
@@ -76,8 +78,8 @@
                         Your browser does not support the video tag.
                     </video>
                     <div class="slide-text">
-                        <div class="title">Да, это <br> мой ломбард!</div>
-                        <div class="text">Респект и уважуха!</div>
+                        <div class="title" v-html="textLoc.video8_title"></div>
+                        <div class="text" v-html="textLoc.video8_subtitle"></div>
                     </div>
                 </div>
             </slick>
@@ -97,6 +99,7 @@
                 videos:[
 
                 ],
+                textLoc: '',
                 slideIndex: 0,
                 slickOption: {
                     dots: true,
@@ -181,6 +184,7 @@
         },
         created() {
             this.GetKeyWords();
+            this.GetText();
         },
         methods: {
             GetKeyWords() {
@@ -197,6 +201,17 @@
 })
                 .catch((e) => console.log(e))
             },
+                                        GetText() {
+                    this.$axios.get('/localization')
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                        } else {
+                            this.textLoc = $response.data.main
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                },
             next() {
                 this.$refs.slicks.next()
             },

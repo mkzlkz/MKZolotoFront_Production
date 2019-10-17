@@ -13,6 +13,18 @@ import OnlineRulesComponent from '@/components/OnlineRulesComponent'
 import MapComponent from '@/components/MapComponent'
 import FormComponent from '@/components/FormComponent'
 import PageNotFound from '@/components/PageNotFound'
+import admin from '@/components/admin/admin'
+import myLoans from '@/components/admin/myLoans'
+import ExpressExtensionPage from '@/components/admin/ExpressExtensionPage'
+import myLastOperations from '@/components/admin/myLastOperations'
+import valuationCapital from '@/components/admin/valuationCapital'
+import notificationHistory from '@/components/admin/notificationHistory'
+import editMyData from '@/components/admin/editMyData'
+import changePassword from '@/components/admin/changePassword'
+import mapAdmin from '@/components/admin/mapAdmin'
+import Auth from '@/components/Auth'
+import AuthFunction from '@/functions/Auth'
+
 Vue.use(Router)
 
 export default new Router({
@@ -86,6 +98,110 @@ export default new Router({
       path: '*',
       name: 'PageNotFound',
       component: PageNotFound
+    },
+  {
+    path: "/admin",
+    // component:admin,
+    component: AuthFunction().isLoggedIn() ? admin : Auth,
+    redirect: '/admin/my-loans',
+    children: [
+    {
+      path: 'my-loans',
+      component: AuthFunction().isLoggedIn() ? myLoans : Auth,
+          beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+        {
+      path: 'map',
+      component: AuthFunction().isLoggedIn() ? mapAdmin : Auth,
+          beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+        {
+      path: 'express-extension',
+      component: AuthFunction().isLoggedIn() ? ExpressExtensionPage : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+    {
+      path: 'my-last-operations',
+      component: AuthFunction().isLoggedIn() ? myLastOperations : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+    {
+      path: 'valuation-my-capital',
+      component: AuthFunction().isLoggedIn() ? valuationCapital : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+    {
+          path: 'notification-history',
+      component: AuthFunction().isLoggedIn() ? notificationHistory : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+    {
+      path: 'change-my-data',
+      component: AuthFunction().isLoggedIn() ? editMyData : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+    {
+          path: 'change-password',
+      component: AuthFunction().isLoggedIn() ? changePassword : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
     }
+    ]
+  }
   ]
 })

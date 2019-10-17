@@ -91,12 +91,13 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
-    new PrerenderSPAPlugin(
-      // (REQUIRED) Absolute path to static root
-      path.join(__dirname, '../dist'),
-      // (REQUIRED) List of routes to prerender
-      // [ '/', '/rules']
-      [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form']
-      )
+    // new PrerenderSPAPlugin(
+    //   // (REQUIRED) Absolute path to static root
+    //   path.join(__dirname, '../dist'),
+    //   // (REQUIRED) List of routes to prerender
+    //   // [ '/', '/rules']
+    //   [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form']
+    //   )
   ]
 }
+

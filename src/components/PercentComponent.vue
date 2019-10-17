@@ -2,26 +2,30 @@
     <div>
         <banner-component></banner-component>
 
-        <div class="tab-pane1">
+        <div class="tab-pane1 new-class-percent">
             <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt=""></router-link> -->
             <div class="tab-text height-mob">
                 <div class="dflex-title">
                     <!-- <div class="title-mb">Новичкам на пробу</div> -->
                     <div>
-                        <h1 class="title">ПЛАТИ МЕНЬШЕ!</h1>
-                        <div class="title-text">Получи деньги под 0,2% и погаси дорогой заем</div>
+                        <h1 class="title">{{textLoc.title}}</h1>
+                        <div class="title-text">{{textLoc.subtitle}}</div>
                     </div>
                 </div>
                 <div class="content_block">
                     <div class="block1">
                         <div class="block1-1">
-                            <img :src="require('@/assets/img/tab6.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/tab6.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/tab6k.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/tab6q.png')" alt="" class="img">
+
                             <div class="block1-text">
-                                <div class="b1"><p>Оформи договор <button @click="open"><span>РеФинанса</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p><div class="hint hint2 hint3" v-if="showPopover" v-on-click-outside="close">Ты получишь ровно столько денег в мк-ЗОЛОТО, чтобы тебе хватило погасить дорогой заем в другом ломбарде.</div></div>
-                                <div class="b1"><p>Получи деньги.</p></div>
-                                <div class="b1"><p>Погаси дорогой заем в другом ломбарде.</p></div>
-                                <div class="b1"><p>Оформи заем под 0,2% в  мк-ЗОЛОТО.</p></div>
-                                <div class="b1"><p>И плати, наконец-то,  меньше :)</p></div>
+                                <div class="b1" v-if="this.$auth.getLanguage() === 'ru'"><p>{{textLoc.step1_1}} <button @click="open"><span>{{textLoc.step1_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p><div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step1_3}}</div></div>
+                                <div class="b1" v-else><p><button @click="open"><span>{{textLoc.step1_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> {{textLoc.step1_1}}</p><div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step1_3}}</div></div>
+                                <div class="b1"><p v-html="textLoc.step2"></p></div>
+                            <div class="b1"><p v-html="textLoc.step3"></p></div>
+                            <div class="b1"><p v-html="textLoc.step4"></p></div>
+                            <div class="b1"><p v-html="textLoc.step5"></p></div>
                             </div>
                         </div>
                         <div class="block1-7">
@@ -29,13 +33,20 @@
                         </div>
                     </div>
                     <div class="block1-mobile">
-                        <div class="bm-img"><img :src="require('@/assets/img/m6.png')" alt=""></div>
+                        <div class="bm-img">
+                            <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/m6.png')" alt="">
+                            <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/m6k.png')" alt="">
+                            <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/m6q.png')" alt="">
+                        </div>
                         <div class="bm-text">
-                            <div class="b1"><p>Оформи договор <br> <button @click="open"><span>РеФинанса</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p><div class="hint hint11 hint12" v-if="showPopover" v-on-click-outside="close">Ты получишь ровно столько денег в мк-ЗОЛОТО, чтобы тебе хватило погасить дорогой заем в другом ломбарде.</div></div>
-                            <div class="b1"><p>Получи деньги.</p></div>
-                            <div class="b1"><p>Погаси дорогой заем в другом ломбарде.</p></div>
-                            <div class="b1"><p>Оформи заем под 0,2% в  мк-ЗОЛОТО.</p></div>
-                            <div class="b1"><p>И плати, наконец-то,  меньше :)</p></div>
+                            <div class="b1" v-if="this.$auth.getLanguage() === 'ru'"><p>{{textLoc.step1_1}} <br> <button @click="open"><span>{{textLoc.step1_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p><div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step1_3}}</div></div>
+
+                            <div class="b1" v-else><p><button @click="open"><span>{{textLoc.step1_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> <br> {{textLoc.step1_1}} </p><div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step1_3}}</div></div>
+
+                            <div class="b1"><p v-html="textLoc.step2"></p></div>
+                            <div class="b1"><p v-html="textLoc.step3"></p></div>
+                            <div class="b1"><p v-html="textLoc.step4"></p></div>
+                            <div class="b1"><p v-html="textLoc.step5"></p></div>
                         </div>
                     </div>
                     <div class="block1-mobile-img">
@@ -45,7 +56,9 @@
                 </div>
                 <div class="box box7" v-if="visible">
                     <div class="closes_box closes_box7" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')" alt="" ></div>
-                    <img :src="require('@/assets/img/7.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/7.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/7k.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/7q.png')" alt="" class="img">
                 </div>
             </div>
         </div>
@@ -67,7 +80,8 @@
                 visible: true,
                 title_page: '',
                 description_page: '',
-                opengraph_image: ''
+                opengraph_image: '',
+                textLoc: ''
             }
         },
                 metaInfo() {
@@ -83,7 +97,8 @@
             }
         },
         created() {
-            this.getMenus()
+            this.getMenus();
+            this.GetText();
         },
         methods: {
                         getMenus () {
@@ -100,6 +115,17 @@
                 })
                 .catch((e) => console.log(e))
             },
+                            GetText() {
+                    this.$axios.get('/localization')
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                        } else {
+                            this.textLoc = $response.data.percent
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                },
             open() {
                 this.showPopover = true
             },

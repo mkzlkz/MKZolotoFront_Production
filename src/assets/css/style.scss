@@ -21,7 +21,6 @@ html{
 body{
 	color: #666666;
 	font-size: 18px;
-	font-family: $font-body;
 	overflow-x: hidden;
 	height: 100%;
 }
@@ -32,6 +31,9 @@ select:hover, select:focus, select:active,
 textarea:hover, textarea:focus, textarea:active{
 	outline: none;
 }
+#app{
+	font-family: $font-body;
+}
 .block{
 	display: flex;
 	&-left{
@@ -40,7 +42,6 @@ textarea:hover, textarea:focus, textarea:active{
 		background-color: #ffffff;
 		height: 100vh;
 		z-index: 2;
-		display: none;
 		.logo{
 			cursor: pointer;
 			display: block;
@@ -748,20 +749,43 @@ textarea:hover, textarea:focus, textarea:active{
 .hint{
 	border-radius: 10px;
 	height: auto;
-	width: 200px;
+	width: 250px;
 	padding: 15px;
 	position: absolute;
 	background: #fffa9f;
-	margin-top: -6px;
-	left: -50%;
+	top: 0;
+	left: -100%;
 	z-index: 1;
 }
-.hint2{
+.new-class-smart .hint {
+    top: 45%;
+}
+.new-class-noscratches .hint{
+    top: 90%;
+}
+.new-class-presents .hint{
+top: 75%;
+}
+.new-class-vip .hint{
+    top: 90%;
+    left: -25%;
+}
+.new-class-vip .hint:before {
+	right: 74%;
+}
+.new-class-percent .hint{
+top: 90%;
+    left: -25%;
+}
+.new-class-percent .hint:before {
+	right: 74%;
+}
+/*.hint2{
 	left: -20%;
 }
 .hint3{
 	margin-top: 15px;
-}
+}*/
 .hint:before {
 	border: 12px solid transparent;
 	border-bottom-color: #fffa9f;
@@ -770,9 +794,9 @@ textarea:hover, textarea:focus, textarea:active{
 	right: 42%;
 	content: '';
 }
-.hint2:before {
+/*.hint2:before {
 	right: 74%;
-}
+}*/
 .point{
 	margin: -5px 0 0 -2px;
 }
@@ -872,7 +896,7 @@ select:disabled{
 		background: #F1EDF1;
 	}
 	.slick-prev{
-		background-image: url(../img/left.png);
+		background-image: url(../img/left.svg);
 		width: 66px;
 		height: 66px;
 		background-position: left;
@@ -887,7 +911,7 @@ select:disabled{
 		position: absolute;
 	}
 	.slick-next{
-		background-image: url(../img/right.png);
+		background-image: url(../img/right.svg);
 		width: 66px;
 		height: 66px;
 		background-position: right;
@@ -937,7 +961,7 @@ select:disabled{
 }
 
 .slick-end .slick-next{
-	background-image: url(../img/restart.png) !important;
+	background-image: url(../img/restart.svg) !important;
 	width: 66px !important;
 	height: 66px !important;
 	background-position: right !important;
@@ -994,6 +1018,9 @@ input[type='number'] {
 	}
 	.title{
 		font-family: $font-body;
+	}
+	.modal-content{
+		min-height: 140px;
 	}
 }
 
@@ -1362,6 +1389,7 @@ white-space: nowrap;
 	.text{
 		padding: 50px;
 		width: calc(100% - 850px);
+		display: block;
 		.text1{
 			font-size: 24px;
 			font-family:'FranklinGothicBook';
@@ -1392,6 +1420,7 @@ white-space: nowrap;
 	.img{
 		width: 850px;
 		height: 290px;
+		display: block;
 		img{
 			width: 100%;
 			height: 100%;
@@ -1410,9 +1439,6 @@ white-space: nowrap;
 .slider_banner{
 	height: 290px;
 	background: #fff;
-	.slick-slide, .slick-track{
-		width: 100% !important;
-	}
 	.slick-dots {
 		bottom: 15px;
 		padding-right: 0;
@@ -1678,7 +1704,7 @@ height:40px;
     display: block;
     font-family:'FranklinGothicMedium';
     padding: 0 25px;
-    font-size: 18px;
+    font-size: 16px;
     color: #333;
     }
     ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -1729,6 +1755,8 @@ margin-bottom: 10px;
 .text{
     color: #666666;
     font-size: 18px;
+    max-width: 360px;
+    width: 100%;
 }
 .extension{
     padding:0 0 60px 60px;
@@ -1894,7 +1922,6 @@ background-color: #666;
 .social{
 	    position: absolute;
     bottom: 20px;
-    display: none !important;
 	ul{
 		margin: 0;
 		padding: 0;
@@ -1912,3 +1939,41 @@ background-color: #666;
 margin-right: 25px;
 	}
 }
+
+.dflex-lang{
+    display: flex;
+    justify-content: center;
+    div{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 53px;
+        cursor: pointer;
+        height: 30px;
+        background: #dedede;
+        color: #696969;
+        font-size: 12px;
+        border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+        margin: 0 5px;
+        padding-bottom: 3px;
+        font-family:'FranklinGothicMedium';
+    }
+    .activeLng{
+background: #000;
+color: #fff;
+    }
+    .dnone{
+    	display: none;
+    }
+}
+
+.block1 .block1-1 .block1-text .b1{
+	position: relative;
+}
+.social.mobb{
+display: none;
+}
+/*.desktop-banner .slick-track{
+width: 100% !important;
+}*/

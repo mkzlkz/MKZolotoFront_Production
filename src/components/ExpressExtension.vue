@@ -9,18 +9,18 @@
                                 <div class="extension" v-if="step === 1">
                                     <div class="modal-header">
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                        <div class="modal-title">Экспресс-продление</div>
+                                        <div class="modal-title">{{ $t('expressExtension') }}</div>
                                     </div>
                                     <div class="form-1">
-                                        <p>ИИН</p>
-                                        <input type="text" placeholder="Введите ваш ИИН" v-mask="'############'" v-model="iin">
+                                        <p>{{ $t('iin') }}</p>
+                                        <input type="text" :placeholder="$t('enter_iin')" v-mask="'############'" v-model="iin">
                                     </div>
                                     <div class="form-1">
-                                        <p>Номер залогового билета</p>
-                                        <input type="text" placeholder="Введите номер залогового билета" v-mask="'################'" v-model="loan_id" >
+                                        <p>{{ $t('number_zb') }}</p>
+                                        <input type="text" :placeholder="$t('enter_zb')" v-mask="'################'" v-model="loan_id" >
                                     </div>
-                                    <button :class="(this.iin!='' && this.loan_id!='' && this.iin.length==12 && this.loan_id.length==16) ? 'button-orange':'button-orange disabled'" @click="prolongForm()" >Продлить заём</button>
-                                    <!-- <div class="text">В любой момент вы можете продлить <br> заем в личном кабинете, а также <br> получить полную информацию <br> о всех своих займах.</div> -->
+                                    <button :class="(this.iin!='' && this.loan_id!='' && this.iin.length==12 && this.loan_id.length==16) ? 'button-orange':'button-orange disabled'" @click="prolongForm()" >{{ $t('extent_loan') }}</button>
+                                    <!-- <div class="text" v-html="$t('express_text1')"></div> -->
                                     <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                                 </div>
 
@@ -32,10 +32,10 @@
                                     <div class="extension" v-if="errors">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                            <h1 class="modal-title" v-if="!errorMsg">Что-то пошло не так</h1>
+                                            <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
                                         </div>
-                                        <div class="text" v-if='!errorMsg'>ИИН или Номер Залогового билета <br> не верные, следует повторить.</div>
-                                        <div v-if="timeout">Сервис временно недоступен. Попробуй позже.</div>
+                                        <div class="text" v-if='!errorMsg'>{{errors}}</div>
+                                        <div v-if="timeout">{{ $t('service_unavailable') }}</div>
                                         <div class="text" v-else>{{errorMsg}}</div>
 
                                         <div class="img pr-20" v-if='!errorMsg'><img :src="require('@/assets/img/ex2.png')" alt=""></div>
@@ -44,10 +44,10 @@
                                     <div class="extension" v-if="!errors">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                            <h1 class="modal-title">Экспресс-продление</h1>
+                                            <h1 class="modal-title">{{ $t('expressExtension') }}</h1>
                                         </div>
                                         <div class="form-2 mb-0">
-                                            <span>Номер залогового билета:</span>
+                                            <span>{{ $t('number_zb') }}:</span>
                                             <div class="number-ex"><the-mask :mask="['#### #### #### ####']" v-model="loan_id" /></div>
                                         </div>
                                         <div class="exten-slider" :class="(this.prolong.max_renewal==this.prolong.min_renewal) ? 'left-100':''">
@@ -59,13 +59,13 @@
                                             <div class="border"></div>
                                         </div>
                                         <div class="form-1">
-                                            <input type="text"  placeholder="или введите срок вручную" v-model="count_days" @change="calculationForm(); defaultValue();" @input="calculationForm()" @keyUp="calculationForm()" @keydown="keyDays">
+                                            <input type="text"  :placeholder="$t('enter_term')" v-model="count_days" @change="calculationForm(); defaultValue();" @input="calculationForm()" @keyUp="calculationForm()" @keydown="keyDays">
                                         </div>
                                         <div class="total">
-                                            <p>Итого к оплате:</p>
-                                            <div class="price" :class="(this.count_days < this.minTerm) ? 'price transparent':'price'">{{amount}} тг</div>
+                                            <p>{{ $t('total_payment') }}</p>
+                                            <div class="price" :class="(this.count_days < this.minTerm) ? 'price transparent':'price'">{{amount}} ₸</div>
                                         </div>
-                                        <button :class="(this.count_days < this.minTerm) ? 'button-orange disabled':'button-orange'" @click="countDaysForm()">Оплатить</button>
+                                        <button :class="(this.count_days < this.minTerm) ? 'button-orange disabled':'button-orange'" @click="countDaysForm()">{{ $t('pay') }}</button>
                                         <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                                     </div>
                                 </div>
@@ -74,18 +74,18 @@
                                     <div class="extension" v-if="!this.successful">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                            <h1 class="modal-title">Что-то пошло не так</h1>
+                                            <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
                                         </div>
-                                        <div class="text">Кажется, в процесс вкралась ошибка. <br> Может, еще разок?</div>
+                                        <div class="text" v-html="$t('express_text3')"></div>
                                         <div class="img pr-20"><img :src="require('@/assets/img/ex4.png')" alt=""></div>
                                     </div>
                                     <div class="extension" v-if="this.successful">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                            <h1 class="modal-title">Заем успешно продлен</h1>
+                                            <h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
                                         </div>
-                                        <div class="text">Супер! </div>
-                                        <a :href="`https://mk-prod.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">Посмотреть квитанцию</a>
+                                        <div class="text">{{ $t('super') }}</div>
+                                        <a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
                                         <div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@ let $response = response.data
 if ($response.code === 0) {
     console.log($response.error)
     this.errors = $response.error
-    this.errorMsg = $response.error.message
+    this.errorMsg = $response.error
 } else {
     this.prolong = $response.data
     this.count_days = $response.data.max_renewal
@@ -221,6 +221,7 @@ if ($response.code === 0) {
     this.minTerm = $response.data.min_renewal
 }
 this.loader = false
+this.expAmount();
 })
             .catch((e) => {
                 this.step = 3
@@ -238,11 +239,12 @@ this.loader = false
     },
     countDaysForm () {
         if ( this.count_days >= this.minTerm) {
-        let obj = {}
-        obj['count_days'] = this.count_days
-        obj['loan_id'] = this.loan_id
-        this.$axios.post('/en/auth/generate_order', obj)
-        .then((response) => {
+            let obj = {}
+            obj['count_days'] = this.count_days
+            obj['loan_id'] = this.loan_id
+            obj['place'] = 'SiteExpress'
+            this.$axios.post('/generate_order', obj)
+            .then((response) => {
 // console.log(response)
 let $response = response.data
 if ($response.code === 0) {
@@ -252,16 +254,13 @@ if ($response.code === 0) {
     location.href = this.order.url
 }
 })
-        .catch((e) => console.log(e))
-    }
+            .catch((e) => console.log(e))
+        }
     },
-    calculationForm () {
-        // console.log('test', this.count_days);
-        if ( this.count_days >= this.minTerm) {
+    expAmount() {
         let obj = {}
-        obj['client_count_day'] = this.count_days
         obj['loan_id'] = this.loan_id
-        this.$axios.post('/en/auth/exp_calculation', obj)
+        this.$axios.post('/exp_calculation', obj)
         .then((response) => {
 // console.log(response)
 let $response = response.data
@@ -269,11 +268,15 @@ if ($response.code === 0) {
     console.log($response.error)
 } else {
     this.total = $response.data
-    this.amount = this.total[this.count_days - 1].amount
+// this.amount = this.total[this.count_days - 1].amount
 }
 })
         .catch((e) => console.log(e))
-    }
+    },
+    calculationForm () {
+        if ( this.count_days >= this.minTerm) {
+            this.amount = this.total[this.count_days - 1].amount
+        }
     },
     receiptId () {
         this.Idreceipt = this.$route.query.id
@@ -282,7 +285,7 @@ if ($response.code === 0) {
         if (this.count_days.length == 0) {
             this.count_days = this.minTerm
         }
-                if (this.count_days < this.minTerm) {
+        if (this.count_days < this.minTerm) {
             this.count_days = this.minTerm
         }
     },
