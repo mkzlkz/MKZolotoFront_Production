@@ -13,11 +13,11 @@
 
                 <tr v-for="(operation, index) in operations" :key="index" @click="totalFunc(operation)">
                     <td>{{operation.order}}</td>
-                    <td><span v-for="loan in operation.loans">{{ moment(loan.date).format('DD.MM.YYYY  HH:mm') }}</span></td>
+                    <td>{{ moment(operation.date).format('DD.MM.YYYY  HH:mm') }}</td>
                     <td><span>{{operation.place}}</span></td>
                     <td><span v-for="loan in operation.loans">{{loan.operation_type}}</span></td>
-                    <td><span v-for="loan in operation.loans" v-html="$options.filters.subStr(loan.loan_id)"></span> <span class="it" v-if="operation.loans.length > 1">{{$t('total_amount')}}</span></td>
-                    <td><span v-for="loan in operation.loans">{{loan.amount}} ₸</span> <span class="it" v-if="operation.loans.length > 1" style="text-align: center;">{{operation.sum}} ₸</span></td>
+                    <td><span v-for="loan in operation.loans" v-html="$options.filters.subStr(loan.loan_id)"></span> <span class="it it-w" v-if="operation.loans.length > 1">{{$t('total_amount')}}</span></td>
+                    <td><span v-for="loan in operation.loans">{{loan.amount}} ₸</span> <span class="it" v-if="operation.loans.length > 1" style="text-align: left;">{{operation.sum}} ₸</span></td>
                     <td><span class="green" v-if="operation.success === true">{{operation.status}}</span><span class="red" v-if="operation.success === false">{{operation.status}}</span></td>
                     <td><a :href="operation.pdf" target="_blank" class="kvi" v-if="operation.success === true">{{$t('receipt')}}</a></td>
                 </tr>

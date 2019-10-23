@@ -1,37 +1,37 @@
 <template>
     <div class="myLastOperations valuationCapital">
-                    <div v-if="loader" class="loader loader-admin">
+        <div v-if="loader" class="loader loader-admin">
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
         <div class="title">{{$t('valuation_capital')}}</div>
         <div class="title-text">{{$t('today')}}  {{ moment().format('DD.MM.YYYY') }} {{$t('text_1')}} {{payAll}} ₸ {{$t('text_2')}}</div>
-        <div class="table-responsive mb-capital">
+        <div class="table-responsive mb-capital" v-if="products.length>0 || productsLocal.length>0">
             <table class="table-1">
-                <tr><th>{{$t('title_o')}}</th><th>{{$t(img)}}</th><th>{{$t('gold_content')}}</th><th>{{$t('product_weight')}} <br> ({{$t('gram')}})</th><th>{{$t('content')}} <br> AU999 ({{$t('gram')}})</th><th>{{$t('name')}}</th><th>{{$t('description')}}</th><th v-html="$t('getting_hands')"></th> <th></th></tr>
+                <tr><th>{{$t('title_o')}}</th><th>{{$t('img')}}</th><th>{{$t('gold_content')}}</th><th>{{$t('product_weight')}} <br> ({{$t('gram')}})</th><th>{{$t('content')}} <br> AU999 ({{$t('gram')}})</th><th>{{$t('name')}}</th><th>{{$t('description')}}</th><th v-html="$t('getting_hands')"></th> <th></th></tr>
 
                 <tr v-for="(product, index) in products" :key="index">
-                    <td>{{product.name}}</td>
+                    <td><span>{{product.name}}</span></td>
                     <td><img v-img :src="product.image" alt="" class="img"></td>
                     <td>AU {{product.probe}}</td>
                     <td>{{product.weight}}</td>
                     <td>{{product.au999content}}</td>
-                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
 
-                    <td><div class="opis"><div class="txt">{{product.description}}</div><!-- <button class="button-yellow" data-toggle="modal" data-target="#modal-edit">{{$t('edit')}}</button> --></div></td>
+                    <td><div class="opis"><div class="txt" v-if="product.user_description.length>0">{{product.user_description}}</div><div class="txt" v-if="product.user_description.length<1">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.user_description.length>0">{{$t('edit')}}</span> <span v-if="product.user_description<1">{{$t('add_description')}}</span></button></div> </td>
                     <td><span v-if="!product.amountHide">{{product.max_amount_date_issue}} ₸</span><span v-if="product.amountHide">-</span></td>
                     <td><div class="switch switch-op" @click="toggleSwitch(index)">
                         <switches v-model="product.switch" type-bold="true" ></switches>
                     </div></td>
                 </tr>
                 <tr v-for="(product, index) in productsLocal" :key="product.id">
-                    <td>{{product.name}}</td>
+                    <td><span>{{product.name}}</span></td>
                     <td></td>
                     <td>{{product.probeTitle}}</td>
-                    <td>{{product.weight}}</td>
+                    <td>{{roundingNumbers(product.weight)}}</td>
                     <td>{{product.au999content}}</td>
-                    <td>{{product.name}}</td>
                     <td></td>
-                    <td><span v-if="!product.amountHide">{{product.max_amount_date_issue}} ₸</span><span v-if="product.amountHide">-</span></td>
+                    <td></td>
+                    <td><span v-if="!product.amountHide">{{roundingNumbers_none(product.max_amount_date_issue)}} ₸</span><span v-if="product.amountHide">-</span></td>
                     <td> <div class="switch switch-op" @click="toggleSwitch2(index)">
                         <switches v-model="product.switch" type-bold="true" ></switches>
                     </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="vc-desc">
-                <div class="opis"><div class="txt">{{product.description}}</div><!-- <button class="button-yellow" data-toggle="modal" data-target="#modal-edit">{{$t('edit')}}</button> --></div>
+                <div class="opis"><div class="txt">{{product.user_description}}</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.user_description.length>0">{{$t('edit')}}</span> <span v-if="product.user_description<1">{{$t('add_description')}}</span></button></div>
             </div>
             <div class="vc-content">
                 <div class="dflex">
@@ -101,10 +101,10 @@
     </div>
     <div class="valuationCapital-foot">
         <button class="button-yellow" data-toggle="modal" data-target="#modalAdd">{{$t('add_item')}}</button>
-        <div class="price"><span>{{$t('total')}}</span> <span>{{payAll}} ₸</span></div>
+        <div class="price" v-if="products.length>0 || productsLocal.length>0"><span>{{$t('total')}}</span> <span>{{roundingNumbers_none(payAll)}} ₸</span></div>
     </div>
     <div class="modal-edit">
-        <div id="modal-edit" class="modal fade">
+        <div id="modalEdit" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -115,7 +115,7 @@
                         <textarea class="textarea" v-model='message' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
                         <div class="modal-foot">
                             <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
-                            <button class="button-yellow" :disabled="clickable">{{$t('save')}}</button>
+                            <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription">{{$t('save')}}</button>
                         </div>
                     </div>
                 </div>
@@ -169,9 +169,11 @@
         data() {
             return {
                 hasError: false,
+                noclick: false,
                 clickable: false,
-                message: 'Кольцо, белое золото, маленькое, родовое, тётя Гаухар подарила на день рождения в 1983 году, Айке передарю как подрастет немножко.',
-                letter: '',
+                message: '',
+                item_code: '',
+                letter: 0,
                 maxLetter: 250,
                 products: [],
                 productsLocal: [],
@@ -186,16 +188,21 @@
                 loader: true
             }
         },
-                mounted () {
+        mounted () {
             var obj = this;
             $('#modalAdd').on('hidden.bs.modal', function () {
                 obj.name = '';
                 obj.weight = '';
                 obj.probe = obj.probes[5].value;
             });
+            $('#modalEdit').on('hidden.bs.modal', function () {
+                obj.noclick = false;
+                obj.hasError = false;
+                obj.clickable = false;
+                obj.getProducts();
+            });
         },
         created() {
-            this.charCount();
             this.getProducts();
             this.getProductsLocal();
             this.getLayout();
@@ -209,6 +216,14 @@
             }
         },
         methods: {
+            roundingNumbers(number) {
+                var rounding = Number(number).toFixed(2);
+                return rounding
+            },
+            roundingNumbers_none(number) {
+                var rounding = Number(number).toFixed(0);
+                return rounding
+            },
             toggleSwitch: function(i) {
                 this.products[i].switch = !this.products[i].switch
                 this.products[i].amountHide = !this.products[i].amountHide
@@ -224,11 +239,6 @@
                 this.productsLocal = []
                 this.productsLocal = tempProductsLocal
                 this.payAmount();
-            },
-            charCount: function(){
-                this.letter = this.message.length;
-                this.hasError = this.letter > this.maxLetter;
-                this.clickable = this.hasError;
             },
             getProductsLocal () {
                 this.productsLocal = JSON.parse(localStorage.getItem("products"));
@@ -260,6 +270,7 @@
                         for(var i=0; i<this.products.length;i++){
                             this.products[i].switch = true
                             this.products[i].amountHide = false
+                            this.letter = this.products[i].user_description.length
                             this.payAll += this.products[i].max_amount_date_issue;
                             this.payAmount();
                         }
@@ -307,6 +318,38 @@
                 }
                 this.payAll = 0
                 this.payAll = this.payAll1 + this.payAll2
+            },
+            clickEdit(index){
+              this.message = this.products[index].user_description
+              this.item_code = this.products[index].item_code
+            },
+                        charCount: function(){
+                this.letter = this.message.length;
+                this.hasError = this.letter > this.maxLetter;
+                this.noclick = this.letter < 1;
+                this.clickable = this.hasError || this.noclick;
+            },
+            changeDescription(){
+                let obj = {}
+                obj['item_code'] = this.item_code
+                obj['user_description'] = this.message
+                this.$axios.post('/auth/change_description', obj)
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response.error)
+                    } else {
+                        this.getProducts();
+                    }
+                })
+                .catch((e) => {
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
             }
         }
     }

@@ -18,35 +18,35 @@
             </div>
             <div class="menu deskk-menu">
                 <ul class="nav nav-pills nav-stacked">
-                    <li><router-link to="/admin/my-loans">{{$t('my_loans')}}</router-link></li>
-                    <li><router-link to="/admin/express-extension">{{$t('express_renewal')}}</router-link></li>
-                    <li><router-link to="/admin/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
-                    <li><router-link to="/admin/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
-                    <li><router-link to="/admin/notification-history">{{$t('notification_history')}}</router-link></li>
-                    <li><router-link to="/admin/change-my-data">{{$t('change_details')}}</router-link></li>
-                    <li><router-link to="/admin/change-password">{{$t('change_password')}}</router-link></li>
+                    <li><router-link to="/cabinet/my-loans">{{$t('my_loans')}}</router-link></li>
+                    <li><router-link to="/cabinet/express-extension">{{$t('express_renewal')}}</router-link></li>
+                    <li><router-link to="/cabinet/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
+                    <li><router-link to="/cabinet/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
+                    <li><router-link to="/cabinet/notification-history">{{$t('notification_history')}}</router-link></li>
+                    <li><router-link to="/cabinet/change-my-data">{{$t('change_details')}}</router-link></li>
+                    <li><router-link to="/cabinet/change-password">{{$t('change_password')}}</router-link></li>
                 </ul>
             </div>
-            <div class="mobb-menu" v-bind:class="{ mapMenu : this.$route.path === '/admin/map'}">
+            <div class="mobb-menu" v-bind:class="{ mapMenu : this.$route.path === '/cabinet/map'}">
                 <div class="dropdown">
                     <button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" @click="open()">
-                        <span v-if="$route.path == '/admin/my-loans'">{{$t('my_loans')}}</span>
-                        <span v-if="$route.path == '/admin/express-extension'">{{$t('express_renewal')}}</span>
-                        <span v-if="$route.path == '/admin/my-last-operations'">{{$t('my_last_operations')}}</span>
-                        <span v-if="$route.path == '/admin/valuation-my-capital'">{{$t('valuation_capital')}}</span>
-                        <span v-if="$route.path == '/admin/notification-history'">{{$t('notification_history')}}</span>
-                        <span v-if="$route.path == '/admin/change-my-data'">{{$t('change_details')}}</span>
-                        <span v-if="$route.path == '/admin/change-password'">{{$t('change_password')}}</span>
+                        <span v-if="$route.path == '/cabinet/my-loans'">{{$t('my_loans')}}</span>
+                        <span v-if="$route.path == '/cabinet/express-extension'">{{$t('express_renewal')}}</span>
+                        <span v-if="$route.path == '/cabinet/my-last-operations'">{{$t('my_last_operations')}}</span>
+                        <span v-if="$route.path == '/cabinet/valuation-my-capital'">{{$t('valuation_capital')}}</span>
+                        <span v-if="$route.path == '/cabinet/notification-history'">{{$t('notification_history')}}</span>
+                        <span v-if="$route.path == '/cabinet/change-my-data'">{{$t('change_details')}}</span>
+                        <span v-if="$route.path == '/cabinet/change-password'">{{$t('change_password')}}</span>
                         <span class="carets"><img :src="require('@/assets/img/icon/drop2.svg')" alt=""></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenu2" v-if="showPopover" v-on-click-outside="close">
-                        <li><router-link to="/admin/my-loans">{{$t('my_loans')}}</router-link></li>
-                        <li><router-link to="/admin/express-extension">{{$t('express_renewal')}}</router-link></li>
-                        <li><router-link to="/admin/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
-                        <li><router-link to="/admin/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
-                        <li><router-link to="/admin/notification-history">{{$t('notification_history')}}</router-link></li>
-                        <li><router-link to="/admin/change-my-data">{{$t('change_details')}}</router-link></li>
-                        <li><router-link to="/admin/change-password">{{$t('change_password')}}</router-link></li>
+                        <li><router-link to="/cabinet/my-loans">{{$t('my_loans')}}</router-link></li>
+                        <li><router-link to="/cabinet/express-extension">{{$t('express_renewal')}}</router-link></li>
+                        <li><router-link to="/cabinet/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
+                        <li><router-link to="/cabinet/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
+                        <li><router-link to="/cabinet/notification-history">{{$t('notification_history')}}</router-link></li>
+                        <li><router-link to="/cabinet/change-my-data">{{$t('change_details')}}</router-link></li>
+                        <li><router-link to="/cabinet/change-password">{{$t('change_password')}}</router-link></li>
                         <li><a href="#" @click="UserLogout()" class="logout"><img :src="require('@/assets/img/icon/exit.svg')" alt=""> {{$t('exit')}}</a></li>
                     </div>
                 </div>

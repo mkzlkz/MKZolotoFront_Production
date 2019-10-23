@@ -100,10 +100,10 @@ export default new Router({
       component: PageNotFound
     },
   {
-    path: "/admin",
+    path: "/cabinet",
     // component:admin,
     component: AuthFunction().isLoggedIn() ? admin : Auth,
-    redirect: '/admin/my-loans',
+    redirect: '/cabinet/my-loans',
     children: [
     {
       path: 'my-loans',

@@ -45,6 +45,7 @@
                                         <button class="mt" v-bind:class="{ active: step == 2 }" @click="clickSteps(2)">{{ $t('check_in') }}</button>
                                     </div>
                                     <div>
+                                        <form @submit.prevent="regisForm">
                                         <div class="form-1">
                                             <p>{{ $t('iin') }}</p>
                                             <input type="text" name="iin" v-model="iin" v-mask="'############'" :placeholder="$t('enter_iin')">
@@ -53,9 +54,10 @@
                                             <p>{{ $t('number_phone') }}</p>
                                             <masked-input v-model="phone" mask="\+\7(111)-111-11-11" placeholder="+7 (___) ___-__-__" />
                                         </div>
-                                        <button :class="(this.iin!='' && this.phone!='' && this.iin.length==12 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'" @click="regisForm()">
+                                        <button :class="(this.iin!='' && this.phone!='' && this.iin.length==12 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'">
                                             {{ $t('signup') }}
                                         </button>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -93,6 +95,7 @@
                                             <div class="modal-title">{{ $t('check_in') }}</div>
                                         </div>
                                         <div class="tab3_3">
+                                            <form @submit.prevent="setPasswordRegis">
                                             <div class="form-1">
                                                 <p>{{ $t('ent_password') }}</p>
                                                 <input name="new_password" type="password" v-model="new_password" :placeholder="$t('ent_your_password')">
@@ -101,8 +104,8 @@
                                                 <p>{{ $t('rep_password') }}</p>
                                                 <input name="repeat_new_password" type="password" v-model="repeat_new_password" :placeholder="$t('re_enter_your_password')">
                                             </div>
-                                            <button :class="(this.new_password!='' && this.phone!='' && this.new_password == this.repeat_new_password && this.new_password.length >= 8 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'" @click="setPasswordRegis()">{{ $t('save') }}</button>
-
+                                            <button :class="(this.new_password!='' && this.phone!='' && this.new_password == this.repeat_new_password && this.new_password.length >= 8 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'">{{ $t('save') }}</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -169,6 +172,7 @@
                                             <div class="text_modal txt-dec" @click="resendSms()" v-if="seconds" v-html="$t('send_code_again')"></div>
                                         </div>
                                         <div class="tab3_3" v-if="tab === 3">
+                                            <form @submit.prevent="setPassword">
                                             <div class="form-1">
                                                 <p>{{ $t('new_password') }}</p>
                                                 <input name="new_password" type="password" v-model="new_password" :placeholder="$t('enter_new_password')">
@@ -177,7 +181,8 @@
                                                 <p>{{ $t('repeat_new_password') }}</p>
                                                 <input name="repeat_new_password" type="password" v-model="repeat_new_password" :placeholder="$t('enter_repeat_new_password')">
                                             </div>
-                                            <button :class="(this.new_password!='' && this.phone!='' && this.new_password == this.repeat_new_password && this.new_password.length >= 8 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'" @click="setPassword()">{{ $t('save') }}</button>
+                                            <button :class="(this.new_password!='' && this.phone!='' && this.new_password == this.repeat_new_password && this.new_password.length >= 8 && this.phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) ? 'button-orange':'button-orange disabled'">{{ $t('save') }}</button>
+                                            </form>
                                             <div class="er-text2" v-if="set_pass">
                                                 {{set_pass}}
                                             </div>
@@ -304,18 +309,19 @@
                             console.log($response.error)
                             this.errors = $response.error
                             this.step = 3
+                            this.loader = false
                         } else {
                             this.$auth.saveUser($response.data)
                             this.$auth.saveToken('Bearer ' + $response.data.access_token)
                             let step = vc.$auth.verifiedUser()
                             if (step) {
-                                window.location.replace('/admin/my-loans')
+                                window.location.replace('/cabinet/my-loans')
                             } else {
                                 window.location.replace('/')
                             }
                             this.loader = true
                         }
-                        this.loader = true
+
                     })
                     .catch((e) => {
                         this.loader = false
@@ -453,7 +459,7 @@
                             console.log($r.data);
                             this.$auth.saveToken('Bearer ' + $r.data.access_token)
                                 setTimeout(function(){
-                                    window.location.replace('/admin/my-loans')
+                                    window.location.replace('/cabinet/my-loans')
                                 },2000);
                             })
                         }

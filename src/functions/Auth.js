@@ -12,12 +12,10 @@ const getAuthData = () => {
 
 const saveToken = (token) => {
     localStorage.setItem('token', token)
-    console.log('saveToken');
 }
 
 const saveUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user))
-    console.log('saveUser');
 }
 
 const getUser = () => {

@@ -1,6 +1,6 @@
 <template>
     <div class="map map-admin">
-        <router-link to="/admin/my-loans" class="title"><img :src="require('@/assets/img/icon/exit.svg')" alt=""> Карта</router-link>
+        <router-link to="/cabinet/my-loans" class="title"><img :src="require('@/assets/img/icon/exit.svg')" alt=""> Карта</router-link>
         <gmap-map :options="{
         streetViewControl: false,
         fullscreenControl: false}" :center="center" :zoom="14" style="width:100%;  height: 100%;"

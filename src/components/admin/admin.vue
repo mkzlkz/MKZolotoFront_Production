@@ -1,5 +1,5 @@
 <template>
-<div class="admin-wrapper" v-bind:class="{'padding-0' : this.$route.path == '/admin/express-extension'}">
+<div class="admin-wrapper" v-bind:class="{'padding-0' : this.$route.path == '/cabinet/express-extension'}">
     <router-view />
 </div>
 </template>

@@ -4,7 +4,6 @@
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
         <div class="loan-block1">
-            <button class="button-bg-none" @click="topScroll()"><img :src="require('@/assets/img/icon/top.svg')" alt=""></button>
             <div class="loan-list">
                 <div>
                     <div class="loan-box" v-for="(loan, index) in loans" :key="loan.loan_id">
@@ -166,7 +165,7 @@
                                     <div class="l1">{{$t('branch')}}</div>
                                     <div class="l2">
                                         <span >
-                                            <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/admin/map?branch=${branch.id}`">{{branch.alias}}</router-link>
+                                            <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/cabinet/map?branch=${branch.id}`">{{branch.alias}}</router-link>
                                         </span>
                                     </div>
                                 </div>
@@ -191,27 +190,9 @@
                                 </div>
                                 <div class="text">
                                     <span class="des">{{$t('description')}}</span>
-                                    <div class="text-p">{{product.description}}</div>
-                                    <!-- <button class="button-yellow" data-toggle="modal" data-target="#modal-edit">{{$t('edit')}}</button> -->
-                                    <div class="modal-edit">
-                                        <div id="modal-edit" class="modal fade">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="modal-head">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
-                                                            <div class="title">{{$t('product_description')}}</div>
-                                                        </div>
-                                                        <textarea class="textarea" v-model='product.description' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
-                                                        <div class="modal-foot">
-                                                            <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
-                                                            <button class="button-yellow" :disabled="clickable">{{$t('save')}}</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <div class="text-p" v-if="product.user_description === null">----</div>
+                                    <div class="text-p" v-else>{{product.user_description}}</div>
+                                    <button class="button-yellow button-yellow2" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(product)"><span v-if="product.user_description === null">{{$t('add_description')}}</span> <span v-else>{{$t('edit')}}</span></button>
                                 </div>
                             </div>
 
@@ -232,9 +213,27 @@
                     </div>
                 </div>
             </div>
-            <button class="button-bg-none" @click="bottomScroll()"><img :src="require('@/assets/img/icon/bottom.svg')" alt=""></button>
             <button class="button-yellow button-yellow-loan" @click="payAllLoans()">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
         </div>
+            <div class="modal-edit">
+        <div id="modalEdit" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-head">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
+                            <div class="title">{{$t('product_description')}}</div>
+                        </div>
+                        <textarea class="textarea" v-model='message' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
+                        <div class="modal-foot">
+                            <div class="dflex"><div v-bind:class="{'text-danger': hasError }"><span v-if="message === null">0</span><span v-else>{{ letter }}</span></div>/{{ maxLetter }}</div>
+                            <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription">{{$t('save')}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </template>
 
@@ -259,10 +258,11 @@
                 payments: [],
                 description: [],
                 detail: [],
-                message: 'Кольцо, белое золото, маленькое, родовое, тётя Гаухар подарила на день рождения в 1983 году, Айке передарю как подрастет немножко.',
-                letter: '',
+                message: '',
+                letter: 0,
                 maxLetter: 250,
                 hasError: false,
+                noclick: false,
                 clickable: false,
                 loans: [],
                 errorLog: '',
@@ -278,18 +278,30 @@
                     to: '',
                     from: '',
                 },
-                enabled: false,
                 branch: '',
                 payAll: 0,
                 operations: [],
-                loader: true
+                loader: true,
+                item_code: ''
             }
         },
         mounted() {
+                        var obj = this;
+            $('#modalEdit').on('hidden.bs.modal', function () {
+                obj.noclick = false;
+                obj.hasError = false;
+                obj.clickable = false;
+                obj.getLoans();
+            });
             if(window.screen.width > 767) {
                 $(".loan-list").mCustomScrollbar({
-                    autoHideScrollbar:true,
-                    theme:"rounded"
+                    autoHideScrollbar:false,
+                    theme:"rounded",
+                    scrollButtons:{
+                        enable: true,
+                        scrollAmount: 310,
+                        scrollType: "stepped"
+                    }
                 });
                 $(".dropdown-menu").click(function(e){
                     e.stopPropagation();
@@ -297,7 +309,6 @@
             }
         },
         created() {
-            this.charCount();
             this.getLoans();
             this.operationTypes();
         },
@@ -382,277 +393,305 @@
                     this.payments.splice(inx, 1)
                 } else {
                     this.payments=[index]
-// this.partial_repayment = false
-// this.renewal = true
-this.detail.splice(ins, 1)
-}
-},
-closePayments(index) {
-    const inx = this.payments.indexOf(index);
-    this.payments.splice(inx, 1)
-},
-openDescription(index){
-    const inx = this.description.indexOf(index);
-    console.log(this.description)
-    if (inx > -1) {
-        this.description.splice(inx, 1)
-    } else {
-        this.description=[index]
-
-    }
-},
-closeDescription(index){
-    const inx = this.description.indexOf(index);
-    this.description.splice(inx, 1)
-},
-openDetail(index){
-    const inx = this.detail.indexOf(index);
-    const ins = this.payments.indexOf(index);
-    if (inx > -1) {
-        this.detail.splice(inx, 1)
-    } else {
-        this.detail.push(index)
-        this.payments.splice(ins, 1)
-    }
-},
-closeDetail(index) {
-    const inx = this.detail.indexOf(index);
-    const ind = this.description.indexOf(index);
-    this.detail.splice(inx, 1);
-    this.description.splice(ind, 1)
-},
-charCount: function(){
-    this.letter = this.message.length;
-    this.hasError = this.letter > this.maxLetter;
-    this.clickable = this.hasError;
-},
-getLoans() {
-    this.$axios.get('/auth/loans')
-    .then((response) => {
-        let $response = response.data
-        if ($response.code === 0) {
-            console.log($response)
-        } else {
-            this.loans = $response.data
-            this.loader = false
-            this.gradientFunc();
-            for(var i=0; i<this.loans.length;i++){
-                if(this.loans[i].default_pay == null){
-                    this.loans[i].switch = false
-                    this.loans[i].amountHide = true
+                    this.detail.splice(ins, 1)
                 }
-                if(this.loans[i].amount == null){
-                   this.loans[i].amount = 0;
-                   this.loans[i].default_pay = 0;
-                   this.loans[i].loan_percent = 0;
-                   this.loans[i].amount = 0;
-                   this.loans[i].amount = 0;
+            },
+            closePayments(index) {
+                const inx = this.payments.indexOf(index);
+                this.payments.splice(inx, 1)
+            },
+            openDescription(index){
+                const inx = this.description.indexOf(index);
+                if (inx > -1) {
+                    this.description.splice(inx, 1)
+                } else {
+                    this.description=[index]
                 }
-            }
-        }
-    })
-    .catch((e) => {
-        this.errorLog = e.response.status;
-        if(this.errorLog == 401){
-            localStorage.clear()
-            window.location.reload()
-        }
-        console.log(e)
-    })
-},
-gradientFunc(){
-    this.todays = moment();
-    this.today = moment().format('DD.MM.YYYY');
-    for(var i=0; i<this.loans.length;i++){
-        var startDate = moment(this.loans[i].start_date,"DD.MM.YYYY");
-        var guarantyTime = moment(this.loans[i].guaranty_time,"DD.MM.YYYY")
-        var loanTerm = moment(this.loans[i].loan_term,"DD.MM.YYYY")
-        var minTen = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('DD.MM.YYYY')
-        var date1 = moment(this.loans[i].loan_term,"DD.MM.YYYY").format('YYYY-MM-DD')
-        var date2 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('YYYY-MM-DD')
-        var date3 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").format('YYYY-MM-DD')
-        var loan_bal = this.loans[i].loan_balance
-        var max_amount = this.loans[i].max_amount_pay
-        var loan_percent = this.loans[i].loan_percent
-        var max_days = this.loans[i].max_days_extension
-        var min_days = this.loans[i].min_days_extension
-        var min_date = moment(this.loans[i].partial_date).subtract(max_days,'days').format('YYYY-MM-DD')
-
-        this.loans[i].operation_type = 1
-        this.loans[i].operation_type_1 = true
-        this.loans[i].operation_type_2 = false
-        this.loans[i].min_date = min_date
-        this.loans[i].total_osz = loan_bal - max_amount
-        this.loans[i].total_iko = max_amount + loan_percent
-        this.loans[i].payment_sum = this.loans[i].max_amount_pay
-        this.loans[i].amount = loan_percent
-        this.loans[i].switch = true
-        this.loans[i].amountHide = false
-        this.loans[i].count_days = max_days
-        this.loans[i].days=this.todays.diff(startDate, 'days')
-        this.loans[i].maxDays = guarantyTime.diff(startDate, 'days')
-
-        this.loans[i].green = moment().isSameOrBefore(loanTerm, 'day');
-        this.loans[i].yellow = moment().isAfter(date1, 'day') && moment().isBefore(date2, 'day');
-        this.loans[i].orange = moment().isAfter(date2, 'day') && moment().isBefore(date3, 'day');
-        this.loans[i].red = moment().isSameOrAfter(guarantyTime, 'day');
-        this.payAll += this.loans[i].default_pay;
-    }
-},
-openPay() {
-    if(this.partial_repayment == true && this.renewal == false){
-        this.partial_repayment = false
-        this.renewal = true
-    } else if (this.renewal == true && this.partial_repayment == false) {
-        this.partial_repayment = true
-        this.renewal = false
-    }
-},
-nicePrice(money) {
-    var nice = String(money).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
-    return nice
-},
-formatDate (date) {
-    return moment(date).format('DD.MM.YYYY')
-},
-expAmount(loan) {
-    let obj = {}
-    obj['loan_id'] = loan.loan_id
-    this.$axios.post('/auth/calculation', obj)
-    .then((response) => {
-        let $response = response.data
-        if ($response.code === 0) {
-            console.log($response.error)
-        } else {
-            loan.total = $response.data
-        }
-    })
-    .catch((e) => {
-        this.errorLog = e.response.status;
-        if(this.errorLog == 401){
-            localStorage.clear()
-            window.location.reload()
-        }
-        console.log(e)
-    })
-},
-dayFunc(loan,i){
-    if(loan.count_days > loan.max_days_extension) {
-        loan.count_days=loan.max_days_extension
-    }
-    if (loan.count_days >= loan.min_days_extension) {
-        this.loans[i].amount = this.loans[i].total[loan.count_days - 1].amount
-        this.loans[i].partial_date = this.loans[i].total[loan.count_days - 1].new_term
-
-        var tempLoans = this.loans
-        this.loans=[];
-        this.loans=tempLoans
-    }
-
-},
-defaultValue(loan) {
-    if (loan.count_days.length == 0) {
-        loan.count_days = loan.min_days_extension
-    }
-    if (loan.count_days < loan.min_days_extension) {
-        loan.count_days = loan.min_days_extension
-    }
-    if(loan.count_days > loan.max_days_extension){
-        loan.count_days = loan.max_days_extension
-    }
-},
-datepickerFunc(loan){
-    let min_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.min_days_extension,'days').format('YYYY-MM-DD');
-    let min_day_moment = moment(min_day,"YYYY-MM-DD").format('YYYY/MM/DD');
-    let max_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.max_days_extension + 1,'days').format('YYYY-MM-DD');
-    let max_day_moment = moment(max_day,"YYYY-MM-DD").format('YYYY/MM/DD');
-    this.disabled = {
-        to: new Date(min_day_moment),
-        from: new Date(max_day_moment),
-    }
-},
-payAmount(){
-    this.payAll=0;
-    for(var i=0; i<this.loans.length; i++){
-        if (this.loans[i].amountHide==false) {
-            this.payAll += this.loans[i].default_pay;
-        }
-    }
-},
-payAllLoans(){
-    let obj = {}
-    let objArr=[]
-    for(var i=0; i<this.loans.length;i++){
-        if(this.loans[i].switch == false){
-
-        }else {
-            obj = {};
-            obj['loan_id'] = this.loans[i].loan_id
-            obj['operation_type'] = this.loans[i].operation_type
-            obj['count_days'] = this.loans[i].count_days
-            objArr.push(obj)
-        }
-    }
-    var data = {
-        "loans":objArr
-    }
-    this.$axios.post('/auth/regular_pay_order', data)
-    .then((response) => {
-        let $response = response.data
-        if ($response.code === 0) {
-            console.log($response.error)
-        } else {
-            var orderId=$response.data[0].order;
-            console.log($response.data[0])
-            this.$axios.post('/auth/req_pay', {"order_id":orderId}).then((r) => {
-                location.href = r.data.data.url;
-            })
-        }
-    })
-    .catch((e) => {
-        this.errorLog = e.response.status;
-        if(this.errorLog == 401){
-            localStorage.clear()
-            window.location.reload()
-        }
-        console.log(e)
-    })
-
-},
-bottomScroll(){
-    let first = this.loans.shift();
-    this.loans.push(first);
-},
-topScroll(){
-    let first = this.loans.pop();
-    this.loans.unshift(first);
-},
-operationTypes(){
-    this.$axios.get('/operation_types')
-    .then((response) => {
-        let $response = response.data
-        if ($response.code === 0) {
-            console.log($response)
-        } else {
-            this.operations = $response.data
-            for(var i=0; i<this.operations.length;i++){
-                if(this.operations.length == 1){
-                    if(this.operations[i].id == 1){
-                        this.partial_repayment = false
-                        this.renewal = true
+            },
+            closeDescription(index){
+                const inx = this.description.indexOf(index);
+                this.description.splice(inx, 1)
+            },
+            openDetail(index){
+                const inx = this.detail.indexOf(index);
+                const ins = this.payments.indexOf(index);
+                if (inx > -1) {
+                    this.detail.splice(inx, 1)
+                } else {
+                    this.detail = [index]
+                    this.description.splice(inx, 1)
+                    this.payments.splice(ins, 1)
+                }
+            },
+            closeDetail(index) {
+                const inx = this.detail.indexOf(index);
+                const ind = this.description.indexOf(index);
+                this.detail.splice(inx, 1);
+                this.description.splice(ind, 1)
+            },
+            getLoans() {
+                this.$axios.get('/auth/loans')
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response)
+                    } else {
+                        this.loans = $response.data
+                        this.loader = false
+                        this.gradientFunc();
+                        for(var i=0; i<this.loans.length;i++){
+                            for(var j=0; i<this.loans[j].products.length;j++){
+                                this.letter = this.loans[i].products[j].user_description.length
+                            }
+                            if(this.loans[i].default_pay == null){
+                                this.loans[i].switch = false
+                                this.loans[i].amountHide = true
+                            }
+                            if(this.loans[i].amount == null){
+                                this.loans[i].amount = 0;
+                                this.loans[i].default_pay = 0;
+                                this.loans[i].loan_percent = 0;
+                                this.loans[i].amount = 0;
+                                this.loans[i].amount = 0;
+                            }
+                        }
                     }
-                    if(this.operations[i].id == 2){
-                        this.partial_repayment = true
-                        this.renewal = false
+                })
+                .catch((e) => {
+// this.errorLog = e.response.status;
+// if(this.errorLog == 401){
+//     localStorage.clear()
+//     window.location.reload()
+// }
+console.log(e)
+})
+            },
+            gradientFunc(){
+                this.todays = moment();
+                this.today = moment().format('DD.MM.YYYY');
+                for(var i=0; i<this.loans.length;i++){
+                    var startDate = moment(this.loans[i].start_date,"DD.MM.YYYY");
+                    var guarantyTime = moment(this.loans[i].guaranty_time,"DD.MM.YYYY")
+                    var loanTerm = moment(this.loans[i].loan_term,"DD.MM.YYYY")
+                    var minTen = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('DD.MM.YYYY')
+                    var date1 = moment(this.loans[i].loan_term,"DD.MM.YYYY").format('YYYY-MM-DD')
+                    var date2 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").subtract(10,'days').format('YYYY-MM-DD')
+                    var date3 = moment(this.loans[i].guaranty_time,"DD.MM.YYYY").format('YYYY-MM-DD')
+                    var loan_bal = this.loans[i].loan_balance
+                    var max_amount = this.loans[i].max_amount_pay
+                    var loan_percent = this.loans[i].loan_percent
+                    var max_days = this.loans[i].max_days_extension
+                    var min_days = this.loans[i].min_days_extension
+                    var min_date = moment(this.loans[i].partial_date).subtract(max_days,'days').format('YYYY-MM-DD')
+
+                    this.loans[i].operation_type = 1
+                    this.loans[i].operation_type_1 = true
+                    this.loans[i].operation_type_2 = false
+                    this.loans[i].min_date = min_date
+                    this.loans[i].total_osz = loan_bal - max_amount
+                    this.loans[i].total_iko = max_amount + loan_percent
+                    this.loans[i].payment_sum = this.loans[i].max_amount_pay
+                    this.loans[i].amount = loan_percent
+                    this.loans[i].switch = true
+                    this.loans[i].amountHide = false
+                    this.loans[i].count_days = max_days
+                    this.loans[i].days=this.todays.diff(startDate, 'days')
+                    this.loans[i].maxDays = guarantyTime.diff(startDate, 'days')
+
+                    this.loans[i].green = moment().isSameOrBefore(loanTerm, 'day');
+                    this.loans[i].yellow = moment().isAfter(date1, 'day') && moment().isBefore(date2, 'day');
+                    this.loans[i].orange = moment().isAfter(date2, 'day') && moment().isBefore(date3, 'day');
+                    this.loans[i].red = moment().isSameOrAfter(guarantyTime, 'day');
+                    this.payAll += this.loans[i].default_pay;
+                }
+            },
+            openPay() {
+                if(this.partial_repayment == true && this.renewal == false){
+                    this.partial_repayment = false
+                    this.renewal = true
+                } else if (this.renewal == true && this.partial_repayment == false) {
+                    this.partial_repayment = true
+                    this.renewal = false
+                }
+            },
+            nicePrice(money) {
+                var nice = String(money).replace(/(\d)(?=(\d{3})+([^\d]|$))/g, "$1 ");
+                return nice
+            },
+            formatDate (date) {
+                return moment(date).format('DD.MM.YYYY')
+            },
+            expAmount(loan) {
+                let obj = {}
+                obj['loan_id'] = loan.loan_id
+                this.$axios.post('/auth/calculation', obj)
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response.error)
+                    } else {
+                        loan.total = $response.data
+                    }
+                })
+                .catch((e) => {
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
+            },
+            dayFunc(loan,i){
+                if(loan.count_days > loan.max_days_extension) {
+                    loan.count_days=loan.max_days_extension
+                }
+                if (loan.count_days >= loan.min_days_extension) {
+                    this.loans[i].amount = this.loans[i].total[loan.count_days - 1].amount
+                    this.loans[i].partial_date = this.loans[i].total[loan.count_days - 1].new_term
+
+                    var tempLoans = this.loans
+                    this.loans=[];
+                    this.loans=tempLoans
+                }
+
+            },
+            defaultValue(loan) {
+                if (loan.count_days.length == 0) {
+                    loan.count_days = loan.min_days_extension
+                }
+                if (loan.count_days < loan.min_days_extension) {
+                    loan.count_days = loan.min_days_extension
+                }
+                if(loan.count_days > loan.max_days_extension){
+                    loan.count_days = loan.max_days_extension
+                }
+            },
+            datepickerFunc(loan){
+                let min_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.min_days_extension,'days').format('YYYY-MM-DD');
+                let min_day_moment = moment(min_day,"YYYY-MM-DD").format('YYYY/MM/DD');
+                let max_day = moment(loan.loan_term,"DD.MM.YYYY").add(loan.max_days_extension + 1,'days').format('YYYY-MM-DD');
+                let max_day_moment = moment(max_day,"YYYY-MM-DD").format('YYYY/MM/DD');
+                this.disabled = {
+                    to: new Date(min_day_moment),
+                    from: new Date(max_day_moment),
+                }
+            },
+            payAmount(){
+                this.payAll=0;
+                for(var i=0; i<this.loans.length; i++){
+                    if (this.loans[i].amountHide==false) {
+                        this.payAll += this.loans[i].default_pay;
                     }
                 }
+            },
+            payAllLoans(){
+                let obj = {}
+                let objArr=[]
+                for(var i=0; i<this.loans.length;i++){
+                    if(this.loans[i].switch == false){
+
+                    }else {
+                        obj = {};
+                        obj['loan_id'] = this.loans[i].loan_id
+                        obj['operation_type'] = this.loans[i].operation_type
+                        obj['count_days'] = this.loans[i].count_days
+                        objArr.push(obj)
+                    }
+                }
+                var data = {
+                    "loans":objArr
+                }
+                this.$axios.post('/auth/regular_pay_order', data)
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response.error)
+                    } else {
+                        var orderId=$response.data[0].order;
+                        console.log($response.data[0])
+                        this.$axios.post('/auth/req_pay', {"order_id":orderId}).then((r) => {
+                            location.href = r.data.data.url;
+                        })
+                    }
+                })
+                .catch((e) => {
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
+
+            },
+            bottomScroll(){
+                let first = this.loans.shift();
+                this.loans.push(first);
+            },
+            topScroll(){
+                let first = this.loans.pop();
+                this.loans.unshift(first);
+            },
+            operationTypes(){
+                this.$axios.get('/operation_types')
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response)
+                    } else {
+                        this.operations = $response.data
+                        for(var i=0; i<this.operations.length;i++){
+                            if(this.operations.length == 1){
+                                if(this.operations[i].id == 1){
+                                    this.partial_repayment = false
+                                    this.renewal = true
+                                }
+                                if(this.operations[i].id == 2){
+                                    this.partial_repayment = true
+                                    this.renewal = false
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch((e) => console.log(e))
+            },
+            charCount: function(){
+                this.letter = this.message.length;
+                this.hasError = this.letter > this.maxLetter;
+                this.noclick = this.message.length < 1;
+                this.clickable = this.hasError || this.noclick;
+            },
+            clickEdit(product){
+              this.message = product.user_description
+              this.item_code = product.item_code
+              this.letter = this.message.length;
+            },
+            changeDescription(){
+                let obj = {}
+                obj['item_code'] = this.item_code
+                obj['user_description'] = this.message
+                this.$axios.post('/auth/change_description', obj)
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response.error)
+                    } else {
+                        this.getLoans();
+                    }
+                })
+                .catch((e) => {
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
             }
         }
-    })
-    .catch((e) => console.log(e))
-}
-}
-}
+    }
 </script>
 
 <style scoped>

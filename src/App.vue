@@ -34,8 +34,8 @@ this.pageReload();
     },
 methods: {
   pageReload(){
-          let admin = this.$route.path.split('/')[1]
-      if( admin !== "admin" ){
+          let cabinet = this.$route.path.split('/')[1]
+      if( cabinet !== "cabinet" ){
 localStorage.clear();
       }
   }

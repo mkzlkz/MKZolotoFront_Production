@@ -70,7 +70,7 @@
                 if(this.new_pwd != this.repeat_new_pwd){
                     this.errorNewPas = this.$t('password_error')
                 }
-                if(this.old_pwd!='' && this.old_pwd.length >= 8 && this.new_pwd!='' && this.new_pwd.length >= 8 && this.repeat_new_pwd!='' && this.repeat_new_pwd.length >= 8) {
+                else if(this.old_pwd!='' && this.old_pwd.length >= 8 && this.new_pwd!='' && this.new_pwd.length >= 8 && this.repeat_new_pwd!='' && this.repeat_new_pwd.length >= 8) {
                     this.loader = true
                     let obj = {}
                     obj['old_pwd'] = this.old_pwd

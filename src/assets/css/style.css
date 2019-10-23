@@ -27,7 +27,7 @@ textarea:hover, textarea:focus, textarea:active {
             box-shadow: 0 2px 13px 0 rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
     height: 100vh;
-    z-index: 2; }
+    z-index: 21; }
     .block-left .logo {
       cursor: pointer;
       display: block;
