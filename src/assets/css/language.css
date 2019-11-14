@@ -1,0 +1,40 @@
+.lg-kz, .lg-qaz {
+  font-family: 'PTSans-Regular' !important;
+  /*'FranklinGothicMedium'*/
+  /*'stroke-medium'*/
+  /*.disable, .tab-pane1 .title, .banner-flex .text .text2, .calc_block .df1,
+  .modal-extension .modal-title, .modal-extension .modal-title{
+  font-family:'Roboto-BoldItalic' !important;
+  }*/
+  /*'FranklinGothicDemiCond'*/
+  /*'FranklinGothicBook'*/
+  /*"FranklinGothicBook-Italic"*/ }
+  .lg-kz .dflex-lang div, .lg-kz .express-extension .button-yellow, .lg-kz .form-main .form-1 span, .lg-kz .form-main .form-1 textarea,
+  .lg-kz .form-main .form-1 input, .lg-kz .form-main .flex-smile .it-1, .lg-kz .slide-text .title, .lg-kz .calc_block .df2, .lg-kz .calc-form .form-1 span,
+  .lg-kz .calc-form .total, .lg-kz .tab-pane1 .title-text, .lg-kz .modal-extension .form-1 p, .lg-kz .modal-extension .form-1 input,
+  .lg-kz .button-orange, .lg-qaz .dflex-lang div, .lg-qaz .express-extension .button-yellow, .lg-qaz .form-main .form-1 span, .lg-qaz .form-main .form-1 textarea,
+  .lg-qaz .form-main .form-1 input, .lg-qaz .form-main .flex-smile .it-1, .lg-qaz .slide-text .title, .lg-qaz .calc_block .df2, .lg-qaz .calc-form .form-1 span,
+  .lg-qaz .calc-form .total, .lg-qaz .tab-pane1 .title-text, .lg-qaz .modal-extension .form-1 p, .lg-qaz .modal-extension .form-1 input,
+  .lg-qaz .button-orange {
+    font-family: 'PTSans-Bold' !important; }
+  .lg-kz .banner-flex .text .text3, .lg-kz .dflex-faq .panel-heading .panel-title a, .lg-kz .block3 .block3-1 li,
+  .lg-kz .marker-modal .mm-1 h4, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
+  .lg-qaz .marker-modal .mm-1 h4 {
+    font-family: 'Roboto-Bold' !important; }
+  .lg-kz .banner-flex .text .text4, .lg-kz .calc-form .form-1 select, .lg-kz .marker-modal .mm-1 p, .lg-kz .hint-ult, .lg-kz .titlem1, .lg-kz .block1 .title1, .lg-kz .modal-form .title, .lg-qaz .banner-flex .text .text4, .lg-qaz .calc-form .form-1 select, .lg-qaz .marker-modal .mm-1 p, .lg-qaz .hint-ult, .lg-qaz .titlem1, .lg-qaz .block1 .title1, .lg-qaz .modal-form .title {
+    font-family: 'PTSans-Regular' !important; }
+  .lg-kz .block1 .text_p a, .lg-qaz .block1 .text_p a {
+    font-family: 'PTSans-RegularItalic'; }
+  .lg-kz .new-class-smart .hint, .lg-qaz .new-class-smart .hint {
+    top: 19%; }
+  .lg-kz .new-class-presents .hint, .lg-qaz .new-class-presents .hint {
+    top: 72%; }
+  .lg-kz .new-class-vip .hint, .lg-qaz .new-class-vip .hint {
+    top: 68%; }
+  .lg-kz .new-class-percent .hint, .lg-qaz .new-class-percent .hint {
+    top: 52%; }
+
+.menu-kz-lg {
+  font-family: 'PTSans-Bold' !important; }
+
+/*# sourceMappingURL=language.css.map */

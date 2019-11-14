@@ -2,10 +2,8 @@
           <div>
     <banner-component></banner-component>
     <div class="tab-pane1 rules-new">
-        <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
-        </router-link> -->
         <div class="tab-text">
-            <h1 class="title">Без правил никуда!</h1>
+            <h1 class="title">{{ $t('rules_title') }}</h1>
             <div class="content_block">
                 <div class="block3">
                     <div class="block3-flex" id="rules">
@@ -24,7 +22,9 @@
             <div class="box box8" v-if="visible">
                 <div class="closes_box closes_box8" @click="visible = !visible"><img
                         :src="require('@/assets/img/close.svg')" alt=""></div>
-                <img :src="require('@/assets/img/8.png')" alt="" class="img">
+                <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/8.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/8k.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/8q.png')" alt="" class="img">
             </div>
         </div>
     </div>
@@ -75,48 +75,24 @@
             });
         },
         created () {
-            this.GetRulesLink();
-            this.GetRulesContent();
-            this.getMenus();
+            this.getLayout();
         },
         methods: {
-                        getMenus () {
-                this.$axios.get('/menus')
+                        getLayout () {
+                this.$axios.get('/layout-data')
                 .then((response) => {
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
                     } else {
-                        this.title_page = $response.data[9].title_page
-                        this.description_page = $response.data[9].description
-                        this.opengraph_image = $response.data[9].opengraph_image
+                        this.links = $response.data.rules_link
+                        this.content = $response.data.rules_content
+                        this.title_page = $response.data.menus[9].title_page
+                        this.description_page = $response.data.menus[9].description
+                        this.opengraph_image = $response.data.menus[9].opengraph_image
                     }
                 })
                 .catch((e) => console.log(e))
-            },
-            GetRulesLink () {
-                this.$axios.get('/rules_link')
-                    .then((response) => {
-                        let $response = response.data
-                        if ($response.code === 0) {
-                            console.log($response)
-                        } else {
-                            this.links = $response.data
-                        }
-                    })
-                    .catch((e) => console.log(e))
-            },
-            GetRulesContent () {
-                this.$axios.get('/rules_content')
-                    .then((response) => {
-                        let $response = response.data
-                        if ($response.code === 0) {
-                            console.log($response)
-                        } else {
-                            this.content = $response.data
-                        }
-                    })
-                    .catch((e) => console.log(e))
             }
         }
     }

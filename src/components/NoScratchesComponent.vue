@@ -1,26 +1,32 @@
 <template>
     <div>
         <banner-component></banner-component>
-        <div class="tab-pane1">
+        <div class="tab-pane1 new-class-noscratches">
             <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt=""></router-link> -->
             <div class="tab-text height-mob">
                 <div class="dflex-title">
-                    <div class="title-mb">С трепетом и без царапин</div>
+                     <div class="title-mb">{{textLoc.mob_title}}</div>
                     <div>
-                        <h1 class="title">БЕРЕЖНО!</h1>
-                        <div class="title-text">Узнай пробу украшений без повреждений</div>
+                         <h1 class="title">{{textLoc.title}}</h1>
+            <div class="title-text">{{textLoc.subtitle}}</div>
                     </div>
                 </div>
                 <div class="content_block">
                     <div class="block1">
                         <div class="block1-1">
-                            <img :src="require('@/assets/img/tab2.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/tab2.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/tab2k.png')" alt="" class="img">
+                            <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/tab2q.png')" alt="" class="img">
                             <div class="block1-text">
-                                <div class="b1"><p>Принеси украшения <br> в мк-ЗОЛОТО.</p></div>
-                                <div class="b1"><p>Проверь пробу золота на <button @click="open"><span>СпектроМетре</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p> <div class="hint mt-12" v-if="showPopover" v-on-click-outside="close">Ты проверишь свои украшения  БЕЗ ПОВРЕЖДЕНИЙ. Мы точно определим  из каких металлов оно состоит на нашем специальном аппарате.</div></div>
-                                <div class="b1"><p>Узнай из каких основных металлов состоит твое украшение.</p></div>
-                                <div class="b1"><p>Получи документ о результатах спектрального анализа.</p></div>
-                                <div class="b1"><p>И, наконец-то, ближе познакомься со своим украшением :)</p></div>
+                                <div class="b1"><p v-html="textLoc.step1"></p></div>
+
+                                <div class="b1" v-if="this.$auth.getLanguage() === 'ru'"><p>{{textLoc.step2_1}} <button @click="open"><span>{{textLoc.step2_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> </p> <div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step2_4}}</div></div>
+                                <div class="b1" v-else><p>{{textLoc.step2_1}} <button @click="open"><span>{{textLoc.step2_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> {{textLoc.step2_3}}</p> <div class="hint" v-if="showPopover" v-on-click-outside="close">{{textLoc.step2_4}}</div></div>
+
+                                <div class="b1"><p v-html="textLoc.step3"></p></div>
+                                <div class="b1"><p v-html="textLoc.step4"></p></div>
+                                <div class="b1"><p v-html="textLoc.step5"></p></div>
+
                             </div>
                         </div>
                         <div class="block1-3">
@@ -28,13 +34,18 @@
                         </div>
                     </div>
                     <div class="block1-mobile">
-                        <div class="bm-img"><img :src="require('@/assets/img/m2.png')" alt=""></div>
+                        <div class="bm-img">
+                            <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/m2.png')" alt="">
+                             <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/m2k.png')" alt="">
+                              <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/m2q.png')" alt="">
+                        </div>
                         <div class="bm-text">
-                            <div class="b1"><p>Принеси украшения <br> в мк-ЗОЛОТО.</p></div>
-                            <div class="b1"><p>Проверь пробу золота на <button @click="open"><span>СпектроМетре</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button></p> <div class="hint hint11 mt-12" v-if="showPopover" v-on-click-outside="close">Ты проверишь свои украшения  БЕЗ ПОВРЕЖДЕНИЙ. Мы точно определим  из каких металлов оно состоит на нашем специальном аппарате.</div></div>
-                            <div class="b1"><p>Узнай из каких основных металлов состоит твое украшение.</p></div>
-                            <div class="b1"><p>Получи документ о результатах спектрального анализа.</p></div>
-                            <div class="b1"><p>И, наконец-то, ближе познакомься со своим украшением :)</p></div>
+                            <div class="b1"><p v-html="textLoc.step1"></p></div>
+                            <div class="b1" v-if="this.$auth.getLanguage() === 'ru'"><p>{{textLoc.step2_1}} <button @click="open"><span>{{textLoc.step2_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> </p> <div class="hint hint11 mt-12" v-if="showPopover" v-on-click-outside="close">{{textLoc.step2_4}}</div></div>
+                                <div class="b1" v-else><p>{{textLoc.step2_1}} <button @click="open"><span>{{textLoc.step2_2}}</span> <img :src="require('@/assets/img/icon/point.png')" alt="" class="point"></button> {{textLoc.step2_3}}</p> <div class="hint hint11 mt-12" v-if="showPopover" v-on-click-outside="close">{{textLoc.step2_4}}</div></div>
+                            <div class="b1"><p v-html="textLoc.step3"></p></div>
+                            <div class="b1"><p v-html="textLoc.step4"></p></div>
+                            <div class="b1"><p v-html="textLoc.step5"></p></div>
                         </div>
                     </div>
                     <div class="block1-mobile-img">
@@ -44,71 +55,85 @@
                 </div>
                 <div class="box box3" v-if="visible">
                     <div class="closes_box closes_box3" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')" alt="" ></div>
-                    <img :src="require('@/assets/img/3.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/3.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/3k.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/3q.png')" alt="" class="img">                </div>
                 </div>
             </div>
         </div>
-    </div>
-</template>
+    </template>
 
-<script>
-    import BannerComponent from '@/components/BannerComponent.vue'
-    import Social from '@/components/Social.vue'
-    export default {
-        name: "no-scratches-component",
-        components: {
-            BannerComponent,
-            Social
-        },
-        data () {
-            return {
-                showPopover: false,
-                visible: true,
-                title_page: '',
-                description_page: '',
-                opengraph_image: ''
-            }
-        },
-        metaInfo() {
-            return {
-                title: this.title_page,
-                meta: [
-                { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
-        { name: 'description', content: this.description_page },
-        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
-        { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
-        { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
-                ]
-            }
-        },
-        created() {
-            this.getMenus();
-        },
-        methods: {
-            getMenus () {
-                this.$axios.get('/menus')
-                .then((response) => {
-                    let $response = response.data
-                    if ($response.code === 0) {
-                        console.log($response)
-                    } else {
-                        this.title_page = $response.data[3].title_page
-                        this.description_page = $response.data[3].description
-                        this.opengraph_image = $response.data[3].opengraph_image
-                    }
-                })
-                .catch((e) => console.log(e))
+    <script>
+        import BannerComponent from '@/components/BannerComponent.vue'
+        import Social from '@/components/Social.vue'
+        export default {
+            name: "no-scratches-component",
+            components: {
+                BannerComponent,
+                Social
             },
-            open() {
-                this.showPopover = true
+            data () {
+                return {
+                    showPopover: false,
+                    visible: true,
+                    title_page: '',
+                    description_page: '',
+                    opengraph_image: '',
+                    textLoc: ''
+                }
             },
-            close() {
-                this.showPopover = false
+            metaInfo() {
+                return {
+                    title: this.title_page,
+                    meta: [
+                    { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
+                    { name: 'description', content: this.description_page },
+                    { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+                    { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+                    { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
+                    ]
+                }
+            },
+            created() {
+                this.getMenus();
+                this.GetText();
+            },
+            methods: {
+                getMenus () {
+                    this.$axios.get('/menus')
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                            console.log($response)
+                        } else {
+                            this.title_page = $response.data[3].title_page
+                            this.description_page = $response.data[3].description
+                            this.opengraph_image = $response.data[3].opengraph_image
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                },
+                GetText() {
+                    this.$axios.get('/localization')
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                        } else {
+                            this.textLoc = $response.data.noscratches
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                },
+                open() {
+                    this.showPopover = true
+                },
+                close() {
+                    this.showPopover = false
+                }
             }
         }
-    }
-</script>
+    </script>
 
-<style scoped>
+    <style scoped>
 
 </style>

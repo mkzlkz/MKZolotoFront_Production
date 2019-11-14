@@ -2,91 +2,84 @@
     <div>
         <banner-component></banner-component>
         <div class="tab-pane1">
-<!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
-</router-link> -->
-<div class="tab-text tab-text-form">
-    <h1 class="title">Часто задаваемые вопросы</h1>
+            <div class="tab-text tab-text-form">
+                <h1 class="title">{{ $t('qa_title') }}</h1>
 
-    <div class="dflex-faq">
-        <div class="qa-content" id="rule-block">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default" v-for="(qa, index) in faq" :key="qa.id">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion"
-                            v-bind:class="[(index === currentIndex ? '' : 'collapsed')]"
-                            v-bind:href="'#collapse' + qa.order">
-                            <span>{{ qa.order }}.</span>
-                            {{ qa.question }}
-                            <i class="active"></i>
-                        </a>
-                    </h4>
-                </div>
-                <div v-bind:id="'collapse' + qa.order"
-                v-bind:class="['panel-collapse collapse', (index === 0 ? 'in' : '')]">
-                <div class="panel-body">
-                    {{ qa.answer }}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="title title-none">Пообщаемся?</div>
-<div class="form-main">
-    <!-- <form action=""> -->
-        <div class="form-1">
-            <div class="flex-smile">
-                <span>Как к тебе обращаться?</span>
-                <button @click="getRandomName()" class="button-bgnone"><span class="it">
-                    <span class="img"></span>
-                    <span class="it-1">Возьми себе прозвище</span></span></button>
-                </div>
-                <input v-model="name" type="text" placeholder="Мадонна Луиза Вероника Чикконе">
-            </div>
-            <div class="form-1">
-                <span>Куда тебе позвонить? </span>
-                <masked-input v-model="phone" mask="\+\7 (111) 111-11-11" placeholder="+7 (___) ___-__-__"
-                @input="rawVal = arguments[1]" />
-                <!-- <the-mask v-model="phone" :masked="true" placeholder="+7 707 777 7778" mask="+7 (###) ###-##-##" /> -->
-            </div>
-            <div class="form-1">
-                <span>Напиши мне, напиши</span>
-                <input type="email" placeholder="E-mail" v-model="email">
-                <textarea v-model="text" placeholder="Текст сообщения"></textarea>
-            </div>
-            <button class="button-blue-line modal_calc button-yellow" data-target="#modal-calc-inf" data-toggle="modal"
-            @click="sendForm()">Отправить
-        </button>
-        <!-- </form> -->
-    </div>
-</div>
-<div class="box box11" v-if="visible">
-    <div class="closes_box closes_box11" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
-        alt=""></div>
-        <img :src="require('@/assets/img/11.png')" alt="" class="img">
-    </div>
-</div>
-<div class="modal-form">
-    <div id="modal-calc-inf" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="afterModal()">X</button>
-                </div>
-                <div class="modal-body">
-                    <div class="title">
-                        <h2 v-if="error">{{error}}</h2>
-                        <h2 v-if="modalText">{{modalText}}</h2>
-                        <div v-if="(!error) && !modalText"><img :src="require('@/assets/img/loader.gif')" alt="" class="loader"></div>
+                <div class="dflex-faq">
+                    <div class="qa-content" id="rule-block">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default" v-for="(qa, index) in faq" :key="qa.id">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion"
+                                        v-bind:class="[(index === currentIndex ? '' : 'collapsed')]"
+                                        v-bind:href="'#collapse' + qa.order">
+                                        <span>{{ qa.order }}.</span>
+                                        {{ qa.question }}
+                                        <i class="active"></i>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div v-bind:id="'collapse' + qa.order"
+                            v-bind:class="['panel-collapse collapse', (index === 0 ? 'in' : '')]">
+                            <div class="panel-body" v-html="qa.answer">
+                            </div>
+                        </div>
                     </div>
-                    <!--               <button data-dismiss="modal" @click="afterModal" data-toggle="modal">x</button> -->
+                </div>
+            </div>
+            <div class="title title-none">{{ $t('form_title') }}</div>
+            <div class="form-main">
+                <div class="form-1">
+                    <div class="flex-smile">
+                        <span>{{ $t('contact_you') }}</span>
+                        <button @click="getRandomName()" class="button-bgnone"><span class="it">
+                            <span class="img"></span>
+                            <span class="it-1">{{ $t('nickname_yourself') }}</span></span></button>
+                        </div>
+                        <input v-model="name" type="text" :placeholder="$t('nickname')">
+                    </div>
+                    <div class="form-1">
+                        <span>{{ $t('call_you') }}</span>
+                        <masked-input v-model="phone" mask="\+\7 (111) 111-11-11" placeholder="+7 (___) ___-__-__"
+                        @input="rawVal = arguments[1]" />
+                    </div>
+                    <div class="form-1">
+                        <span>{{ $t('write_me') }}</span>
+                        <input type="email" placeholder="E-mail" v-model="email">
+                        <textarea v-model="text" :placeholder="$t('message_text')"></textarea>
+                    </div>
+                    <button class="button-blue-line modal_calc button-yellow" data-target="#modal-calc-inf" data-toggle="modal" @click="sendForm()">{{ $t('send') }} </button>
+                </div>
+            </div>
+            <div class="box box11" v-if="visible">
+                <div class="closes_box closes_box11" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
+                    alt=""></div>
+                    <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/11.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/11k.png')" alt="" class="img">
+                    <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/11q.png')" alt="" class="img">
+                </div>
+            </div>
+            <div class="modal-form">
+                <div id="modal-calc-inf" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" @click="afterModal()">X</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="title">
+                                    <h2 v-if="error">{{error}}</h2>
+                                    <h2 v-if="modalText">{{modalText}}</h2>
+                                    <div v-if="(!error) && !modalText"><img :src="require('@/assets/img/loader.gif')" alt="" class="loader"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-</div>
 </template>
 
 <script>
@@ -118,15 +111,15 @@
                 opengraph_image: ''
             }
         },
-                metaInfo() {
+        metaInfo() {
             return {
                 title: this.title_page,
                 meta: [
                 { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
-        { name: 'description', content: this.description_page },
-        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
-        { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
-        { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
+                { name: 'description', content: this.description_page },
+                { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+                { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+                { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
                 ]
             }
         },
@@ -141,7 +134,7 @@
             this.getMenus();
         },
         methods: {
-                        getMenus () {
+            getMenus () {
                 this.$axios.get('/menus')
                 .then((response) => {
                     let $response = response.data
@@ -191,7 +184,7 @@
                     obj.name = this.name
                     this.error = ''
                 } else {
-                    this.error = 'Заполните имя или воспользуйтесь генератором имен.'
+                    this.error = this.$t('modal_error1')
                     return
                 }
 
@@ -202,15 +195,15 @@
                     this.error = ''
 
                 }else {
-                    return this.error = 'Что-то не так с номером.. Введен не верный номер.'
+                    return this.error = this.$t('modal_error2')
                 }
                 if (!this.phone && !this.email) {
-                    this.error = 'Введите адрес электронной почты или контактный номер.'
+                    this.error = this.$t('modal_error3')
                     return
                 }
                 if (!this.phone && this.email) {
                     if (!this.validEmail(this.email)) {
-                        this.error = 'Что-то не так с адресом.. Введен не верный адрес.'
+                        this.error = this.$t('modal_error4')
                         return
                     } else {
                         obj.email = this.email
@@ -219,12 +212,10 @@
                             obj.text = this.text
                             this.error = ''
                         } else {
-                            this.error = 'При вводе электронной почты, нужно обязательно заполнить текст сообщения.'
+                            this.error = this.$t('modal_error5')
                             return
                         }
                     }
-
-
                 }
                 if (this.phone && this.email) {
                     obj.email = this.email
@@ -234,14 +225,14 @@
                 if (obj.name && (obj.phone || (obj.email && obj.text))) {
                     if (this.email) {
                         if (!this.validEmail(this.email)) {
-                            this.error = 'Что-то не так с адресом.. Введен не верный адрес.'
+                            this.error = this.$t('modal_error4')
                             return
                         } else {
                             if (this.text) {
                                 obj.text = this.text
                                 this.error = ''
                             } else {
-                                this.error = 'При вводе электронной почты, нужно обязательно заполнить текст сообщения.'
+                                this.error = this.$t('modal_error5')
                                 return
                             }
                             obj.email = this.email
@@ -254,7 +245,7 @@
                                     this.phone = ''
                                     this.email = ''
                                     this.text = ''
-                                    this.modalText = 'Будем на связи! Скоро перезвоним!'
+                                    this.modalText = this.$t('modal_error6')
                                 }
                                 let $response = response.data.data
                             }).catch((err) => {
@@ -270,7 +261,7 @@
                                 this.phone = ''
                                 this.email = ''
                                 this.text = ''
-                                this.modalText = 'Будем на связи! Скоро перезвоним!'
+                                this.modalText = this.$t('modal_error6')
                             }
                             let $response = response.data.data
                         }).catch((err) => {
@@ -281,7 +272,6 @@
             }
         }
     }
-
 </script>
 
 <style scoped>

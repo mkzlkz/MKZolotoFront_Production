@@ -92,11 +92,15 @@ module.exports = {
   },
   plugins: [
     new PrerenderSPAPlugin(
-      // (REQUIRED) Absolute path to static root
       path.join(__dirname, '../dist'),
-      // (REQUIRED) List of routes to prerender
-      // [ '/', '/rules']
-      [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form']
+
+      // [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form']
+
+      [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/location',
+      '/location/aktau', '/location/aktobe', '/location/almaty', '/location/atyrau', '/location/burunday', '/location/esik', '/location/zhanaozen', '/location/kandyagash', '/location/kapchagay',
+      '/location/kaskelen', '/location/kosshy', '/location/kulsary', '/location/kyzylorda', '/location/merke', '/location/nur-sultan', '/location/otegen-batyr', '/location/semey',
+       '/location/talgar', '/location/taraz', '/location/uzynagash', '/location/uralsk', '/location/ust-kamenogorsk', '/location/shymkent', '/form']
       )
   ]
 }
+

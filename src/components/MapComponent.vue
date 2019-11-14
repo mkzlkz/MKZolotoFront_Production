@@ -8,7 +8,7 @@
   <div class="map-wrapper">
     <div class="tab-text">
       <div class="title-flex">
-        <h1 class="title">Загляни к нам</h1>
+        <h1 class="title">{{ $t('location_title') }}</h1>
         <div class="map-select">
           <select v-model="selectedCity" name="" id="">
             <option v-for="(city, index) in allCity" :key="city.id" :value="city">{{city.city}}
@@ -16,13 +16,13 @@
           </select>
         </div>
         <div class="map-search">
-          <span><img :src="require('@/assets/img/circle.png')" alt="">Ближайший к вам офис в радиусе</span>
+          <span><img :src="require('@/assets/img/circle.png')" alt="">{{$t('office_radius')}}</span>
           <select v-bind:disabled="disableSelect" v-model="selected" name="" id="">
-            <option value="1">1 км</option>
-            <option value="2">2 км</option>
-            <option value="5">5 км</option>
-            <option value="10">10 км</option>
-            <option value="all">Все</option>
+            <option value="1">1 {{$t('km')}}</option>
+            <option value="2">2 {{$t('km')}}</option>
+            <option value="5">5 {{$t('km')}}</option>
+            <option value="10">10 {{$t('km')}}</option>
+            <option value="all">{{$t('all')}}</option>
           </select>
           <!-- <div class="nen"> -->
             <!-- <select v-if="show" disabled name="" id="">
@@ -42,7 +42,7 @@
 
             <div class="marker-modal">
               <div class="mm-1">
-                <!-- <h4>{{infoContent.text}}</h4> -->
+                <h4 v-if="infoContent.text">{{infoContent.text}}</h4>
                 <h4>{{ infoContent.alias }}</h4>
                 <p>{{ infoContent.address }}</p>
                 <p class="tel-m">{{ infoContent.phone }}</p>
@@ -79,7 +79,9 @@
 <div class="box box10" v-if="visible">
   <div class="closes_box closes_box10" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
     alt=""></div>
-    <img :src="require('@/assets/img/10.png')" alt="" class="img">
+    <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/10.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/10k.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/10q.png')" alt="" class="img">
   </div>
 </div>
 <div class="new-cont">
@@ -185,7 +187,8 @@
 // console.log(this.$route);
 if (this.$route.path === '/location/' + this.$route.params.city_name) {
     //alert(this.$route.params.city_name);
-
+this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
   this.getTitle();
   //this.title_page = this.title_page.replace("[CITY]", this.title_city);
 }
@@ -195,6 +198,8 @@ selectedCity: function () {
     this.disableSelect = true
     this.selected = 'all'
     this.getSelectedCity()
+    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
     // this.show = true
 } else {
   if (!this.mapDisable) {
@@ -202,6 +207,8 @@ selectedCity: function () {
     this.getCurrentLocations()
     this.disableSelect = false
     this.getSelectedCity()
+    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
     // this.show = false
   } else {
     // this.show = false
@@ -209,6 +216,8 @@ selectedCity: function () {
     this.disableSelect = true
     this.selected = 'all'
     this.getSelectedCity()
+    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
 }
 }
 },
@@ -255,6 +264,8 @@ if (markers.length === 0) {
 },
 created() {
   this.getContacts();
+  this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
 },
 methods: {
   getMenus () {
@@ -264,9 +275,7 @@ methods: {
       if ($response.code === 0) {
         console.log($response)
       } else {
-        this.title_page = $response.data[12].title_page
         this.title_page_default = $response.data[12].title_page
-        this.description_page = $response.data[12].description
         this.description_page_default = $response.data[12].description
         this.opengraph_image = $response.data[12].opengraph_image
       }
@@ -282,7 +291,6 @@ methods: {
       if ($response.code === 0) {
         console.log($response)
       } else {
-        //alert()
         this.title_city = $response.data.city
         this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
         this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
@@ -327,7 +335,6 @@ methods: {
     })
     let obj = {}
     obj.city = this.selectedCity.city
-// if (this.selectedCity != this.myCity) {
   this.$axios.post('/getPointsByCity', obj)
   .then(response => {
     let selCit = response.data.data
@@ -336,8 +343,6 @@ methods: {
   }).catch((err) => {
     console.log(err)
   })
-
-// }
 },
 getAllCities() {
   this.$axios.get('/cities')
@@ -373,7 +378,7 @@ getCity(error) {
   this.$axios.post('/getCityByCoordinates', body)
   .then(response => {
 // console.log(response);
-if (this.$route.path === '/location') {
+if (this.$route.path === '/location' || this.$route.path === '/location/') {
 
   this.myCity = response.data.data
   this.selectedCity = response.data.data
@@ -443,7 +448,7 @@ showPosition(position) {
     lat: this.myLocation.lat,
     lng: this.myLocation.lng
   }
-  myMarker.text = "Ты здесь"
+  myMarker.text = this.$t('are_you_here')
   this.myMarkers.push({
     position: myMarker.position,
     infoText: myMarker
@@ -488,7 +493,7 @@ reloadPage() {
   if (navigator.userAgent.search(/Safari/) > 0) {
 // alert('safari')
 };
-},
+}
 }
 }
 

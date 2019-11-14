@@ -4,10 +4,10 @@
       <div class="banner" v-for="banner in banners">
         <a v-if="banner.link" :href="banner.link" target="_blank" class="banner-flex">
           <div class="text">
-            <div class="text1">{{banner.text1}}</div>
-            <div class="text2">{{banner.text2}}</div>
-            <div class="text3">{{banner.text3}}</div>
-            <div class="text4">{{banner.text4}}</div>
+            <div class="text1" v-if="banner.text1">{{banner.text1}}</div>
+            <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
+            <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
+            <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
           </div>
           <div class="img">
             <img :src="banner.desktop" alt="" class="img-deck_i">
@@ -16,10 +16,10 @@
         </a>
         <div v-else class="banner-flex">
           <div class="text">
-            <div class="text1">{{banner.text1}}</div>
-            <div class="text2">{{banner.text2}}</div>
-            <div class="text3">{{banner.text3}}</div>
-            <div class="text4">{{banner.text4}}</div>
+            <div class="text1" v-if="banner.text1">{{banner.text1}}</div>
+            <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
+            <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
+            <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
           </div>
           <div class="img">
             <img :src="banner.desktop" alt="" class="img-deck_i">
@@ -44,7 +44,7 @@
           dots: true,
           arrows: false,
           fade: false,
-          autoplay: false,
+          autoplay: true,
           infinite: true,
           autoplaySpeed: 5000
         },
@@ -62,31 +62,19 @@
       }
     },
     created () {
-      this.GetBanners()
-      this.GetAutoscrolling()
+      this.getLayout();
     },
     methods: {
-      GetBanners () {
-        this.$axios.get('/banners')
+      getLayout () {
+        this.$axios.get('/layout-data')
         .then((response) => {
           let $response = response.data
           if ($response.code === 0) {
             console.log($response)
           } else {
-            this.banners = $response.data
-          }
-        })
-        .catch((e) => console.log(e))
-      },
-      GetAutoscrolling () {
-        this.$axios.get('/autoscrolling')
-        .then((response) => {
-          let $response = response.data
-          if ($response.code === 0) {
-            console.log($response)
-          } else {
-            this.scroll = $response.data
-            this.slickOptions.autoplaySpeed = $response.value
+            this.banners = $response.data.banners
+            this.scroll = $response.data.autoscrolling
+            this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
           }
         })
         .catch((e) => console.log(e))
