@@ -72,6 +72,11 @@ export default new Router({
     name: 'MapComponent',
     component: MapComponent
   },
+    {
+      path: '/location/:city_name',
+      name: 'OneCityPage',
+      component: MapComponent
+    },
   {
     path: '/location/aktau',
     name: 'aktau',
