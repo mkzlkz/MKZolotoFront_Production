@@ -96,7 +96,7 @@ module.exports = {
     //   path.join(__dirname, '../dist'),
     //   // (REQUIRED) List of routes to prerender
     //   // [ '/', '/rules']
-    //   [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form']
+    //   [ '/location/almaty', '/location/aktau', '/location/aktobe']
     //   )
   ]
 }

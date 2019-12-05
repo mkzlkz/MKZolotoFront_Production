@@ -1528,6 +1528,13 @@ width: 210px;
     .block{
         flex-wrap: wrap;
     }
+    .modal-auth .extension .tab-errors{
+            padding: 0 15px 0 0;
+    margin: 0 0 0 -15px;
+    }
+    .modal-auth .extension .tab-errors .forgot-password{
+        margin-top: 60px;
+    }
     .block-left{
         width: 100%;
         box-shadow: none;

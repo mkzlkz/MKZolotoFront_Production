@@ -1,9 +1,12 @@
 <template>
     <div class="editMyData">
-                                <div v-if="loader" class="loader loader-admin">
+        <div v-if="loader" class="loader loader-admin">
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
-        <div class="emd">
+        <div class="errorsServer" v-if="errorsServer">
+            {{errorsServer}}
+        </div>
+        <div class="emd" v-if="!errorsServer">
             <div class="title">{{$t('change_details')}}</div>
             <div class="form-1">
                 <p>{{$t('fio')}}</p>
@@ -31,7 +34,8 @@
                 <p>{{$t('number_phone')}}</p>
                 <div class="input-1">
                     <input type="text" name="input_up" :value="user.phone" disabled>
-                    <button data-toggle="modal" data-target="#modal-edit">{{$t('change')}}</button>
+                    <button v-if="this.edit" data-toggle="modal" data-target="#modal-edit">{{$t('change')}}</button>
+                    <span v-if="!this.edit"><img :src="require('@/assets/img/icon/key.svg')" alt=""></span>
                 </div>
             </div>
             <div class="form-1">
@@ -48,16 +52,18 @@
                     <div class="modal-content">
                         <div class="modal-body">
                             <div class="cont-1" v-if="tab === 1">
+                                <form @submit.prevent="changePhone">
                                 <p>{{$t('new_phone')}}</p>
-                                <masked-input name="mi_nkn" v-model="new_phone" mask="\+\7(111)-111-11-11" placeholder="+7 (___) ___-__-__" />
-                                <button @click="changePhone" class="button-yellow" :class="(this.new_phone!='' && this.new_phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.new_phone))) ? 'button-orange':'button-orange disabled'">{{$t('further')}}</button>
+                                <masked-input type="tel" name="mi_nkn" v-model="new_phone" mask="\+\7(111)-111-11-11" placeholder="+7 (___) ___-__-__" />
+                                <button class="button-yellow" :class="(this.new_phone!='' && this.new_phone.length == 17 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.new_phone))) ? 'button-orange':'button-orange disabled'">{{$t('further')}}</button>
+                                </form>
                                 <div v-if="errorReset" class="er-text">
                                     {{errorReset}}
                                 </div>
                             </div>
                             <div class="cont-2" v-if="tab === 2">
                                 <p>{{$t('sms_code')}}</p>
-                                <input type="text" maxlength="6" name="mi_sk" v-model="sms_code" class="sms-code"placeholder="______" />
+                                <masked-input type="tel" v-model="sms_code" class="sms-code" mask="111111" placeholder="______" />
 
                                 <button class="button-yellow" @click="smsVerify()">{{$t('complete')}}</button>
                                 <div class="text_modal" v-if="!seconds"><span v-html="$t('fpassword_text')"></span> {{ currentTime }} <span v-html="$t('seconds')"></span></div>
@@ -120,7 +126,10 @@
                 sms_code: '',
                 errorset: '',
                 errorEmail: '',
-                loader: true
+                loader: true,
+                user: '',
+                edit: true,
+                errorsServer: ''
             }
         },
         mounted () {
@@ -137,6 +146,7 @@
                 obj.sms_code = '';
                 obj.errorset = '';
                 obj.errorEmail = '';
+                obj.errorsServer = '';
             });
             $('#modal-edit-mail').on('hidden.bs.modal', function () {
                 obj.new_phone = '';
@@ -150,10 +160,13 @@
                 obj.sms_code = '';
                 obj.errorset = '';
                 obj.errorEmail = '';
+                obj.errorsServer = '';
             });
         },
         created(){
             this.getUser();
+            this.user = JSON.parse(localStorage.getItem("user"));
+            this.edit = this.user.phone_editing;
         },
         methods: {
             getUser () {
@@ -162,6 +175,8 @@
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.user = $response.data
                         this.loader = false
@@ -247,7 +262,7 @@
                 .then((response) => {
                     let $response = response.data
                     if ($response.code === 0) {
-                        this.errorEmail = $response.error.message
+                        this.errorEmail = $response.error
                     } else {
                         this.step = 2
                     }

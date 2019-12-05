@@ -1597,7 +1597,8 @@ input[type='number'] {
   padding: 60px 60px 30px 0px;
   border: none; }
 .modal-extension .modal-body {
-  padding: 0; }
+  padding: 0;
+  min-height: 356px; }
 .modal-extension .form-1 {
   margin-bottom: 20px; }
   .modal-extension .form-1 p {
@@ -1825,7 +1826,8 @@ input[type='number'] {
 
 .button-orange.disabled {
   opacity: 0.6;
-  cursor: default; }
+  cursor: default;
+  pointer-events: none; }
 
 .left-100 .vue-slider-dot {
   left: 100% !important; }

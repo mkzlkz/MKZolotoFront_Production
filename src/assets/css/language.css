@@ -11,24 +11,28 @@
   .lg-kz .pl-txt2 .span, .lg-kz .prodl .pl-txt span, .lg-kz .loan-box .loan-1 .l1 span, .lg-kz .loan-box .loan-1 .bold, .lg-kz .ExpressExtensionPage .form-1 p, .lg-kz .ExpressExtensionPage
   .form-1 input, .lg-kz .valuationCapital .valuationCapital-foot .price, .lg-kz .valuationCapital .valuationCapital-foot .button-yellow,
   .lg-kz .read, .lg-kz .notificationHistory .not-his .push-1 .date, .lg-kz .editMyData .emd .form-1 p, .lg-kz .editMyData .emd .form-1 input, .lg-kz .modal-edit2 .modal-dialog p,
-  .lg-kz .modal-edit2 .modal-dialog .button-yellow, .lg-kz .modal-extension .form-1 p, .lg-kz .loan .loan-down .button-yellow, .lg-kz .aside-admin .exit, .lg-qaz .dflex-lang div, .lg-qaz .express-extension .button-yellow, .lg-qaz .form-main .form-1 span, .lg-qaz .form-main .form-1 textarea,
+  .lg-kz .modal-edit2 .modal-dialog .button-yellow, .lg-kz .modal-extension .form-1 p, .lg-kz .loan .loan-down .button-yellow, .lg-kz .aside-admin .exit,
+  .lg-kz .avatarChange .av-change .img-button label, .lg-kz .avatarChange .av2-change .title, .lg-qaz .dflex-lang div, .lg-qaz .express-extension .button-yellow, .lg-qaz .form-main .form-1 span, .lg-qaz .form-main .form-1 textarea,
   .lg-qaz .form-main .form-1 input, .lg-qaz .form-main .flex-smile .it-1, .lg-qaz .slide-text .title, .lg-qaz .calc_block .df2, .lg-qaz .calc-form .form-1 span,
   .lg-qaz .calc-form .total, .lg-qaz .tab-pane1 .title-text, .lg-qaz .modal-extension .form-1 p, .lg-qaz .modal-extension .form-1 input,
   .lg-qaz .button-orange, .lg-qaz .loan .bold, .lg-qaz .prodl .pr-title, .lg-qaz .loan-2 .loan2-1 .bold, .lg-qaz .loan-2 .loan2-3 .name p, .lg-qaz .loan-2 .loan2-3 .text .des,
   .lg-qaz .pl-txt2 .span, .lg-qaz .prodl .pl-txt span, .lg-qaz .loan-box .loan-1 .l1 span, .lg-qaz .loan-box .loan-1 .bold, .lg-qaz .ExpressExtensionPage .form-1 p, .lg-qaz .ExpressExtensionPage
   .form-1 input, .lg-qaz .valuationCapital .valuationCapital-foot .price, .lg-qaz .valuationCapital .valuationCapital-foot .button-yellow,
   .lg-qaz .read, .lg-qaz .notificationHistory .not-his .push-1 .date, .lg-qaz .editMyData .emd .form-1 p, .lg-qaz .editMyData .emd .form-1 input, .lg-qaz .modal-edit2 .modal-dialog p,
-  .lg-qaz .modal-edit2 .modal-dialog .button-yellow, .lg-qaz .modal-extension .form-1 p, .lg-qaz .loan .loan-down .button-yellow, .lg-qaz .aside-admin .exit {
+  .lg-qaz .modal-edit2 .modal-dialog .button-yellow, .lg-qaz .modal-extension .form-1 p, .lg-qaz .loan .loan-down .button-yellow, .lg-qaz .aside-admin .exit,
+  .lg-qaz .avatarChange .av-change .img-button label, .lg-qaz .avatarChange .av2-change .title {
     font-family: 'PTSans-Bold' !important; }
   .lg-kz .banner-flex .text .text3, .lg-kz .dflex-faq .panel-heading .panel-title a, .lg-kz .block3 .block3-1 li,
   .lg-kz .marker-modal .mm-1 h4, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
   .lg-qaz .marker-modal .mm-1 h4 {
     font-family: 'Roboto-Bold' !important; }
   .lg-kz .banner-flex .text .text4, .lg-kz .calc-form .form-1 select, .lg-kz .marker-modal .mm-1 p, .lg-kz .hint-ult, .lg-kz .titlem1, .lg-kz .block1 .title1,
-  .lg-kz .loan-box .loan-1 .button-yellow, .lg-qaz .banner-flex .text .text4, .lg-qaz .calc-form .form-1 select, .lg-qaz .marker-modal .mm-1 p, .lg-qaz .hint-ult, .lg-qaz .titlem1, .lg-qaz .block1 .title1,
-  .lg-qaz .loan-box .loan-1 .button-yellow {
+  .lg-kz .loan-box .loan-1 .button-yellow, .lg-kz .button-yellow-loan, .lg-qaz .banner-flex .text .text4, .lg-qaz .calc-form .form-1 select, .lg-qaz .marker-modal .mm-1 p, .lg-qaz .hint-ult, .lg-qaz .titlem1, .lg-qaz .block1 .title1,
+  .lg-qaz .loan-box .loan-1 .button-yellow, .lg-qaz .button-yellow-loan {
     font-family: 'PTSans-Regular' !important; }
-  .lg-kz .block1 .text_p a, .lg-qaz .block1 .text_p a {
+  .lg-kz .block1 .text_p a, .lg-kz .loan-2 .loan2-2 th, .lg-kz .loan-2 .loan2-1 .l2 a, .lg-kz .loan-2 .loan2-3 .name span,
+  .lg-kz .loan-2 .loan2-3 .text .text-p, .lg-qaz .block1 .text_p a, .lg-qaz .loan-2 .loan2-2 th, .lg-qaz .loan-2 .loan2-1 .l2 a, .lg-qaz .loan-2 .loan2-3 .name span,
+  .lg-qaz .loan-2 .loan2-3 .text .text-p {
     font-family: 'PTSans-RegularItalic'; }
   .lg-kz .new-class-smart .hint, .lg-qaz .new-class-smart .hint {
     top: 19%; }
@@ -226,12 +230,12 @@
   .loan .rd {
     margin-right: 5px; }
   .loan .l1 {
-    width: 62%;
+    width: 66%;
     text-align: right;
-    padding-right: 17px;
+    padding-right: 15px;
     margin-bottom: 6px; }
   .loan .l2 {
-    width: 38%;
+    width: 34%;
     text-align: left;
     margin-bottom: 6px; }
   .loan .bold {
@@ -374,7 +378,7 @@
     background-repeat: no-repeat;
     width: calc(100vw - 380px) !important;
     background-position: 137px !important;
-    z-index: 111; }
+    z-index: 11; }
   .admin-wrapper .mCSB_buttonDown {
     background-image: url(../img/icon/bottom.svg) !important;
     opacity: 1 !important;
@@ -385,7 +389,7 @@
     left: 20px;
     background-color: #fff;
     background-repeat: no-repeat;
-    z-index: 111; }
+    z-index: 11; }
   .admin-wrapper .mCSB_buttonDown:hover, .admin-wrapper .mCSB_buttonDown:focus, .admin-wrapper .mCSB_buttonDown:active,
   .admin-wrapper .mCSB_buttonUp:hover, .admin-wrapper .mCSB_buttonUp:focus, .admin-wrapper .mCSB_buttonUp:active {
     opacity: 1 !important; }
@@ -935,7 +939,7 @@
          object-position: center;
       border-radius: 50%;
       border: solid 2px #dedede; }
-  .avatarChange .av-change button {
+  .avatarChange .av-change .img-button label {
     width: 226px;
     height: 32px;
     border-radius: 20px;
@@ -943,7 +947,24 @@
     letter-spacing: -0.18px;
     font-family: 'FranklinGothicDemi';
     font-size: 14px;
-    color: #7F7F7F; }
+    color: #7F7F7F;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+  .avatarChange .av-change .img-button input {
+    display: none; }
+  .avatarChange .av-change .img-button .text {
+    position: absolute;
+    font-size: 13px;
+    color: red;
+    margin-top: 10px; }
 .avatarChange .av2-change .title {
   font-size: 18px;
   color: #000;
@@ -1406,6 +1427,11 @@
             box-shadow: inset 0 0 0 2px #fff;
     font-family: 'FranklinGothicBook';
     color: #000; }
+  .valuationCapital .opis .txt {
+    width: 100%;
+    overflow-x: auto;
+    max-height: 50px;
+    overflow-y: auto; }
 .valuationCapital td img {
   border: 1px solid #EAEAEA;
   border-radius: 3px;
@@ -1833,7 +1859,7 @@ input:-webkit-autofill {
   left: 0; }
 
 .admin-wrapper .map-admin {
-  padding: 40px 0; }
+  padding: 40px 0 28px; }
   .admin-wrapper .map-admin .title {
     color: #000;
     font-family: 'stroke-medium';
@@ -1844,7 +1870,7 @@ input:-webkit-autofill {
   .admin-wrapper .map-admin .title:hover, .admin-wrapper .map-admin .title:focus {
     text-decoration: none; }
   .admin-wrapper .map-admin .vue-map-container {
-    height: calc(100% - 50px) !important; }
+    height: calc(100vh - 150px) !important; }
 
 .read {
   font-family: 'FranklinGothicDemi'; }
@@ -1865,6 +1891,44 @@ input:-webkit-autofill {
 
 .oneoper {
   display: none; }
+
+.button-yellow-loan.disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none; }
+
+.weight-1 {
+  font-size: 14px;
+  padding-left: 20px;
+  margin-top: 5px;
+  color: red;
+  position: absolute; }
+
+#modalAdd .button-orange {
+  margin-top: 40px; }
+
+.errorsServer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2; }
+
+.ds-v {
+  display: none !important; }
+
+.mb-v {
+  display: block !important; }
 
 @media (max-height: 750px) {
   .modal-auth .forgot-password, .modal-auth .text_modal {
@@ -1887,7 +1951,7 @@ input:-webkit-autofill {
     padding: 30px 10px 20px; }
 
   .admin-wrapper .map-admin {
-    padding: 30px 0; }
+    padding: 30px 0 18px; }
 
   .myLastOperations .table-responsive {
     max-height: calc(100vh - 132px);
@@ -1902,7 +1966,10 @@ input:-webkit-autofill {
     padding: 40px 22px 30px; }
 
   .notificationHistory .height-mk {
-    height: calc(100vh - 132px); } }
+    height: calc(100vh - 132px); }
+
+  .admin-wrapper .map-admin .vue-map-container {
+    height: calc(100vh - 130px) !important; } }
 @media (max-height: 610px) {
   .modal-extension .select-border {
     height: 34px;
@@ -1952,7 +2019,16 @@ input:-webkit-autofill {
 
   .ExpressExtensionPage .img img {
     width: 300px;
-    height: 320px; } }
+    height: 320px; }
+
+  .loan .l2 {
+    width: 33%; }
+
+  .loan .l1 {
+    width: 67%; }
+
+  .loan .button-gray button {
+    width: 72px; } }
 @media (max-width: 1220px) {
   .aside-admin .menu .nav li a, .aside-admin .exit {
     padding-left: 15px;
@@ -2044,6 +2120,12 @@ input:-webkit-autofill {
             justify-content: flex-start;
     padding: 0 15px;
     margin-bottom: 15px; }
+
+  .ds-v {
+    display: none !important; }
+
+  .mb-v {
+    display: block !important; }
 
   .modal-auth .tab-1 {
     padding: 0 15px 0 0; }
@@ -2241,11 +2323,17 @@ input:-webkit-autofill {
     right: -5px; }
 
   .ExpressExtensionPage .extension {
-    padding: 0 15px 0px 15px;
-    height: 100%; }
+    padding: 0 15px 260px;
+    height: 100%;
+    min-height: calc(100vh - 237px); }
+
+  .ExpressExtensionPage .text {
+    padding-top: 30px; }
 
   .ExpressExtensionPage .img {
-    margin: 0 -15px 0 auto; }
+    margin: 0 0px 0 auto;
+    position: absolute;
+    bottom: 0; }
 
   .ExpressExtensionPage .modal-header {
     display: none; }
@@ -2375,9 +2463,6 @@ input:-webkit-autofill {
     padding: 0; }
 
   .admin-wrapper .map-admin .vue-map-container {
-    height: 100% !important; }
-
-  .admin-wrapper .map-admin .vue-map-container {
     height: 380px !important;
     margin: 0 !important; }
 
@@ -2418,6 +2503,21 @@ input:-webkit-autofill {
     margin: 15% auto 0; }
 
   .modal-edit .title {
-    display: block !important; } }
+    display: block !important; }
+
+  .errorsServer {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    padding: 0 15px;
+    margin-top: 30px;
+    text-align: center; } }
+.modal-backdrop {
+  display: none !important; }
+
+.modal {
+  background: rgba(0, 0, 0, 0.5); }
 
 /*# sourceMappingURL=language.css.map */

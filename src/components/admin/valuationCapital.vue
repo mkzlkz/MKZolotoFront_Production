@@ -3,6 +3,10 @@
         <div v-if="loader" class="loader loader-admin">
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
+                <div class="errorsServer" v-if="errorsServer">
+            {{errorsServer}}
+        </div>
+        <div v-if="!errorsServer">
         <div class="title">{{$t('valuation_capital')}}</div>
         <div class="title-text">{{$t('today')}}  {{ moment().format('DD.MM.YYYY') }} {{$t('text_1')}} {{payAll}} ₸ {{$t('text_2')}}</div>
         <div class="table-responsive mb-capital" v-if="products.length>0 || productsLocal.length>0">
@@ -17,7 +21,7 @@
                     <td>{{product.au999content}}</td>
                     <td>{{product.description}}</td>
 
-                    <td><div class="opis"><div class="txt" v-if="product.user_description.length>0">{{product.user_description}}</div><div class="txt" v-if="product.user_description.length<1">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.user_description.length>0">{{$t('edit')}}</span> <span v-if="product.user_description<1">{{$t('add_description')}}</span></button></div> </td>
+                    <td><div class="opis"><div class="txt" v-if="edit">{{product.user_description}}</div><div class="txt" v-if="!edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="edit">{{$t('edit')}}</span> <span v-if="!edit">{{$t('add_description')}}</span></button></div> </td>
                     <td><span v-if="!product.amountHide">{{product.max_amount_date_issue}} ₸</span><span v-if="product.amountHide">-</span></td>
                     <td><div class="switch switch-op" @click="toggleSwitch(index)">
                         <switches v-model="product.switch" type-bold="true" ></switches>
@@ -51,7 +55,7 @@
                 </div>
             </div>
             <div class="vc-desc">
-                <div class="opis"><div class="txt">{{product.user_description}}</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.user_description.length>0">{{$t('edit')}}</span> <span v-if="product.user_description<1">{{$t('add_description')}}</span></button></div>
+                <div class="opis"><div class="txt" v-if="edit">{{product.user_description}}</div><div class="txt" v-if="!edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="edit">{{$t('edit')}}</span> <span v-if="!edit">{{$t('add_description')}}</span></button></div>
             </div>
             <div class="vc-content">
                 <div class="dflex">
@@ -94,7 +98,7 @@
                 </div>
                 <div class="dflex">
                     <div class="l1" v-html="$t('getting_hands')"></div>
-                    <div class="l2"><span v-if="!product.amountHide">{{product.max_amount_date_issue}} ₸</span><span v-if="product.amountHide">-</span></div>
+                    <div class="l2"><span v-if="!product.amountHide">{{roundingNumbers_none(product.max_amount_date_issue)}} ₸</span><span v-if="product.amountHide">-</span></div>
                 </div>
             </div>
         </div>
@@ -136,7 +140,7 @@
                                 </div>
                                 <div class="form-1">
                                     <p>{{$t('product_name')}}</p>
-                                    <input type="text" name="input_nvi" v-model="name" :placeholder="$t('product_your_name')">
+                                    <input type="text" name="input_nvi" maxlength="50" v-model="name" :placeholder="$t('product_your_name')">
                                 </div>
                                 <div class="form-1">
                                     <p>{{$t('gold_content')}}</p>
@@ -148,9 +152,13 @@
                                 </div>
                                 <div class="form-1">
                                     <p>{{$t('product_weight')}} ({{$t('gram')}})</p>
-                                    <input type="number" name="input_w" :placeholder="0" v-model="weight">
+                                    <input placeholder="0" @blur="saveEdit" v-on:keydown="getkey" v-on:input="getkey" ref="inWeight" v-model="weight" id="currencyTextBox">
+
+                                    <div v-if="showAnsver" class="weight-1">
+                                        {{ $t('gold_weight_exceed') }} {{maxWeight}} {{ $t('gram_text') }}
+                                    </div>
                                 </div>
-                                <button class="button-orange" @click="addProduct()" data-dismiss="modal" aria-hidden="true">{{$t('add')}}</button>
+                                <button :class="(this.name!='' && this.weight!='') ? 'button-orange':'button-orange disabled'" @click="addProduct()" data-dismiss="modal" aria-hidden="true">{{$t('add')}}</button>
                             </div>
                             <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
                         </div>
@@ -159,6 +167,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </template>
 <script>
@@ -185,10 +194,30 @@
                 probe: '',
                 probes: [],
                 switch: false,
-                loader: true
+                loader: true,
+                edit: true,
+                showAnsver: false,
+                maxWeight: 2000,
+                errorsServer: ''
             }
         },
         mounted () {
+                          $.fn.inputFilter = function(inputFilter) {
+    return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+      if (inputFilter(this.value)) {
+        this.oldValue = this.value;
+        this.oldSelectionStart = this.selectionStart;
+        this.oldSelectionEnd = this.selectionEnd;
+      } else if (this.hasOwnProperty("oldValue")) {
+        this.value = this.oldValue;
+        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+      } else {
+        this.value = "";
+      }
+    });
+  };
+  $("#currencyTextBox").inputFilter(function(value) {
+  return /^-?\d*[.]?\d{0,2}$/.test(value); });
             var obj = this;
             $('#modalAdd').on('hidden.bs.modal', function () {
                 obj.name = '';
@@ -209,6 +238,21 @@
             this.payAmount();
         },
         watch:{
+            weight: function (newWeight, oldWeight) {
+                if (String(newWeight[0]) == '0' ) {
+                    this.weight=oldWeight
+                }
+                if (String(newWeight[0]) == '.' ) {
+                    this.weight=oldWeight
+                }
+                if (newWeight == parseFloat(newWeight).toFixed(3)) {
+                    this.weight = oldWeight
+                }
+                if (newWeight > this.maxWeight) {
+                    this.showAnsver = true
+                    this.weight = oldWeight
+                }
+            },
             'products': {
                 handler: function (after, before) {
                 },
@@ -252,6 +296,8 @@
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.probes = $response.data;
                         this.probe = this.probes[5].value
@@ -264,13 +310,15 @@
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.products = $response.data
                         this.loader = false
+                        this.descriptionLength();
                         for(var i=0; i<this.products.length;i++){
                             this.products[i].switch = true
                             this.products[i].amountHide = false
-                            this.letter = this.products[i].user_description.length
                             this.payAll += this.products[i].max_amount_date_issue;
                             this.payAmount();
                         }
@@ -320,14 +368,14 @@
                 this.payAll = this.payAll1 + this.payAll2
             },
             clickEdit(index){
-              this.message = this.products[index].user_description
-              this.item_code = this.products[index].item_code
+                this.message = this.products[index].user_description
+                this.item_code = this.products[index].item_code
             },
-                        charCount: function(){
+            charCount: function(){
                 this.letter = this.message.length;
                 this.hasError = this.letter > this.maxLetter;
-                this.noclick = this.letter < 1;
-                this.clickable = this.hasError || this.noclick;
+                // this.noclick = this.letter < 1;
+                this.clickable = this.hasError;
             },
             changeDescription(){
                 let obj = {}
@@ -338,6 +386,8 @@
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response.error)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.getProducts();
                     }
@@ -350,6 +400,58 @@
                     }
                     console.log(e)
                 })
+            },
+            descriptionLength(){
+                for(var i=0; i<this.products.length; i++){
+                    if(this.products[i].user_description == null){
+                        this.letter = 0;
+                        this.edit = false;
+                        this.clickable = true;
+                    } else {
+                        this.edit = true;
+                        this.letter = this.products[i].user_description.length;
+                        this.clickable = false;
+                    }
+                }
+            },
+            getAnsver() {
+                if (this.weight.length > 0) {
+                    this.showAnsver = false
+                } else {
+                    this.showAnsver = true
+                }
+            },
+            saveEdit(e) {
+                this.showAnsver = false
+            },
+            getkey(evt) {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if ( (this.weight.length == 0 && charCode == 48) || (charCode == 96 && this.weight.length == 0) || (charCode == 190 && this.weight.length == 0)) {
+                    evt.preventDefault()
+                }
+                if (charCode == 46 || charCode == 8 && this.showAnsver == true) {
+                    this.showAnsver = false
+                }
+                if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 190 && charCode !== 188 && charCode != 110) {
+                    if (charCode >= 96 && charCode <= 105) {
+
+                    }else{
+                        evt.preventDefault();
+                    }
+                } else {
+                    if (charCode == 188 || charCode == 190 || charCode ==110) {
+                        evt.preventDefault()
+                        if (this.weight.length == 0) {
+                            evt.preventDefault()
+                        }
+                        if (this.weight.split(".").length < 2 && this.weight.length != 0) {
+                            this.weight = this.weight + "."
+                        }
+                    } else {
+                        return true;
+                    }
+                }
             }
         }
     }

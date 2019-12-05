@@ -8,11 +8,11 @@
             </div>
             <div class="mobile-header-decktop">
                 <div class="ddflex">
-                    <router-link :to="{ name: 'Home' }"><img :src="require('@/assets/img/logo.svg')" alt="" class="logo"></router-link>
-<!--                     <div class="add-photo">
-                        <img :src="require('@/assets/img/user.svg')" alt="" class="img">
-                        <button class="ad-ph" data-toggle="modal" data-target="#modalAvatar"><img :src="require('@/assets/img/icon/photo.svg')" alt=""></button>
-                    </div> -->
+                    <img :src="require('@/assets/img/logo.svg')" alt="" class="logo">
+                    <div class="add-photo">
+                        <img :src="user.avatar ? imgMin : require('@/assets/img/user.svg')" alt="" class="img">
+                        <button class="ad-ph" data-toggle="modal" data-target="#modalAvatar" v-if="!errorsServer"><img :src="require('@/assets/img/icon/photo.svg')" alt=""></button>
+                    </div>
                 </div>
                 <div class="name">{{user.name}}</div>
             </div>
@@ -53,6 +53,40 @@
             </div>
             <div class="exit" @click="UserLogout()"><img :src="require('@/assets/img/icon/exit.svg')" alt=""> {{$t('exit')}}</div>
         </aside>
+        <div class="avatarChange">
+            <div id="modalAvatar" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="av-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
+                                <div class="modal-title">{{$t('avatar_change')}}</div>
+                            </div>
+                            <div class="av-change">
+                                <div class="img">
+                                    <img :src="user.avatar ? user.avatar.url : require('@/assets/img/user.svg')" alt="" v-if="user.avatar !== null" class="img-g1">
+                                    <img :src="imgMest ? imgMest : require('@/assets/img/user.svg')" alt="" class="img-g2" v-else>
+                                </div>
+                                <div class="img-button">
+                                    <input ref="file" type="file" accept="image/*" @change="onChange" id="img-file" />
+                                    <label for="img-file">{{$t('upload_image')}}</label>
+                                    <div class="text" v-if="mbError">{{$t('mbErrorText')}}</div>
+                                </div>
+                            </div>
+                            <div class="av2-change">
+                                <div class="title">{{$t('take_avatars')}} <img :src="require('@/assets/img/icon/avatar.svg')" alt=""></div>
+                                <div class="av-list">
+                                    <div v-for="(avatar, index) in avatarList" :key="avatar.id" @click="changeImage(avatar)">
+                                        <img :src="avatar.image" alt="">
+                                    </div>
+                                </div>
+                                <button :class="(this.img!='') ? 'button-orange':'button-orange disabled'" @click="changeAvatar()" data-dismiss="modal" aria-hidden="true">{{$t('save')}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -65,7 +99,16 @@
                 lang: [],
                 langList: '',
                 user: '',
-                showPopover: false
+                showPopover: false,
+
+                avatarList: '',
+                file : {},
+                mbError : false,
+                avatarId: '',
+                img: '',
+                imgMin: '',
+                imgMest: "",
+                errorsServer: ''
             }
         },
         watch:{
@@ -73,10 +116,22 @@
                 this.showPopover = false;
             }
         },
+        mounted () {
+            var obj = this;
+            $('#modalAvatar').on('hidden.bs.modal', function () {
+                obj.file = {};
+                obj.mbError = false;
+                obj.avatarId = '';
+                obj.img = '';
+                obj.imgMest = "";
+                obj.getUser();
+            });
+        },
         created () {
             this.getLangList();
             this.GetLangWeb();
             this.getUser();
+            this.getAvatarList();
         },
         methods: {
             selectLang(lng) {
@@ -127,18 +182,83 @@
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
+                        this.errorsServer = $response.error
                     } else {
                         this.user = $response.data
+                        if(this.user.avatar != null){
+                            this.imgMin = this.user.avatar.url
+                        }
                     }
                 })
-                .catch((e) => {
-                    this.errorLog = e.response.status;
-                    if(this.errorLog == 401){
-                        localStorage.clear()
-                        window.location.reload()
+                .catch((e) => console.log(e))
+            },
+            getAvatarList () {
+                this.$axios.get('/auth/avatar-list')
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response)
+                    } else {
+                        this.avatarList = $response.data
                     }
-                    console.log(e)
                 })
+                .catch((e) => console.log(e))
+            },
+            changeImage(avatar){
+                this.avatarId = avatar.id
+                this.img = 'server'
+                this.$refs.file.value = ''
+                if(this.user.avatar != null){
+                    this.user.avatar.url = avatar.image
+                }else{
+                    this.imgMest = avatar.image
+                }
+            },
+            onChange() {
+                this.file = this.$refs.file.files[0];
+                if (this.file.size > 1024 * 10000) {
+                    this.mbError = true
+                    this.img = ''
+                    return;
+                }else {
+                    this.mbError = false
+                    this.img = 'site'
+                    if(this.user.avatar != null){
+                        this.user.avatar.id = 0
+                        this.user.avatar.url = URL.createObjectURL(this.file)
+                    } else{
+                        this.imgMest = URL.createObjectURL(this.file)
+                    }
+                }
+            },
+            changeAvatar(){
+                let obj = {}
+                let formData = new FormData();
+                if ( this.img == 'server') {
+                    obj['avatar'] = this.avatarId
+                    this.$axios.post('/auth/change-avatar', obj)
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                            console.log($response.error)
+                        } else {
+                            this.getUser();
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                } else if (this.img == 'site') {
+                    formData.append('image', this.file);
+                    this.$axios.post('/auth/avatar-upload', formData)
+                    .then((response) => {
+                        let $response = response.data
+                        if ($response.code === 0) {
+                            console.log($response.error)
+                        } else {
+                            this.getUser();
+                        }
+                    })
+                    .catch((e) => console.log(e))
+                }
             },
             UserLogout () {
                 localStorage.clear()

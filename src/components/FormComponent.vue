@@ -41,7 +41,7 @@
                     </div>
                     <div class="form-1">
                         <span>{{ $t('call_you') }}</span>
-                        <masked-input v-model="phone" mask="\+\7 (111) 111-11-11" placeholder="+7 (___) ___-__-__"
+                        <masked-input type="tel" v-model="phone" mask="\+\7 (111) 111-11-11" placeholder="+7 (___) ___-__-__"
                         @input="rawVal = arguments[1]" />
                     </div>
                     <div class="form-1">

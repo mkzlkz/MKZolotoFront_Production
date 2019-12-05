@@ -95,9 +95,10 @@ export default {
   exit: 'Выход',
   // Мои займы
   security_ticket: 'Залоговый билет',
-  guaranteed_time: 'Гарантированный срок ожидания',
-  guaranteed_expired: 'Гарантированный срок ожидания истек',
-  guaranteed_expired_1: 'Гарантированный срок ожидания истекает',
+  guaranteed_time_green: 'Срок займа',
+  guaranteed_time_yellow: 'Гарантированный срок ожидания',
+  guaranteed_time_orange: 'Истекает гарантированный срок ожидания',
+  guaranteed_time_red: 'Истек гарантированный срок ожидания',
   loan_balance: 'Остаток суммы займа',
   on_loan: '% по займу',
   for_delay:'% за просрочку',
@@ -178,6 +179,12 @@ export default {
   new_password_again:'Новый пароль повторно',
   re_enter_new_password:'Введите новый пароль повторно',
   password_error:'Пароль и повторный пароль не совпадает',
+  // Смена аватарки
+  mbErrorText: 'Размер изображения не должен превышать 10 мб',
+  avatar_change: 'Смена аватарки',
+  upload_image: 'Загрузить изображение',
+  take_avatars:'Возьми себе одну из наших аватарок',
+  text_zd: 'Здесь будут отображаться Ваши залоговые билеты',
 }
 
 

@@ -8,7 +8,8 @@
   .pl-txt2 .span, .prodl .pl-txt span, .loan-box .loan-1 .l1 span, .loan-box .loan-1 .bold, .ExpressExtensionPage .form-1 p, .ExpressExtensionPage
   .form-1 input, .valuationCapital .valuationCapital-foot .price, .valuationCapital .valuationCapital-foot .button-yellow,
   .read, .notificationHistory .not-his .push-1 .date, .editMyData .emd .form-1 p, .editMyData .emd .form-1 input, .modal-edit2 .modal-dialog p,
-  .modal-edit2 .modal-dialog .button-yellow, .modal-extension .form-1 p, .loan .loan-down .button-yellow, .aside-admin .exit{
+  .modal-edit2 .modal-dialog .button-yellow, .modal-extension .form-1 p, .loan .loan-down .button-yellow, .aside-admin .exit,
+  .avatarChange .av-change .img-button label, .avatarChange .av2-change .title{
     font-family:'PTSans-Bold' !important;
   }
 
@@ -20,12 +21,13 @@
 
 /*'FranklinGothicBook'*/
 .banner-flex .text .text4, .calc-form .form-1 select, .marker-modal .mm-1 p, .hint-ult, .titlem1, .block1 .title1,
-.loan-box .loan-1 .button-yellow{
+.loan-box .loan-1 .button-yellow, .button-yellow-loan{
   font-family:'PTSans-Regular' !important;
 }
 
 /*"FranklinGothicBook-Italic"*/
-.block1 .text_p a{
+.block1 .text_p a, .loan-2 .loan2-2 th, .loan-2 .loan2-1 .l2 a, .loan-2 .loan2-3 .name span,
+.loan-2 .loan2-3 .text .text-p{
   font-family:'PTSans-RegularItalic';
 }
 .new-class-smart .hint {
@@ -234,13 +236,13 @@
     margin-right: 5px;
   }
   .l1{
-    width: 62%;
+    width: 66%;
     text-align: right;
-    padding-right: 17px;
+    padding-right: 15px;
     margin-bottom: 6px;
   }
   .l2{
-    width: 38%;
+    width: 34%;
     text-align: left;
     margin-bottom: 6px;
   }
@@ -407,7 +409,7 @@ background-image: url(../img/icon/top.svg) !important;
     background-repeat: no-repeat;
         width: calc(100vw - 380px) !important;
     background-position: 137px !important;
-    z-index: 111;
+    z-index: 11;
 }
 .mCSB_buttonDown{
  background-image: url(../img/icon/bottom.svg) !important;
@@ -419,7 +421,7 @@ background-image: url(../img/icon/top.svg) !important;
     left: 20px;
     background-color: #fff;
     background-repeat: no-repeat;
-    z-index: 111;
+    z-index: 11;
 }
 .mCSB_buttonDown:hover, .mCSB_buttonDown:focus, .mCSB_buttonDown:active,
 .mCSB_buttonUp:hover, .mCSB_buttonUp:focus, .mCSB_buttonUp:active{
@@ -1006,7 +1008,8 @@ background-image: url(../img/icon/top.svg) !important;
           border: solid 2px #dedede;
         }
       }
-      button{
+.img-button{
+        label{
   width: 226px;
   height: 32px;
   border-radius: 20px;
@@ -1015,7 +1018,21 @@ background-image: url(../img/icon/top.svg) !important;
    font-family:'FranklinGothicDemi';
    font-size: 14px;
    color: #7F7F7F;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
       }
+      input{
+        display: none;
+      }
+      .text{
+        position: absolute;
+    font-size: 13px;
+    color: red;
+    margin-top: 10px;
+      }
+}
     }
     .av2-change{
 .title{
@@ -1528,6 +1545,12 @@ justify-content: center;
         font-family:'FranklinGothicBook';
         color: #000;
       }
+      .txt{
+           width: 100%;
+    overflow-x: auto;
+    max-height: 50px;
+    overflow-y: auto;
+      }
   }
   td{
     img{
@@ -1973,7 +1996,7 @@ font-family:'FranklinGothicBook';
 }
 .admin-wrapper{
   .map-admin{
-    padding: 40px 0;
+    padding: 40px 0 28px;
     .title{
       color: #000;
 font-family: 'stroke-medium';
@@ -1986,7 +2009,7 @@ font-family: 'stroke-medium';
       text-decoration: none;
     }
     .vue-map-container {
-    height: calc(100% - 50px) !important;
+    height: calc(100vh - 150px) !important;
 }
   }
 }
@@ -2013,6 +2036,38 @@ input:-webkit-autofill {
 .oneoper{
   display: none;
 }
+.button-yellow-loan.disabled{
+opacity: 0.6;
+    cursor: default;
+    pointer-events: none;
+}
+.weight-1{
+    font-size: 14px;
+    padding-left: 20px;
+    margin-top: 5px;
+    color: red;
+    position: absolute;
+}
+#modalAdd .button-orange{
+  margin-top: 40px;
+}
+.errorsServer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+}
+.ds-v{
+  display: none !important;
+}
+.mb-v{
+  display: block !important;
+}
 
   @media (max-height: 750px) {
     .modal-auth .forgot-password, .modal-auth .text_modal {
@@ -2037,7 +2092,7 @@ input:-webkit-autofill {
     padding: 30px 10px 20px;
 }
 .admin-wrapper .map-admin {
-    padding: 30px 0;
+        padding: 30px 0 18px;
 }
 .myLastOperations .table-responsive {
     max-height: calc(100vh - 132px);
@@ -2053,6 +2108,9 @@ input:-webkit-autofill {
 }
 .notificationHistory .height-mk {
     height: calc(100vh - 132px);
+}
+.admin-wrapper .map-admin .vue-map-container {
+    height: calc(100vh - 130px) !important;
 }
 }
 @media (max-height: 610px){
@@ -2109,6 +2167,15 @@ input:-webkit-autofill {
 .ExpressExtensionPage .img img {
     width: 300px;
     height: 320px;
+    }
+    .loan .l2 {
+    width: 33%;
+}
+.loan .l1 {
+    width: 67%;
+}
+.loan .button-gray button {
+    width: 72px;
     }
 }
   @media (max-width: 1220px){
@@ -2205,6 +2272,12 @@ border-left: 0;
     justify-content: flex-start;
     padding: 0 15px;
     margin-bottom: 15px;
+}
+.ds-v{
+  display: none !important;
+}
+.mb-v{
+  display: block !important;
 }
 .modal-auth .tab-1{
 padding: 0 15px 0 0;
@@ -2392,11 +2465,17 @@ padding: 0;
     right: -5px;
 }
 .ExpressExtensionPage .extension {
-    padding: 0 15px 0px 15px;
+    padding: 0 15px 260px;
     height: 100%;
+    min-height: calc(100vh - 237px);
+}
+.ExpressExtensionPage .text{
+  padding-top: 30px;
 }
 .ExpressExtensionPage .img {
-    margin: 0 -15px 0 auto;
+     margin: 0 0px 0 auto;
+    position: absolute;
+    bottom: 0;
 }
 .ExpressExtensionPage .modal-header{
 display: none;
@@ -2514,9 +2593,6 @@ min-height: auto;
     padding: 0;
 }
 .admin-wrapper .map-admin .vue-map-container {
-    height: 100% !important;
-}
-.admin-wrapper .map-admin .vue-map-container {
     height: 380px !important;
     margin: 0 !important;
 }
@@ -2559,9 +2635,24 @@ min-height: auto;
 .modal-edit .title{
   display: block !important;
 }
+.errorsServer {
+position: relative;
+top: auto;
+left: auto;
+right: auto;
+bottom: auto;
+    padding: 0 15px;
+    margin-top: 30px;
+    text-align: center;
+}
 }
 
-
+    .modal-backdrop{
+      display: none !important;
+    }
+    .modal{
+background: rgba(0,0,0,0.5);
+    }
 
 
 

@@ -69,6 +69,7 @@
 <script>
   import BannerComponent from '@/components/BannerComponent.vue'
   import Social from '@/components/Social.vue'
+
   export default {
     name: "smart-scales-component",
     components: {

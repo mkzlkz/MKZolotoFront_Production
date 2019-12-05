@@ -3,7 +3,13 @@
         <div v-if="loader" class="loader loader-admin">
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
-        <div class="loan-block1">
+        <div class="errorsServer" v-if="errorsServer">
+            {{errorsServer}}
+        </div>
+        <div class="errorsServer" v-if="loans.length<1">
+            {{$t('text_zd')}}
+        </div>
+        <div class="loan-block1" v-if="!errorsServer">
             <div class="loan-list">
                 <div>
                     <div class="loan-box" v-for="(loan, index) in loans" :key="loan.loan_id">
@@ -25,21 +31,22 @@
                             </div>
                             <div class="loan-content p-24">
                                 <div class="dflex green-d" v-if="loan.green === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval1.svg')" alt="" class="rd"> {{$t('guaranteed_time')}}</div>
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval1.svg')" alt="" class="rd"> {{$t('guaranteed_time_green')}}</div>
                                     <div class="l2">{{loan.loan_term}}</div>
                                 </div>
                                 <div class="dflex red-d" v-if="loan.red === true">
-                                    <div class="red l1"><img :src="require('@/assets/img/icon/oval.svg')" alt="" class="rd"> {{$t('guaranteed_expired')}}</div>
+                                    <div class="red l1"><img :src="require('@/assets/img/icon/oval.svg')" alt="" class="rd"> {{$t('guaranteed_time_red')}}</div>
                                     <div class="red l2">{{loan.guaranty_time}}</div>
                                 </div>
                                 <div class="dflex yellow-d" v-if="loan.yellow === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval2.svg')" alt="" class="rd"> {{$t('guaranteed_time')}}</div>
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval2.svg')" alt="" class="rd"> {{$t('guaranteed_time_yellow')}}</div>
                                     <div class="l2">{{loan.guaranty_time}}</div>
                                 </div>
                                 <div class="dflex orange-d" v-if="loan.orange === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval3.svg')" alt="" class="rd"> {{$t('guaranteed_expired_1')}}</div>
+                                    <div class="l1"><img :src="require('@/assets/img/icon/oval3.svg')" alt="" class="rd"> {{$t('guaranteed_time_orange')}}</div>
                                     <div class="l2">{{loan.guaranty_time}}</div>
                                 </div>
+
 
                                 <div class="dflex">
                                     <div class="l1">{{$t('loan_balance')}}</div>
@@ -101,7 +108,7 @@
                                     </div>
                                     <div class="dflex">
                                         <div class="l1">{{$t('remuneration_amount')}}</div>
-                                        <div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div>
+                                        <div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div>
                                     </div>
                                     <div class="dflex dflex2">
                                         <div class="l1"><div v-html="$t('partial_redemption_amount')"></div>
@@ -109,7 +116,7 @@
                                         <span :class="{red : red_max === true}">{{$t('before')}} {{nicePrice(loan.max_amount_pay)}} ₸</span>
                                     </div>
                                     <div class="l2">
-                                        <input type="number" :class="{red_border : red_max === true || red_min === true}" name="payment_sum" v-model="loan.payment_sum" v-on:keyup="checkSum(loan)">
+                                        <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :class="{red_border : red_max === true || red_min === true}" name="payment_sum" v-model="loan.payment_sum" v-on:keyup="checkSum(loan)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                     </div>
                                 </div>
                                 <div class="dflex">
@@ -136,7 +143,7 @@
                                     <div class="border"></div>
                                 </div>
                                 <div class="prod-input">
-                                    <input type="number" :min="loan.min_days_extension" :max="loan.max_days_extension" v-model="loan.count_days" @change="defaultValue(loan);dayFunc(loan,index); " @input="dayFunc(loan,index)" @keyUp="dayFunc(loan,index)" name="input-vue-slider">
+                                    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :min="loan.min_days_extension" :max="loan.max_days_extension" v-model="loan.count_days" @change="defaultValue(loan);dayFunc(loan,index); " @input="dayFunc(loan,index)" @keyUp="dayFunc(loan,index)" name="input-vue-slider" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                 </div>
                                 <div class="prod-text">
                                     <div class="pl-txt2"><span class="span">{{$t('new_term')}}</span>
@@ -173,7 +180,7 @@
                                 <div class="dflex"><div class="l1">{{$t('guaranteed_term')}}</div><div class="l2">{{loan.guaranty_time}}</div></div>
                                 <div class="dflex"><div class="l1">{{$t('loan_balance')}}</div><div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div></div>
                                 <div class="dflex"><div class="l1">{{$t('interest_payable')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
-                                <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
+                                <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div></div>
                                 <div class="dflex"><div class="l1">{{$t('for_delay')}}</div><div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div></div>
                                 <div class="dflex"><div class="l1 bold">{{$t('total_return')}}</div><div class="l2 bold">{{nicePrice(loan.return_total)}} ₸</div></div>
                             </div>
@@ -213,27 +220,29 @@
                     </div>
                 </div>
             </div>
-            <button class="button-yellow button-yellow-loan" @click="payAllLoans()">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
+            <button class="button-yellow button-yellow-loan" v-bind:class="{disabled : payAll === 0}" @click="payAllLoans()" v-if="loans.length>0">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
         </div>
-            <div class="modal-edit">
-        <div id="modalEdit" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="modal-head">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
-                            <div class="title">{{$t('product_description')}}</div>
-                        </div>
-                        <textarea class="textarea" v-model='message' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
-                        <div class="modal-foot">
-                            <div class="dflex"><div v-bind:class="{'text-danger': hasError }"><span v-if="message === null">0</span><span v-else>{{ letter }}</span></div>/{{ maxLetter }}</div>
-                            <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription">{{$t('save')}}</button>
+        <div class="modal-edit">
+            <div id="modalEdit" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="modal-head">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
+                                <div class="title">{{$t('product_description')}}</div>
+                            </div>
+                            <textarea class="textarea" v-model='message' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
+                            <div class="modal-foot">
+                                <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
+                                <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription">{{$t('save')}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+
     </div>
 </template>
 
@@ -264,10 +273,11 @@
                 hasError: false,
                 noclick: false,
                 clickable: false,
+                edit: true,
                 loans: [],
                 errorLog: '',
-                partial_repayment: true,
-                renewal: false,
+                partial_repayment: false,
+                renewal: true,
                 en: en,
                 ru: ru,
                 kk: kk,
@@ -282,11 +292,14 @@
                 payAll: 0,
                 operations: [],
                 loader: true,
-                item_code: ''
+                item_code: '',
+                errorsServer: '',
+                op_type1: true,
+                op_type2: false
             }
         },
         mounted() {
-                        var obj = this;
+            var obj = this;
             $('#modalEdit').on('hidden.bs.modal', function () {
                 obj.noclick = false;
                 obj.hasError = false;
@@ -368,7 +381,7 @@
                     this.red_min = false
                     this.red_max = false
                     loan.total_osz = loan.loan_balance - Number(String(loan.payment_sum));
-                    loan.total_iko = loan.loan_percent + Number(String(loan.payment_sum));
+                    loan.total_iko = loan.percent_pay + Number(String(loan.payment_sum));
                 }
             },
             changeDataLoans: function(loan){
@@ -393,6 +406,9 @@
                     this.payments.splice(inx, 1)
                 } else {
                     this.payments=[index]
+                    this.operationTypes();
+                    this.partial_repayment = false
+                    this.renewal = true
                     this.detail.splice(ins, 1)
                 }
             },
@@ -434,37 +450,23 @@
                 .then((response) => {
                     let $response = response.data
                     if ($response.code === 0) {
-                        console.log($response)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.loans = $response.data
                         this.loader = false
                         this.gradientFunc();
-                        for(var i=0; i<this.loans.length;i++){
-                            for(var j=0; i<this.loans[j].products.length;j++){
-                                this.letter = this.loans[i].products[j].user_description.length
-                            }
-                            if(this.loans[i].default_pay == null){
-                                this.loans[i].switch = false
-                                this.loans[i].amountHide = true
-                            }
-                            if(this.loans[i].amount == null){
-                                this.loans[i].amount = 0;
-                                this.loans[i].default_pay = 0;
-                                this.loans[i].loan_percent = 0;
-                                this.loans[i].amount = 0;
-                                this.loans[i].amount = 0;
-                            }
-                        }
+                        this.descriptionLength();
                     }
                 })
                 .catch((e) => {
-// this.errorLog = e.response.status;
-// if(this.errorLog == 401){
-//     localStorage.clear()
-//     window.location.reload()
-// }
-console.log(e)
-})
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
             },
             gradientFunc(){
                 this.todays = moment();
@@ -480,6 +482,7 @@ console.log(e)
                     var loan_bal = this.loans[i].loan_balance
                     var max_amount = this.loans[i].max_amount_pay
                     var loan_percent = this.loans[i].loan_percent
+                    var percent_pay = this.loans[i].percent_pay
                     var max_days = this.loans[i].max_days_extension
                     var min_days = this.loans[i].min_days_extension
                     var min_date = moment(this.loans[i].partial_date).subtract(max_days,'days').format('YYYY-MM-DD')
@@ -489,9 +492,9 @@ console.log(e)
                     this.loans[i].operation_type_2 = false
                     this.loans[i].min_date = min_date
                     this.loans[i].total_osz = loan_bal - max_amount
-                    this.loans[i].total_iko = max_amount + loan_percent
+                    this.loans[i].total_iko = max_amount + percent_pay
                     this.loans[i].payment_sum = this.loans[i].max_amount_pay
-                    this.loans[i].amount = loan_percent
+                    this.loans[i].amount = percent_pay
                     this.loans[i].switch = true
                     this.loans[i].amountHide = false
                     this.loans[i].count_days = max_days
@@ -503,6 +506,21 @@ console.log(e)
                     this.loans[i].orange = moment().isAfter(date2, 'day') && moment().isBefore(date3, 'day');
                     this.loans[i].red = moment().isSameOrAfter(guarantyTime, 'day');
                     this.payAll += this.loans[i].default_pay;
+                    if(this.loans[i].default_pay == null){
+                        this.loans[i].switch = false
+                        this.loans[i].amountHide = true
+                        this.loans[i].amount = 0;
+                        this.loans[i].default_pay = 0;
+                        this.loans[i].loan_percent = 0;
+                    }
+                    if(this.op_type1 == true && this.op_type2 == false){
+                        this.loans[i].operation_type_1 = true
+                        this.loans[i].operation_type_2 = false
+                    }
+                    if(this.op_type1 == false && this.op_type2 == true){
+                        this.loans[i].operation_type_1 = false
+                        this.loans[i].operation_type_2 = true
+                    }
                 }
             },
             openPay() {
@@ -529,6 +547,8 @@ console.log(e)
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response.error)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         loan.total = $response.data
                     }
@@ -596,6 +616,9 @@ console.log(e)
                         obj['loan_id'] = this.loans[i].loan_id
                         obj['operation_type'] = this.loans[i].operation_type
                         obj['count_days'] = this.loans[i].count_days
+                        obj['amount'] = this.loans[i].default_pay
+                        obj['entered'] = this.loans[i].payment_sum
+                        obj['place'] = 'ЛКСайт'
                         objArr.push(obj)
                     }
                 }
@@ -607,11 +630,14 @@ console.log(e)
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response.error)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         var orderId=$response.data[0].order;
                         console.log($response.data[0])
                         this.$axios.post('/auth/req_pay', {"order_id":orderId}).then((r) => {
                             location.href = r.data.data.url;
+                            this.urlAddress();
                         })
                     }
                 })
@@ -639,6 +665,8 @@ console.log(e)
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.operations = $response.data
                         for(var i=0; i<this.operations.length;i++){
@@ -646,10 +674,14 @@ console.log(e)
                                 if(this.operations[i].id == 1){
                                     this.partial_repayment = false
                                     this.renewal = true
+                                    this.op_type1 = true
+                                    this.op_type2 = false
                                 }
                                 if(this.operations[i].id == 2){
                                     this.partial_repayment = true
                                     this.renewal = false
+                                    this.op_type1 = false
+                                    this.op_type2 = true
                                 }
                             }
                         }
@@ -657,16 +689,14 @@ console.log(e)
                 })
                 .catch((e) => console.log(e))
             },
+            clickEdit(product){
+                this.message = product.user_description
+                this.item_code = product.item_code
+            },
             charCount: function(){
                 this.letter = this.message.length;
                 this.hasError = this.letter > this.maxLetter;
-                this.noclick = this.message.length < 1;
-                this.clickable = this.hasError || this.noclick;
-            },
-            clickEdit(product){
-              this.message = product.user_description
-              this.item_code = product.item_code
-              this.letter = this.message.length;
+                this.clickable = this.hasError;
             },
             changeDescription(){
                 let obj = {}
@@ -677,6 +707,8 @@ console.log(e)
                     let $response = response.data
                     if ($response.code === 0) {
                         console.log($response.error)
+                        this.errorsServer = $response.error
+                        this.loader = false
                     } else {
                         this.getLoans();
                     }
@@ -689,6 +721,24 @@ console.log(e)
                     }
                     console.log(e)
                 })
+            },
+            descriptionLength(){
+                for(var i=0; i<this.loans.length;i++){
+                    for(var j=0; j<this.loans[j].products.length;j++){
+                        if(this.loans[i].products[j].user_description == null){
+                            this.letter = 0;
+                            this.edit = false;
+                            this.clickable = true;
+                        } else {
+                            this.edit = true;
+                            this.letter = this.loans[i].products[j].user_description.length
+                            this.clickable = false;
+                        }
+                    }
+                }
+            },
+            urlAddress(){
+                localStorage.setItem('url', this.$router.history.current.path);
             }
         }
     }

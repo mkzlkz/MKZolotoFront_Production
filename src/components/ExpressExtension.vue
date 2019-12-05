@@ -135,7 +135,8 @@
                 successful:true,
                 errorMsg:'',
                 timeout: false,
-                Idreceipt: ''
+                Idreceipt: '',
+                max_renewal: 0
             }
         },
         mounted () {
@@ -250,8 +251,9 @@ let $response = response.data
 if ($response.code === 0) {
     console.log($response.error)
 } else {
-    this.order = $response.data
-    location.href = this.order.url
+    this.order = $response.data;
+    location.href = this.order.url;
+    localStorage.clear();
 }
 })
             .catch((e) => console.log(e))
