@@ -64,6 +64,7 @@
     created () {
       this.getLayout();
     },
+
     methods: {
                 getLayout () {
             this.$axios.get('/layout-data')

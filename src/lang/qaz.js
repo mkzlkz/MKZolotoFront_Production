@@ -185,6 +185,17 @@ export default {
   upload_image: 'Sýrettі júkteý',
   take_avatars:'Bіzdіń avatarymyzdy alyńyz',
   text_zd: 'Munda kepіlzattyq bıletterі kórsetіledі',
+    // договор
+  check_contract: 'Kelіsіm-shart tekserý',
+  check_contract2: 'Sіzdіń kelіsіm-shartyńyz',
+  check_contract3: 'Sіzdіń elektrondyq kelіsіm-shartyńyz',
+  contract_code: 'Kod',
+  contract_text: 'Kod kompanııanyń keńsesіnde qaǵaz túrіnde berіledі',
+  enter_contract_code: 'Kodty eńgіzіńіz',
+  verify: 'Alý',
+  confirmation: 'Rastaý',
+  contract_text2: 'Kelіsіm sharttarymen jáne kepіldememen',
+  read_and_agree: 'Tanystym jáne kelіstіm'
 }
 
 

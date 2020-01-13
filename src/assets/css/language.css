@@ -23,9 +23,11 @@
   .lg-qaz .avatarChange .av-change .img-button label, .lg-qaz .avatarChange .av2-change .title {
     font-family: 'PTSans-Bold' !important; }
   .lg-kz .banner-flex .text .text3, .lg-kz .dflex-faq .panel-heading .panel-title a, .lg-kz .block3 .block3-1 li,
-  .lg-kz .marker-modal .mm-1 h4, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
-  .lg-qaz .marker-modal .mm-1 h4 {
+  .lg-kz .marker-modal .mm-1 h4, .lg-kz .contract-link span, .lg-kz .mobb-menu .dropdown-menu li a.logout, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
+  .lg-qaz .marker-modal .mm-1 h4, .lg-qaz .contract-link span, .lg-qaz .mobb-menu .dropdown-menu li a.logout {
     font-family: 'Roboto-Bold' !important; }
+  .lg-kz .contract-link span, .lg-qaz .contract-link span {
+    font-size: 11px; }
   .lg-kz .banner-flex .text .text4, .lg-kz .calc-form .form-1 select, .lg-kz .marker-modal .mm-1 p, .lg-kz .hint-ult, .lg-kz .titlem1, .lg-kz .block1 .title1,
   .lg-kz .loan-box .loan-1 .button-yellow, .lg-kz .button-yellow-loan, .lg-qaz .banner-flex .text .text4, .lg-qaz .calc-form .form-1 select, .lg-qaz .marker-modal .mm-1 p, .lg-qaz .hint-ult, .lg-qaz .titlem1, .lg-qaz .block1 .title1,
   .lg-qaz .loan-box .loan-1 .button-yellow, .lg-qaz .button-yellow-loan {
@@ -699,7 +701,16 @@
       display: flex;
       font-size: 12px;
       color: #000;
-      margin-bottom: 20px; }
+      margin-bottom: 5px; }
+      .loan-2 .loan2-1 .dflex2 b {
+        font-family: 'FranklinGothicDemi'; }
+      .loan-2 .loan2-1 .dflex2 .num {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        margin-left: 5px; }
+        .loan-2 .loan2-1 .dflex2 .num p {
+          margin-bottom: 0; }
     .loan-2 .loan2-1 .dflex {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -1028,7 +1039,7 @@
   color: #000;
   font-size: 36px;
   font-family: 'stroke-medium'; }
-.ExpressExtensionPage .modal-header {
+.ExpressExtensionPage .modal-header-ex {
   padding: 85px 0;
   border: none; }
 .ExpressExtensionPage .modal-body {
@@ -1112,7 +1123,7 @@
   font-size: 18px;
   max-width: 360px;
   width: 100%; }
-.ExpressExtensionPage .extension {
+.ExpressExtensionPage .extension-ex {
   padding: 0 30px 30px 30px;
   height: 100vh; }
 .ExpressExtensionPage .slider-extension {
@@ -1219,6 +1230,8 @@
   margin: 0 auto; }
 .ExpressExtensionPage .button-orange {
   width: 100%; }
+.ExpressExtensionPage .button-orange-ex {
+  max-width: 280px; }
 .ExpressExtensionPage .back {
   background: none;
   border: none;
@@ -1930,6 +1943,9 @@ input:-webkit-autofill {
 .mb-v {
   display: block !important; }
 
+.img-check {
+  display: none; }
+
 @media (max-height: 750px) {
   .modal-auth .forgot-password, .modal-auth .text_modal {
     bottom: 45px; }
@@ -2043,6 +2059,9 @@ input:-webkit-autofill {
   .admin-wrapper {
     padding: 10px 15px; }
 
+  .ex-margin {
+    margin: -10px -15px; }
+
   .admin-wrapper .mCSB_buttonUp, .admin-wrapper .mCSB_buttonDown {
     background-position: 130px !important; }
 
@@ -2120,6 +2139,9 @@ input:-webkit-autofill {
             justify-content: flex-start;
     padding: 0 15px;
     margin-bottom: 15px; }
+
+  .img-check {
+    display: block; }
 
   .ds-v {
     display: none !important; }
@@ -2261,6 +2283,9 @@ input:-webkit-autofill {
     height: 100%;
     padding: 15px 8px; }
 
+  .ex-margin {
+    margin: 0px -8px -15px; }
+
   .loan-list {
     height: 100%; }
 
@@ -2327,6 +2352,11 @@ input:-webkit-autofill {
     height: 100%;
     min-height: calc(100vh - 237px); }
 
+  /*.ex-margin .extension {
+      padding: 5px 7px;
+      height: 100%;
+      min-height: 100%;
+  }*/
   .ExpressExtensionPage .text {
     padding-top: 30px; }
 
@@ -2340,6 +2370,9 @@ input:-webkit-autofill {
 
   .ExpressExtensionPage .form-width, .ExpressExtensionPage .form-width1 {
     margin: 20px auto; }
+
+  .ex-margin .form-width, .ex-margin .form-width1 {
+    margin: 0px auto; }
 
   .ExpressExtensionPage .form-2 .number-ex {
     font-size: 26px; }
@@ -2519,5 +2552,32 @@ input:-webkit-autofill {
 
 .modal {
   background: rgba(0, 0, 0, 0.5); }
+
+.dnone-prod {
+  display: none; }
+
+.text-error-red {
+  color: red;
+  position: absolute;
+  margin-top: -16px;
+  font-size: 14px;
+  margin-left: 25px; }
+
+.contract-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer; }
+  .contract-link span {
+    text-decoration: underline;
+    font-size: 12px;
+    color: #000;
+    font-family: 'FranklinGothicDemi';
+    display: block;
+    margin-right: 10px; }
 
 /*# sourceMappingURL=language.css.map */

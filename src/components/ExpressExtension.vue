@@ -24,7 +24,6 @@
                                     <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                                 </div>
 
-
                                 <div v-if="step === 2">
                                     <div v-if="loader" class="loader">
                                         <img :src="require('@/assets/img/loader1.gif')" alt="">
@@ -71,6 +70,28 @@
                                 </div>
 
                                 <div v-if="step === 3">
+                                    <div v-if="loader" class="loader">
+                                        <img :src="require('@/assets/img/loader1.gif')" alt="">
+                                    </div>
+                                    <div class="extension" v-if="this.successful">
+                                        <div v-if="check_status">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                                                <h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
+                                            </div>
+                                            <div class="text">{{ $t('super') }}</div>
+                                            <a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
+                                            <div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
+                                        </div>
+                                        <div v-if="!check_status">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                                                <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
+                                            </div>
+                                            <div class="text" v-html="$t('express_text3')"></div>
+                                            <div class="img pr-20"><img :src="require('@/assets/img/ex4.png')" alt=""></div>
+                                        </div>
+                                    </div>
                                     <div class="extension" v-if="!this.successful">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
@@ -78,15 +99,6 @@
                                         </div>
                                         <div class="text" v-html="$t('express_text3')"></div>
                                         <div class="img pr-20"><img :src="require('@/assets/img/ex4.png')" alt=""></div>
-                                    </div>
-                                    <div class="extension" v-if="this.successful">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                                            <h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
-                                        </div>
-                                        <div class="text">{{ $t('super') }}</div>
-                                        <a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
-                                        <div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
                                     </div>
                                 </div>
                                 <div class="button-click" v-if="step != 3">
@@ -136,12 +148,15 @@
                 errorMsg:'',
                 timeout: false,
                 Idreceipt: '',
-                max_renewal: 0
+                max_renewal: 0,
+                check_status: null
             }
         },
         mounted () {
             var url = window.location.href;
             if (url.indexOf('status=successful') != -1) {
+                this.checkStatus();
+                this.loader = true
                 $("#modalExtension").modal('show');
                 this.step=3;
                 this.successful=true;
@@ -163,6 +178,7 @@
                 obj.errorMsg="";
                 obj.successful=true;
                 obj.Idreceipt="";
+                obj.check_status=null
             });
             document.body.addEventListener('keydown', (e) => {
                 if (e.keyCode === 39) {
@@ -324,6 +340,19 @@ clickSteps(index){
         this.isActive = 2;
         this.step = 2;
     }
+},
+checkStatus() {
+    this.$axios.get('/check_status?id=' + this.Idreceipt)
+    .then((response) => {
+        let $response = response.data
+        if ($response.code === 0) {
+            this.check_status = false
+        } else {
+            this.check_status = true
+        }
+        this.loader = false
+    })
+    .catch((e) => console.log(e))
 }
 }
 }

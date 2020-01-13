@@ -60,7 +60,7 @@ textarea:hover, textarea:focus, textarea:active{
 				}
 			}
 			.nav li a{
-				padding: 12px 15px 12px 70px;
+				padding: 9px 15px 9px 70px;
 				font-size: 16px;
 				color: #000;
 				border-radius: 0;
@@ -1759,6 +1759,17 @@ margin-bottom: 10px;
     max-width: 360px;
     width: 100%;
 }
+.text-c{
+ max-width: 370px !important;
+}
+.forgot-password {
+    font-size: 17px;
+    font-family: 'stroke-medium';
+    color: #000;
+    position: absolute;
+    bottom: 60px;
+    cursor: pointer;
+}
 .extension{
     padding:0 0 60px 60px;
     height: 600px;
@@ -1976,6 +1987,9 @@ color: #fff;
 .social.mobb{
 display: none;
 }
-/*.desktop-banner .slick-track{
-width: 100% !important;
-}*/
+.mt-30{
+	margin-top: 30px;
+}
+.ex-margin{
+	margin: -10px -22px;
+}

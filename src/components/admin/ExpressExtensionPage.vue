@@ -3,12 +3,9 @@
         <div v-if="loader" class="loader loader-admin">
             <img :src="require('@/assets/img/loader1.gif')" alt="">
         </div>
-<!--         <div class="errorsServer" v-if="errorsServer">
-            {{errorsServer}}
-        </div> -->
         <div class="slider-extension">
-            <div class="extension" v-if="step === 1">
-                <div class="modal-header">
+            <div class="extension extension-ex" v-if="step === 1">
+                <div class="modal-header modal-header-ex">
                     <div class="modal-title">{{ $t('expressExtension') }}</div>
                 </div>
                 <div class="form-width">
@@ -31,8 +28,8 @@
                 <div v-if="loader" class="loader">
                     <img :src="require('@/assets/img/loader1.gif')" alt="">
                 </div>
-                <div class="extension" v-if="errors">
-                    <div class="modal-header pb-30">
+                <div class="extension extension-ex" v-if="errors">
+                    <div class="modal-header modal-header-ex pb-30">
                         <h1 class="modal-title"><button class="back" @click="clickSteps(1)"><img :src="require('@/assets/img/icon/exit.svg')" alt=""></button>{{ $t('something_went_wrong') }}</h1>
                     </div>
                     <div class="text" v-if='!errorMsg'>{{errors}}</div>
@@ -42,8 +39,8 @@
                     <div class="img pr-20" v-if='!errorMsg'><img :src="require('@/assets/img/ex2.png')" alt=""></div>
                     <div class="img pr-20" v-else><img :src="require('@/assets/img/ex4.png')" alt=""></div>
                 </div>
-                <div class="extension" v-if="!errors">
-                    <div class="modal-header">
+                <div class="extension extension-ex" v-if="!errors">
+                    <div class="modal-header modal-header-ex">
                         <h1 class="modal-title">{{ $t('expressExtension') }}</h1>
                     </div>
                     <div class="form-width1">
@@ -71,25 +68,6 @@
                     <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                 </div>
             </div>
-
-<!--             <div v-if="step === 3">
-<div class="extension" v-if="!this.successful">
-<div class="modal-header">
-<h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
-</div>
-<div class="text" v-html="$t('express_text3')"></div>
-<div class="img pr-20"><img :src="require('@/assets/img/ex4.png')" alt=""></div>
-</div>
-<div class="extension" v-if="this.successful">
-<div class="modal-header">
-<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-<h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
-</div>
-<div class="text">{{ $t('super') }}</div>
-<a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
-<div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
-</div>
-</div> -->
 </div>
 </div>
 </template>

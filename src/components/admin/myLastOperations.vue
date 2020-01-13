@@ -15,7 +15,7 @@
                 <table class="table-1">
                     <tr><th>{{$t('order_number')}}</th><th>{{$t('date_and_time')}}</th><th>{{$t('place_operation')}}</th><th>{{$t('operation')}}</th><th>{{$t('security_ticket')}}</th><th>{{$t('transaction_amount')}}</th><th>{{$t('status')}}</th><th>{{$t('receipt')}}</th></tr>
 
-                    <tr v-for="(operation, index) in operations" :key="index" @click="totalFunc(operation)">
+                    <tr v-for="(operation, index) in operations" :key="index">
                         <td>{{operation.order}}</td>
                         <td>{{ moment(operation.date).format('DD.MM.YYYY  HH:mm') }}</td>
                         <td><span>{{operation.place}}</span></td>
@@ -28,7 +28,7 @@
                 </table>
             </div>
             <div class="myLastOperations-mobile" v-if="operations.length>0">
-                <div class="mo" v-for="(operation, index) in operations" :key="index" @click="totalFunc(operation)">
+                <div class="mo" v-for="(operation, index) in operations" :key="index">
                     <div class="mo-title">
                         <div class="mo-t"><span>{{$t('order_number')}}</span>{{operation.order}}</div>
                         <a :href="operation.pdf" target="_blank" class="kvi" v-if="operation.success === true">{{$t('receipt')}}</a>

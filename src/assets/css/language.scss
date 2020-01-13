@@ -15,8 +15,11 @@
 
 /*'FranklinGothicDemiCond'*/
 .banner-flex .text .text3, .dflex-faq .panel-heading .panel-title a, .block3 .block3-1 li,
-.marker-modal .mm-1 h4{
+.marker-modal .mm-1 h4, .contract-link span, .mobb-menu .dropdown-menu li a.logout{
   font-family:'Roboto-Bold' !important;
+}
+.contract-link span{
+  font-size: 11px;
 }
 
 /*'FranklinGothicBook'*/
@@ -732,7 +735,17 @@ background-image: url(../img/icon/top.svg) !important;
         display: flex;
         font-size: 12px;
         color: #000;
-        margin-bottom: 20px;
+        margin-bottom: 5px;
+              b{
+         font-family:'FranklinGothicDemi';
+      }
+      .num{
+        display: flex;
+        margin-left: 5px;
+        p{
+          margin-bottom: 0;
+        }
+      }
       }
       .dflex{
         display: flex;
@@ -1100,7 +1113,7 @@ margin-top: 30px;
     font-size: 36px;
     font-family:'stroke-medium';
 }
-.modal-header {
+.modal-header-ex {
     padding: 85px 0;
     border:none;
 }
@@ -1197,7 +1210,7 @@ margin-bottom: 10px;
     max-width: 360px;
     width: 100%;
 }
-.extension{
+.extension-ex{
     padding:0 30px 30px 30px;
     height: 100vh;
 }
@@ -1320,6 +1333,9 @@ background-color: #333;
 }
 .button-orange{
   width: 100%;
+}
+.button-orange-ex{
+  max-width: 280px;
 }
 .back{
   background: none;
@@ -2068,6 +2084,9 @@ opacity: 0.6;
 .mb-v{
   display: block !important;
 }
+.img-check{
+  display: none;
+}
 
   @media (max-height: 750px) {
     .modal-auth .forgot-password, .modal-auth .text_modal {
@@ -2196,6 +2215,9 @@ opacity: 0.6;
   .admin-wrapper {
     padding: 10px 15px;
 }
+.ex-margin {
+    margin: -10px -15px;
+}
 .admin-wrapper .mCSB_buttonUp, .admin-wrapper .mCSB_buttonDown{
 background-position: 130px !important;
 }
@@ -2272,6 +2294,9 @@ border-left: 0;
     justify-content: flex-start;
     padding: 0 15px;
     margin-bottom: 15px;
+}
+.img-check{
+  display: block;
 }
 .ds-v{
   display: none !important;
@@ -2405,6 +2430,9 @@ font-family:'FranklinGothicDemi';
     height: 100%;
     padding: 15px 8px;
 }
+.ex-margin {
+    margin: 0px -8px -15px;
+}
 .loan-list {
     height: 100%;
 }
@@ -2469,6 +2497,11 @@ padding: 0;
     height: 100%;
     min-height: calc(100vh - 237px);
 }
+/*.ex-margin .extension {
+    padding: 5px 7px;
+    height: 100%;
+    min-height: 100%;
+}*/
 .ExpressExtensionPage .text{
   padding-top: 30px;
 }
@@ -2482,6 +2515,9 @@ display: none;
 }
 .ExpressExtensionPage .form-width, .ExpressExtensionPage .form-width1 {
     margin: 20px auto;
+}
+.ex-margin .form-width, .ex-margin .form-width1 {
+    margin: 0px auto;
 }
 .ExpressExtensionPage .form-2 .number-ex{
   font-size: 26px;
@@ -2653,10 +2689,32 @@ bottom: auto;
     .modal{
 background: rgba(0,0,0,0.5);
     }
+    .dnone-prod{
+      display: none;
+    }
 
+.text-error-red{
+  color: red;
+    position: absolute;
+    margin-top: -16px;
+    font-size: 14px;
+    margin-left: 25px;
+}
 
-
-
+.contract-link{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  span{
+    text-decoration: underline;
+    font-size: 12px;
+    color: #000;
+    font-family:'FranklinGothicDemi';
+    display: block;
+    margin-right: 10px;
+  }
+}
 
 
 

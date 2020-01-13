@@ -30,8 +30,8 @@
         height: 90px;
     }
     .block-left .menu .disable, .block-left .menu .nav li a{
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 }
 @media (max-height: 899px) {
@@ -84,17 +84,21 @@
     .calc-form .total {
         margin-bottom: 30px;
     }
+    .mobile-header-decktop{
+        padding-top:15px;
+        padding-bottom: 10px;
+    }
 }
 @media (max-height:800px) {
     .mobile-header-decktop{
         padding-top: 15px;
-        padding-bottom: 15px;
+        padding-bottom: 10px;
     }
     .block-left .menu-2 ul {
         margin: 0 auto 0px;
     }
     .mobile-header-decktop .logo, .mobile-header-decktop .ds-logo {
-        height: 50px !important;
+        height: 40px !important;
     }
     .block-left .menu .disable, .block-left .menu .nav li a {
         padding-top: 5px;
@@ -152,8 +156,8 @@
         font-size: 13px;
     }
     .block-left .menu .disable, .block-left .menu .nav li a{
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 5px;
+        padding-bottom: 5px;
     }
 }
 @media (max-height: 770px) {
@@ -178,6 +182,13 @@
     .calc-form .total {
         margin-bottom: 20px;
     }
+    .block-left .menu-2 a img {
+    height: 30px;
+}
+.block-left .menu .disable, .block-left .menu .nav li a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
 }
 
 @media (max-height: 750px) {
@@ -220,8 +231,8 @@
         height: 60px;
     }
     .block-left .menu .disable, .block-left .menu .nav li a {
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
     .block3 .block3-1 a {
         padding: 3px 0 3px;
@@ -270,6 +281,16 @@
     .block1 .block1-1 .block1-text .b1 {
         font-size: 12px;
     }
+    .express-extension .button-yellow {
+    height: 36px;
+    font-size: 15px;
+}
+.block-left .menu-2 a img {
+    margin-bottom: 6px;
+}
+.block-left .menu .nav li a {
+    font-size: 15px;
+}
 }
 @media (max-height: 700px) {
     .form-main .form-1 textarea {
@@ -291,6 +312,13 @@
     .block1 .block1-1 .img {
         margin-bottom: 10px;
     }
+    .mobile-header-decktop {
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+.block-left .menu .disable {
+    font-size: 16px !important;
+}
 }
 @media (max-height: 680px) {
     .calc_block .df {
@@ -345,8 +373,8 @@
         height: 30px;
     }
     .block-left .menu .disable, .block-left .menu .nav li a {
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top: 3px;
+        padding-bottom: 3px;
     }
     .block-left .menu .nav li a {
         font-size: 14px;
@@ -361,6 +389,9 @@
         width: 48px;
         height: 24px;
     }
+    .mobile-header-decktop .logo, .mobile-header-decktop .ds-logo {
+    height: 38px !important;
+}
 }
 @media (max-height: 640px) {
     .bg-calc .title {
@@ -408,16 +439,29 @@
     .block1 .text_p {
         margin-top: 0;
     }
-    .mobile-header-decktop .logo, .mobile-header-decktop .ds-logo {
-        height: 46px !important;
-    }
     .block-left .menu .disable {
         font-size: 16px !important;
     }
     .express-extension .button-yellow {
-        height: 36px;
+        height: 34px;
         font-size: 14px;
+            margin: 10px auto 5px;
     }
+    .block-left .menu-2 a img {
+    height: 26px;
+}
+.dflex-lang div {
+    width: 44px;
+    height: 20px;
+    font-size: 10px;
+}
+.auth {
+    margin-bottom: 8px !important;
+}
+.mobile-header-decktop {
+    padding-top: 8px;
+    padding-bottom: 5px;
+}
 }
 @media (max-height: 610px) {
     .block-right .tab-pane1 .tab-text {
@@ -447,10 +491,6 @@
     }
     .calc-form .form-1 {
         margin-bottom: 10px;
-    }
-    .mobile-header-decktop{
-        padding-top: 10px;
-        padding-bottom: 10px;
     }
     .block-left .menu-2 a img {
         margin-bottom: 5px;
@@ -488,13 +528,6 @@
     .bg-calc .title {
         font-size: 30px !important;
     }
-/*    .calc-form .form-1 select {
-height: 30px;
-}
-.calc-form .form-1 input {
-height: 34px;
-background-size: 100% 100%;
-}*/
 .block1 .block1-1 .img {
     margin-bottom: 10px;
 }
@@ -570,12 +603,9 @@ background-size: 100% 100%;
 .modal-extension .modal-dialog {
     max-width: 700px;
 }
-.mobile-header-decktop .ds-logo, .mobile-header-decktop .logo {
-    height: 46px !important;
-}
 .express-extension .button-yellow {
-    height: 34px;
-    font-size: 14px;
+    height: 32px;
+    font-size: 13px;
 }
 .block-left .menu .disable {
     font-size: 16px !important;
@@ -596,6 +626,16 @@ background-size: 100% 100%;
 }
 .qiwi.text-social .content_block {
     padding-top: 5px;
+}
+.mobile-header-decktop {
+    padding-top: 6px;
+    padding-bottom: 3px;
+}
+}
+@media (max-height: 599px){
+.block-left .menu .disable, .block-left .menu .nav li a {
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 }
 
@@ -1008,6 +1048,9 @@ width: 140px;
     .map-wrapper select {
         width: 110px;
     }
+    .block-left .menu .disable {
+    font-size: 16px !important;
+}
 }
 @media (max-width: 1300px) {
     .block1 .block1-2 img {
@@ -2223,6 +2266,59 @@ display: none;
 }
 .banner-flex{
     align-items: center;
+}
+.modal-contract .img{
+display: none;
+}
+.modal-contract .extension, .modal-contract .slider-extension {
+    height: auto !important;
+    padding-bottom: 0;
+    min-height: 340px;
+}
+.modal-contract .form-1 input {
+    max-width: 100%;
+}
+.modal-contract .button-orange {
+    width: 100%;
+        margin: 20px 0 15px;
+}
+.text-error-red {
+    margin-top: 0 !important;
+}
+.modal-contract .extension{
+    padding: 0 15px 15px !important;
+    min-height: auto !important;
+}
+.modal-contract .modal-body {
+    min-height: 340px;
+}
+.modal-contract .forgot-password {
+    bottom: 40px;
+}
+.modal-contract .modal-header {
+    padding: 15px 0 10px 0px !important;
+    display: block !important;
+}
+.modal-contract .modal-title, .modal-contract .text{
+    text-align: center;
+}
+.modal-contract .close {
+    margin-top: 3px !important;
+}
+.modal-contract .modal-title {
+    font-size: 20px !important;
+}
+.modal-header-contract{
+    margin-bottom: 140px;
+}
+.modal-contract .text.mt-30{
+    text-align: left;
+}
+.ex-margin .modal-header-contract {
+    margin-bottom: 120px;
+}
+.modal-contract .text {
+    font-size: 16px !important;
 }
 }
 @media (max-width: 360px) {

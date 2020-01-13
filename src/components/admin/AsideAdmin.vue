@@ -21,6 +21,7 @@
                     <li><router-link to="/cabinet/my-loans">{{$t('my_loans')}}</router-link></li>
                     <li><router-link to="/cabinet/express-extension">{{$t('express_renewal')}}</router-link></li>
                     <li><router-link to="/cabinet/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
+                    <li><router-link to="/cabinet/check-contract">{{$t('check_contract3')}}</router-link></li>
                     <li><router-link to="/cabinet/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
                     <li><router-link to="/cabinet/notification-history">{{$t('notification_history')}}</router-link></li>
                     <li><router-link to="/cabinet/change-my-data">{{$t('change_details')}}</router-link></li>
@@ -33,6 +34,7 @@
                         <span v-if="$route.path == '/cabinet/my-loans'">{{$t('my_loans')}}</span>
                         <span v-if="$route.path == '/cabinet/express-extension'">{{$t('express_renewal')}}</span>
                         <span v-if="$route.path == '/cabinet/my-last-operations'">{{$t('my_last_operations')}}</span>
+                        <span v-if="$route.path == '/cabinet/check-contract'">{{$t('check_contract2')}}</span>
                         <span v-if="$route.path == '/cabinet/valuation-my-capital'">{{$t('valuation_capital')}}</span>
                         <span v-if="$route.path == '/cabinet/notification-history'">{{$t('notification_history')}}</span>
                         <span v-if="$route.path == '/cabinet/change-my-data'">{{$t('change_details')}}</span>
@@ -43,6 +45,7 @@
                         <li><router-link to="/cabinet/my-loans">{{$t('my_loans')}}</router-link></li>
                         <li><router-link to="/cabinet/express-extension">{{$t('express_renewal')}}</router-link></li>
                         <li><router-link to="/cabinet/my-last-operations">{{$t('my_last_operations')}}</router-link></li>
+                        <li><router-link to="/cabinet/check-contract">{{$t('check_contract2')}}</router-link></li>
                         <li><router-link to="/cabinet/valuation-my-capital">{{$t('valuation_capital')}}</router-link></li>
                         <li><router-link to="/cabinet/notification-history">{{$t('notification_history')}}</router-link></li>
                         <li><router-link to="/cabinet/change-my-data">{{$t('change_details')}}</router-link></li>

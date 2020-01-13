@@ -21,7 +21,7 @@
                     <td>{{product.au999content}}</td>
                     <td>{{product.description}}</td>
 
-                    <td><div class="opis"><div class="txt" v-if="edit">{{product.user_description}}</div><div class="txt" v-if="!edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="edit">{{$t('edit')}}</span> <span v-if="!edit">{{$t('add_description')}}</span></button></div> </td>
+                    <td><div class="opis"><div class="txt" v-if="product.edit">{{product.user_description}}</div><div class="txt" v-if="!product.edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.edit">{{$t('edit')}}</span> <span v-if="!product.edit">{{$t('add_description')}}</span></button></div> </td>
                     <td><span v-if="!product.amountHide">{{product.max_amount_date_issue}} ₸</span><span v-if="product.amountHide">-</span></td>
                     <td><div class="switch switch-op" @click="toggleSwitch(index)">
                         <switches v-model="product.switch" type-bold="true" ></switches>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="vc-desc">
-                <div class="opis"><div class="txt" v-if="edit">{{product.user_description}}</div><div class="txt" v-if="!edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="edit">{{$t('edit')}}</span> <span v-if="!edit">{{$t('add_description')}}</span></button></div>
+                <div class="opis"><div class="txt" v-if="product.edit">{{product.user_description}}</div><div class="txt" v-if="!product.edit">-----</div><button class="button-yellow" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(index)"><span v-if="product.edit">{{$t('edit')}}</span> <span v-if="!product.edit">{{$t('add_description')}}</span></button></div>
             </div>
             <div class="vc-content">
                 <div class="dflex">
@@ -369,6 +369,7 @@
             },
             clickEdit(index){
                 this.message = this.products[index].user_description
+                this.letter = this.products[index].letter
                 this.item_code = this.products[index].item_code
             },
             charCount: function(){
@@ -389,7 +390,7 @@
                         this.errorsServer = $response.error
                         this.loader = false
                     } else {
-                        this.getProducts();
+                        this.loader = false
                     }
                 })
                 .catch((e) => {
@@ -403,13 +404,15 @@
             },
             descriptionLength(){
                 for(var i=0; i<this.products.length; i++){
+                    this.products[i].edit = true
+                    this.products[i].letter = 0
                     if(this.products[i].user_description == null){
-                        this.letter = 0;
-                        this.edit = false;
+                        this.products[i].letter = 0;
+                        this.products[i].edit = false;
                         this.clickable = true;
                     } else {
-                        this.edit = true;
-                        this.letter = this.products[i].user_description.length;
+                        this.products[i].edit = true;
+                        this.products[i].letter = this.products[i].user_description.length;
                         this.clickable = false;
                     }
                 }

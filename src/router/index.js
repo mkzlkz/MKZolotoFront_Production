@@ -17,6 +17,7 @@ import admin from '@/components/admin/admin'
 import myLoans from '@/components/admin/myLoans'
 import ExpressExtensionPage from '@/components/admin/ExpressExtensionPage'
 import myLastOperations from '@/components/admin/myLastOperations'
+import checkContract from '@/components/admin/checkContract'
 import valuationCapital from '@/components/admin/valuationCapital'
 import notificationHistory from '@/components/admin/notificationHistory'
 import editMyData from '@/components/admin/editMyData'
@@ -144,6 +145,18 @@ export default new Router({
     {
       path: 'my-last-operations',
       component: AuthFunction().isLoggedIn() ? myLastOperations : Auth,
+                beforeEnter: (to, from, next) => {
+            let redirect = AuthFunction().verifiedUser()
+            if (redirect) {
+              next(redirect)
+            } else {
+              next()
+            }
+          }
+    },
+        {
+      path: 'check-contract',
+      component: AuthFunction().isLoggedIn() ? checkContract : Auth,
                 beforeEnter: (to, from, next) => {
             let redirect = AuthFunction().verifiedUser()
             if (redirect) {

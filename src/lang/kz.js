@@ -185,6 +185,17 @@ export default {
   upload_image: 'Суретті жүктеу',
   take_avatars:'Біздің аватарымызды алыңыз',
   text_zd: 'Мұнда кепілзаттық билеттері көрсетіледі',
+    // договор
+  check_contract: 'Келісім-шарт тексеру',
+  check_contract2: 'Сіздің келісім-шартыңыз',
+  check_contract3: 'Сіздің электрондық келісім-шартыңыз',
+  contract_code: 'Код',
+  contract_text: 'Код компанияның кеңсесінде қағаз түрінде беріледі',
+  enter_contract_code: 'Кодты еңгізіңіз',
+  verify: 'Алу',
+  confirmation: 'Растау',
+  contract_text2: 'Келісім шарттарымен және кепілдемемен',
+  read_and_agree: 'Таныстым және келістім'
 }
 
 

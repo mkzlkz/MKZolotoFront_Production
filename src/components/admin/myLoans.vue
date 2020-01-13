@@ -6,243 +6,287 @@
         <div class="errorsServer" v-if="errorsServer">
             {{errorsServer}}
         </div>
-        <div class="errorsServer" v-if="loans.length<1">
-            {{$t('text_zd')}}
-        </div>
-        <div class="loan-block1" v-if="!errorsServer">
-            <div class="loan-list">
-                <div>
-                    <div class="loan-box" v-for="(loan, index) in loans" :key="loan.loan_id">
-                        <div class="loan">
-                            <div class="loan-title">
-                                <div class="zb"><span>{{$t('security_ticket')}}</span> <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
-                                <div class="switch" @click="toggleSwitch(index)" v-bind:class="{disabledSwitch : loan.default_pay === 0}">
-                                    <switches v-model="loan.switch" type-bold="true" ></switches>
-                                </div>
-                            </div>
-                            <div class="p-24">
-                                <div class="prog-bar">
-                                    <div class="green"></div>
-                                    <div class="pb" :class="{greens : loan.green === true, yellows : loan.yellow === true, oranges : loan.orange === true, red : loan.reds === true}">
-                                        <progress-bar size="medium" :val="`${String(loan.days)}0`" :max="`${String(loan.maxDays)}0`" min="1"></progress-bar>
+
+        <div v-if="!errorsServer">
+            <div class="errorsServer" v-if="loans.length<1">
+                {{$t('text_zd')}}
+            </div>
+            <div class="loan-block1">
+                <div class="loan-list">
+                    <div>
+                        <div class="loan-box" v-for="(loan, index) in loans" :key="loan.loan_id">
+                            <div class="loan">
+                                <div class="loan-title">
+                                    <div class="zb"><span>{{$t('security_ticket')}}</span> <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
+                                    <div class="switch" @click="toggleSwitch(index)" v-bind:class="{disabledSwitch : loan.default_pay === 0}">
+                                        <switches v-model="loan.switch" type-bold="true" ></switches>
                                     </div>
-                                    <div class="gray" v-if="loan.red === false"></div>
                                 </div>
-                            </div>
-                            <div class="loan-content p-24">
-                                <div class="dflex green-d" v-if="loan.green === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval1.svg')" alt="" class="rd"> {{$t('guaranteed_time_green')}}</div>
-                                    <div class="l2">{{loan.loan_term}}</div>
+                                <div class="p-24">
+                                    <div class="prog-bar">
+                                        <div class="green"></div>
+                                        <div class="pb" :class="{greens : loan.green === true, yellows : loan.yellow === true, oranges : loan.orange === true, red : loan.reds === true}">
+                                            <progress-bar size="medium" :val="`${String(loan.days)}0`" :max="`${String(loan.maxDays)}0`" min="1"></progress-bar>
+                                        </div>
+                                        <div class="gray" v-if="loan.red === false"></div>
+                                    </div>
                                 </div>
-                                <div class="dflex red-d" v-if="loan.red === true">
-                                    <div class="red l1"><img :src="require('@/assets/img/icon/oval.svg')" alt="" class="rd"> {{$t('guaranteed_time_red')}}</div>
-                                    <div class="red l2">{{loan.guaranty_time}}</div>
-                                </div>
-                                <div class="dflex yellow-d" v-if="loan.yellow === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval2.svg')" alt="" class="rd"> {{$t('guaranteed_time_yellow')}}</div>
-                                    <div class="l2">{{loan.guaranty_time}}</div>
-                                </div>
-                                <div class="dflex orange-d" v-if="loan.orange === true">
-                                    <div class="l1"><img :src="require('@/assets/img/icon/oval3.svg')" alt="" class="rd"> {{$t('guaranteed_time_orange')}}</div>
-                                    <div class="l2">{{loan.guaranty_time}}</div>
-                                </div>
+                                <div class="loan-content p-24">
+                                    <div class="dflex green-d" v-if="loan.green === true">
+                                        <div class="l1"><img :src="require('@/assets/img/icon/oval1.svg')" alt="" class="rd"> {{$t('guaranteed_time_green')}}</div>
+                                        <div class="l2">{{loan.loan_term}}</div>
+                                    </div>
+                                    <div class="dflex red-d" v-if="loan.red === true">
+                                        <div class="red l1"><img :src="require('@/assets/img/icon/oval.svg')" alt="" class="rd"> {{$t('guaranteed_time_red')}}</div>
+                                        <div class="red l2">{{loan.guaranty_time}}</div>
+                                    </div>
+                                    <div class="dflex yellow-d" v-if="loan.yellow === true">
+                                        <div class="l1"><img :src="require('@/assets/img/icon/oval2.svg')" alt="" class="rd"> {{$t('guaranteed_time_yellow')}}</div>
+                                        <div class="l2">{{loan.guaranty_time}}</div>
+                                    </div>
+                                    <div class="dflex orange-d" v-if="loan.orange === true">
+                                        <div class="l1"><img :src="require('@/assets/img/icon/oval3.svg')" alt="" class="rd"> {{$t('guaranteed_time_orange')}}</div>
+                                        <div class="l2">{{loan.guaranty_time}}</div>
+                                    </div>
 
 
-                                <div class="dflex">
-                                    <div class="l1">{{$t('loan_balance')}}</div>
-                                    <div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('loan_balance')}}</div>
+                                        <div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div>
+                                    </div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('on_loan')}}</div>
+                                        <div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div>
+                                    </div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('for_delay')}}</div>
+                                        <div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div>
+                                    </div>
+                                    <div class="dflex">
+                                        <div class="l1 bold">{{$t('interest_payable')}}</div>
+                                        <div class="l2 bold">{{nicePrice(loan.percent_pay)}} ₸ </div>
+                                    </div>
+                                    <div class="button-gray">
+                                        <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
+                                        <button v-on:click="closeDetail(index)" v-if="detail.includes(index)"><img :src="require('@/assets/img/icon/right-arrow.svg')" alt=""></button>
+                                    </div>
                                 </div>
-                                <div class="dflex">
-                                    <div class="l1">{{$t('on_loan')}}</div>
-                                    <div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div>
-                                </div>
-                                <div class="dflex">
-                                    <div class="l1">{{$t('for_delay')}}</div>
-                                    <div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div>
-                                </div>
-                                <div class="dflex">
-                                    <div class="l1 bold">{{$t('interest_payable')}}</div>
-                                    <div class="l2 bold">{{nicePrice(loan.percent_pay)}} ₸ </div>
-                                </div>
-                                <div class="button-gray">
-                                    <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
-                                    <button v-on:click="closeDetail(index)" v-if="detail.includes(index)"><img :src="require('@/assets/img/icon/right-arrow.svg')" alt=""></button>
-                                </div>
-                            </div>
-                            <div class="loan-down" v-if="!loan.amountHide">
-                                <div class="dflex">
-                                    <div class="l1 bold" v-if="loan.operation_type_1">{{$t('pay_for_renewal')}}</div>
-                                    <div class="l1 bold" v-if="loan.operation_type_2">{{$t('for_partial_repayment')}}</div>
+                                <div class="loan-down" v-if="!loan.amountHide">
+                                    <div class="dflex">
+                                        <div class="l1 bold" v-if="loan.operation_type_1">{{$t('pay_for_renewal')}}</div>
+                                        <div class="l1 bold" v-if="loan.operation_type_2">{{$t('for_partial_repayment')}}</div>
 
-                                    <div class="l2 bold">{{nicePrice(loan.default_pay)}} ₸ </div>
-                                </div>
-                                <button class="button-yellow" v-bind:class="{ activeLoan: payments.includes(index)}" v-on:click="openPayments(index); expAmount(loan)" >{{$t('change_operation_parameters')}}</button>
-                                <div class="button-gray">
-                                    <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
-                                    <button v-on:click="closeDetail(index)" v-if="detail.includes(index)">{{$t('hide')}}</button>
+                                        <div class="l2 bold">{{nicePrice(loan.default_pay)}} ₸ </div>
+                                    </div>
+                                    <button class="button-yellow" v-bind:class="{ activeLoan: payments.includes(index)}" v-on:click="openPayments(index); expAmount(loan)" >{{$t('change_operation_parameters')}}</button>
+                                    <div class="button-gray">
+                                        <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
+                                        <button v-on:click="closeDetail(index)" v-if="detail.includes(index)">{{$t('hide')}}</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="loan-1" v-if="payments.includes(index)">
-                            <div class="dflex dflex3">
-                                <div class="dropdown">
-                                    <button class="dropdown-toggle" type="button" data-toggle="dropdown" v-bind:class="{disabledDropdown : operations.length === 1}">
-                                        <span v-if="renewal">{{$t('renewal')}}</span>
-                                        <span v-if="partial_repayment">{{$t('partial_repayment')}}</span>
-                                        <span class="bg"><span class="caret"></span></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li v-if="operations.length > 1">
-                                                <a v-on:click="openPay">
-                                                    <span v-if="!partial_repayment">{{$t('partial_repayment')}}</span>
-                                                    <span v-if="!renewal">{{$t('renewal')}}</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                            <div class="loan-1" v-if="payments.includes(index)">
+                                <div class="dflex dflex3">
+                                    <div class="dropdown">
+                                        <button class="dropdown-toggle" type="button" data-toggle="dropdown" v-bind:class="{disabledDropdown : operations.length === 1}">
+                                            <span v-if="renewal">{{$t('renewal')}}</span>
+                                            <span v-if="partial_repayment">{{$t('partial_repayment')}}</span>
+                                            <span class="bg"><span class="caret"></span></span></button>
+                                            <ul class="dropdown-menu">
+                                                <li v-if="operations.length > 1">
+                                                    <a v-on:click="openPay">
+                                                        <span v-if="!partial_repayment">{{$t('partial_repayment')}}</span>
+                                                        <span v-if="!renewal">{{$t('renewal')}}</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <button class="close-l" v-on:click="closePayments(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
                                     </div>
-                                    <button class="close-l" v-on:click="closePayments(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
-                                </div>
-                                <div class="ch-pog" v-if="partial_repayment">
-                                    <div class="dflex">
-                                        <div class="l1">{{$t('new_loan_term')}}</div>
-                                        <div class="l2">{{ moment(loan.partial_date).format('DD.MM.YYYY') }}</div>
-                                    </div>
-                                    <div class="dflex">
-                                        <div class="l1">{{$t('remuneration_amount')}}</div>
-                                        <div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div>
-                                    </div>
-                                    <div class="dflex dflex2">
-                                        <div class="l1"><div v-html="$t('partial_redemption_amount')"></div>
-                                        <span :class="{red : red_min === true}">{{$t('from')}} {{nicePrice(loan.min_amount_pay)}}</span>
-                                        <span :class="{red : red_max === true}">{{$t('before')}} {{nicePrice(loan.max_amount_pay)}} ₸</span>
-                                    </div>
-                                    <div class="l2">
-                                        <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :class="{red_border : red_max === true || red_min === true}" name="payment_sum" v-model="loan.payment_sum" v-on:keyup="checkSum(loan)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                    </div>
-                                </div>
-                                <div class="dflex">
-                                    <div class="l1" v-html="$t('balance_loan_amount')"></div>
-                                    <div class="l2"> {{nicePrice(loan.total_osz)}} ₸</div>
-                                </div>
-                                <div class="loan-down">
-                                    <div class="dflex">
-                                        <div class="l1 bold">{{$t('total_payment')}}</div>
-                                        <div class="l2 bold"> {{nicePrice(loan.total_iko)}} ₸</div>
-                                    </div>
-                                    <button class="button-yellow" v-on:click="changeDataLoans(loan);
-                                    closePayments(index);">{{$t('to_apply')}}</button>
-                                </div>
-                            </div>
-                            <div class="prodl" v-if="renewal">
-                                <div class="pr-title">{{$t('how_many_days')}}</div>
-                                <div class="exten-slider" >
-                                    <div class="ex-flex">
-                                        <div class="min-ex">{{loan.min_days_extension}}</div>
-                                        <div class="max-ex">{{loan.max_days_extension}}</div>
-                                    </div>
-                                    <vue-slider v-model="loan.count_days" :min='loan.min_days_extension' :max='loan.max_days_extension' :tooltip="'always'" @change="dayFunc(loan,index)"/>
-                                    <div class="border"></div>
-                                </div>
-                                <div class="prod-input">
-                                    <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :min="loan.min_days_extension" :max="loan.max_days_extension" v-model="loan.count_days" @change="defaultValue(loan);dayFunc(loan,index); " @input="dayFunc(loan,index)" @keyUp="dayFunc(loan,index)" name="input-vue-slider" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
-                                </div>
-                                <div class="prod-text">
-                                    <div class="pl-txt2"><span class="span">{{$t('new_term')}}</span>
-                                        <div class="datepic" @click="datepickerFunc(loan)">
-                                            <datepicker
-                                            v-model="loan.partial_date"
-                                            :format="formatDate"
-                                            :language="ru"
-                                            :monday-first="true"
-                                            :disabled-dates="disabled"
-                                            v-on:selected="changeDate(loan,index)"
-                                            ></datepicker>
-                                            <img :src="require('@/assets/img/icon/calendar.svg')" alt="" class="img">
+                                    <div class="ch-pog" v-if="partial_repayment">
+                                        <div class="dflex">
+                                            <div class="l1">{{$t('new_loan_term')}}</div>
+                                            <div class="l2">{{ moment(loan.partial_date).format('DD.MM.YYYY') }}</div>
+                                        </div>
+                                        <div class="dflex">
+                                            <div class="l1">{{$t('remuneration_amount')}}</div>
+                                            <div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div>
+                                        </div>
+                                        <div class="dflex dflex2">
+                                            <div class="l1"><div v-html="$t('partial_redemption_amount')"></div>
+                                            <span :class="{red : red_min === true}">{{$t('from')}} {{nicePrice(loan.min_amount_pay)}}</span>
+                                            <span :class="{red : red_max === true}">{{$t('before')}} {{nicePrice(loan.max_amount_pay)}} ₸</span>
+                                        </div>
+                                        <div class="l2">
+                                            <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :class="{red_border : red_max === true || red_min === true}" name="payment_sum" v-model="loan.payment_sum" v-on:keyup="checkSum(loan)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                                         </div>
                                     </div>
-
-                                    <div class="pl-txt"><span>{{$t('pay_loan_extension')}}</span> {{nicePrice(loans[index].amount)}} ₸</div>
-                                </div>
-                                <button class="button-yellow" v-on:click="changeDataLoansProd(loan); closePayments(index)">{{$t('to_apply')}}</button>
-                            </div>
-                        </div>
-                        <div class="loan-2" v-if="detail.includes(index)">
-                            <div class="loan2-1" v-if="description.length==0">
-                                <div class="dflex2">{{$t('security_ticket')}} №{{loan.loan_id}}</div>
-                                <div class="dflex">
-                                    <div class="l1">{{$t('branch')}}</div>
-                                    <div class="l2">
-                                        <span >
-                                            <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/cabinet/map?branch=${branch.id}`">{{branch.alias}}</router-link>
-                                        </span>
+                                    <div class="dflex">
+                                        <div class="l1" v-html="$t('balance_loan_amount')"></div>
+                                        <div class="l2"> {{nicePrice(loan.total_osz)}} ₸</div>
+                                    </div>
+                                    <div class="loan-down">
+                                        <div class="dflex">
+                                            <div class="l1 bold">{{$t('total_payment')}}</div>
+                                            <div class="l2 bold"> {{nicePrice(loan.total_iko)}} ₸</div>
+                                        </div>
+                                        <button class="button-yellow" v-on:click="changeDataLoans(loan);
+                                        closePayments(index);">{{$t('to_apply')}}</button>
                                     </div>
                                 </div>
-                                <div class="dflex"><div class="l1">{{$t('loan_term')}}</div><div class="l2">{{loan.loan_term}}</div></div>
-                                <div class="dflex"><div class="l1">{{$t('guaranteed_term')}}</div><div class="l2">{{loan.guaranty_time}}</div></div>
-                                <div class="dflex"><div class="l1">{{$t('loan_balance')}}</div><div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div></div>
-                                <div class="dflex"><div class="l1">{{$t('interest_payable')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
-                                <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div></div>
-                                <div class="dflex"><div class="l1">{{$t('for_delay')}}</div><div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div></div>
-                                <div class="dflex"><div class="l1 bold">{{$t('total_return')}}</div><div class="l2 bold">{{nicePrice(loan.return_total)}} ₸</div></div>
-                            </div>
+                                <div class="prodl" v-if="renewal">
+                                    <div class="pr-title">{{$t('how_many_days')}}</div>
+                                    <div class="exten-slider" >
+                                        <div class="ex-flex">
+                                            <div class="min-ex">{{loan.min_days_extension}}</div>
+                                            <div class="max-ex">{{loan.max_days_extension}}</div>
+                                        </div>
+                                        <vue-slider v-model="loan.count_days" :min='loan.min_days_extension' :max='loan.max_days_extension' :tooltip="'always'" @change="dayFunc(loan,index)"/>
+                                        <div class="border"></div>
+                                    </div>
+                                    <div class="prod-input">
+                                        <input type="number" pattern=" 0+\.[0-9]*[1-9][0-9]*$" :min="loan.min_days_extension" :max="loan.max_days_extension" v-model="loan.count_days" @change="defaultValue(loan);dayFunc(loan,index); " @input="dayFunc(loan,index)" @keyUp="dayFunc(loan,index)" name="input-vue-slider" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                    </div>
+                                    <div class="prod-text">
+                                        <div class="pl-txt2"><span class="span">{{$t('new_term')}}</span>
+                                            <div class="datepic" @click="datepickerFunc(loan)">
+                                                <datepicker
+                                                v-model="loan.partial_date"
+                                                :format="formatDate"
+                                                :language="ru"
+                                                :monday-first="true"
+                                                :disabled-dates="disabled"
+                                                v-on:selected="changeDate(loan,index)"
+                                                ></datepicker>
+                                                <img :src="require('@/assets/img/icon/calendar.svg')" alt="" class="img">
+                                            </div>
+                                        </div>
 
-                            <div class="loan2-3" v-if="description.includes(index)" v-for="(product,index) in loan.products" :key="product.id">
-                                <div class="dflex">
-                                    <img v-img :src="product.image" alt="" class="img">
-
-                                    <button class="close-l" v-on:click="closeDescription(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
-                                </div>
-                                <div class="name">
-                                    <p>{{$t('name')}}</p>
-                                    <span>{{product.name}}</span>
-                                </div>
-                                <div class="text">
-                                    <span class="des">{{$t('description')}}</span>
-                                    <div class="text-p" v-if="product.user_description === null">----</div>
-                                    <div class="text-p" v-else>{{product.user_description}}</div>
-                                    <button class="button-yellow button-yellow2" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(product)"><span v-if="product.user_description === null">{{$t('add_description')}}</span> <span v-else>{{$t('edit')}}</span></button>
-                                </div>
-                            </div>
-
-                            <div class="loan2-2">
-                                <button class="close-l" v-on:click="closeDetail(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
-                                <div class="table-1">
-                                    <table>
-                                        <tr><th>{{$t('products')}}</th><th>{{$t('probe')}}</th><th>{{$t('weight')}}</th><th>{{$t('content')}} <br> AU 999, {{$t('gr')}}</th></tr>
-                                        <tr v-for="(product,index) in loan.products" :key="product.id">
-                                            <td><button v-on:click="openDescription(index)">{{product.name}}</button></td><td>AU {{product.probe}}</td>
-                                            <td>{{product.weight}}</td>
-                                            <td>{{product.au999content}}</td>
-                                        </tr>
-                                    </table>
+                                        <div class="pl-txt"><span>{{$t('pay_loan_extension')}}</span> {{nicePrice(loans[index].amount)}} ₸</div>
+                                    </div>
+                                    <button class="button-yellow" v-on:click="changeDataLoansProd(loan); closePayments(index)">{{$t('to_apply')}}</button>
                                 </div>
                             </div>
+                            <div class="loan-2" v-if="detail.includes(index)">
+                                <div class="loan2-1" v-if="description.length==0">
+                                    <div class="dflex2">{{$t('security_ticket')}} <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
+                                    <div class="contract-link" @click="checkContract(loan)"><span>{{$t('check_contract3')}}</span> <img src="@/assets/img/icon/contract.svg" alt=""></div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('branch')}}</div>
+                                        <div class="l2">
+                                            <span >
+                                                <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/cabinet/map?branch=${branch.id}`">{{branch.alias}}</router-link>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="dflex"><div class="l1">{{$t('loan_term')}}</div><div class="l2">{{loan.loan_term}}</div></div>
+                                    <div class="dflex"><div class="l1">{{$t('guaranteed_term')}}</div><div class="l2">{{loan.guaranty_time}}</div></div>
+                                    <div class="dflex"><div class="l1">{{$t('loan_balance')}}</div><div class="l2">{{nicePrice(loan.loan_balance)}} ₸</div></div>
+                                    <div class="dflex"><div class="l1">{{$t('interest_payable')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
+                                    <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div></div>
+                                    <div class="dflex"><div class="l1">{{$t('for_delay')}}</div><div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div></div>
+                                    <div class="dflex"><div class="l1 bold">{{$t('total_return')}}</div><div class="l2 bold">{{nicePrice(loan.return_total)}} ₸</div></div>
+                                </div>
+
+                                <div class="loan2-3" v-if="description.includes(index)" v-for="(product,index) in loan.products" :key="product.id">
+                                    <div class="dflex">
+                                        <img v-img :src="product.image" alt="" class="img">
+
+                                        <button class="close-l" v-on:click="closeDescription(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
+                                    </div>
+                                    <div class="name">
+                                        <p>{{$t('name')}}</p>
+                                        <span>{{product.name}}</span>
+                                    </div>
+                                    <div class="text">
+                                        <span class="des">{{$t('description')}}</span>
+                                        <div class="text-p" v-bind:class="{'dnone-prod' : product.edit === false}">{{product.user_description}}</div>
+                                        <div class="text-p" v-bind:class="{'dnone-prod' : product.edit === true}">----</div>
+
+                                        <button class="button-yellow button-yellow2" data-toggle="modal" data-target="#modalEdit" @click="clickEdit(product)">
+                                            <span v-if="product.edit">{{$t('edit')}}</span>
+                                            <span v-if="!product.edit">{{$t('add_description')}}</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-edit">
+                                        <div id="modalEdit" class="modal fade">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="modal-head">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
+                                                            <div class="title">{{$t('product_description')}}</div>
+                                                        </div>
+                                                        <textarea class="textarea" v-model='product.message' @keyup="charCount(product)" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
+                                                        <div class="modal-foot">
+                                                            <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
+                                                            <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription(product)">{{$t('save')}}</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="loan2-2">
+                                    <button class="close-l" v-on:click="closeDetail(index)"><img :src="require('@/assets/img/icon/close-ad.svg')" alt=""></button>
+                                    <div class="table-1">
+                                        <table>
+                                            <tr><th>{{$t('products')}}</th><th>{{$t('probe')}}</th><th>{{$t('weight')}}</th><th>{{$t('content')}} <br> AU 999, {{$t('gr')}}</th></tr>
+                                            <tr v-for="(product,index) in loan.products" :key="product.id">
+                                                <td><button v-on:click="openDescription(index)">{{product.name}}</button></td><td>AU {{product.probe}}</td>
+                                                <td>{{product.weight}}</td>
+                                                <td>{{product.au999content}}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                                        <div class="modal-extension modal-contract">
+      <div id="contract" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="slider-extension">
+                <div class="extension" v-if="cont === 1">
+                  <div v-if="loader" class="loader">
+                    <img :src="require('@/assets/img/loader1.gif')" alt="">
+                  </div>
+                  <div class="modal-header modal-header-contract">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                    <div class="modal-title">{{ $t('confirmation') }}</div>
+                  </div>
+                  <div class="text text-c">{{$t('contract_text2')}}</div>
+                  <button class="button-orange button-orange-ex" @click="openPdf(loan)" >{{ $t('read_and_agree') }}</button>
+                  <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
+                </div>
+
+                <div class="extension" v-if="cont === 2">
+                  <div v-if="loader" class="loader">
+                    <img :src="require('@/assets/img/loader1.gif')" alt="">
+                  </div>
+                  <div class="modal-header modal-header-contract">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                    <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
+                  </div>
+                  <div class="text" v-if="errors">{{errors}}</div>
+                  <div v-if="timeout" class="text">{{ $t('service_unavailable') }}</div>
+                  <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <button class="button-yellow button-yellow-loan" v-bind:class="{disabled : payAll === 0}" @click="payAllLoans()" v-if="loans.length>0">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
-        </div>
-        <div class="modal-edit">
-            <div id="modalEdit" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="modal-head">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/close.svg')" alt=""></button>
-                                <div class="title">{{$t('product_description')}}</div>
-                            </div>
-                            <textarea class="textarea" v-model='message' @keyup="charCount()" v-bind:class="{'text-danger': hasError }" :placeholder="$t('product_description')"></textarea>
-                            <div class="modal-foot">
-                                <div class="dflex"><div v-bind:class="{'text-danger': hasError }">{{ letter }}</div>/{{ maxLetter }}</div>
-                                <button class="button-yellow" :disabled="clickable" data-dismiss="modal" aria-hidden="true" @click="changeDescription">{{$t('save')}}</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <button class="button-yellow button-yellow-loan" v-bind:class="{disabled : payAll === 0}" @click="payAllLoans()" v-if="loans.length>0">{{$t('pay_total')}} <span> {{nicePrice(payAll)}} ₸</span></button>
             </div>
         </div>
-
-
     </div>
 </template>
 
@@ -294,8 +338,12 @@
                 loader: true,
                 item_code: '',
                 errorsServer: '',
+                errors: '',
                 op_type1: true,
-                op_type2: false
+                op_type2: false,
+                cont: 1,
+                timeout: false,
+                iin: ''
             }
         },
         mounted() {
@@ -304,8 +352,13 @@
                 obj.noclick = false;
                 obj.hasError = false;
                 obj.clickable = false;
-                obj.getLoans();
             });
+                  $('#contract').on('hidden.bs.modal', function () {
+        obj.cont = 1;
+        obj.errors = '';
+        obj.timeout = false;
+        obj.loader = false;
+      });
             if(window.screen.width > 767) {
                 $(".loan-list").mCustomScrollbar({
                     autoHideScrollbar:false,
@@ -324,6 +377,7 @@
         created() {
             this.getLoans();
             this.operationTypes();
+            this.getUser();
         },
         watch:{
             'loans': {
@@ -446,6 +500,7 @@
                 this.description.splice(ind, 1)
             },
             getLoans() {
+                this.loader = true
                 this.$axios.get('/auth/loans')
                 .then((response) => {
                     let $response = response.data
@@ -457,6 +512,7 @@
                         this.loader = false
                         this.gradientFunc();
                         this.descriptionLength();
+                        this.payAmount();
                     }
                 })
                 .catch((e) => {
@@ -618,12 +674,12 @@
                         obj['count_days'] = this.loans[i].count_days
                         obj['amount'] = this.loans[i].default_pay
                         obj['entered'] = this.loans[i].payment_sum
-                        obj['place'] = 'ЛКСайт'
                         objArr.push(obj)
                     }
                 }
                 var data = {
-                    "loans":objArr
+                    "loans":objArr,
+                    "place":'ЛКСайт'
                 }
                 this.$axios.post('/auth/regular_pay_order', data)
                 .then((response) => {
@@ -690,18 +746,19 @@
                 .catch((e) => console.log(e))
             },
             clickEdit(product){
-                this.message = product.user_description
+                product.message = product.user_description
+                this.letter = product.letter
                 this.item_code = product.item_code
             },
-            charCount: function(){
-                this.letter = this.message.length;
+            charCount: function(product){
+                this.letter = product.message.length;
                 this.hasError = this.letter > this.maxLetter;
                 this.clickable = this.hasError;
             },
-            changeDescription(){
+            changeDescription(product){
                 let obj = {}
                 obj['item_code'] = this.item_code
-                obj['user_description'] = this.message
+                obj['user_description'] = product.message
                 this.$axios.post('/auth/change_description', obj)
                 .then((response) => {
                     let $response = response.data
@@ -710,7 +767,14 @@
                         this.errorsServer = $response.error
                         this.loader = false
                     } else {
-                        this.getLoans();
+                        product.user_description = product.message
+                        product.letter = this.letter
+                        if(product.user_description.length <= 0){
+                            product.edit = false
+                        }
+                        if(product.user_description.length >= 1){
+                            product.edit = true
+                        }
                     }
                 })
                 .catch((e) => {
@@ -724,14 +788,17 @@
             },
             descriptionLength(){
                 for(var i=0; i<this.loans.length;i++){
-                    for(var j=0; j<this.loans[j].products.length;j++){
+                    for(var j=0; j<this.loans[i].products.length;j++){
+                        this.loans[i].products[j].edit = true
+                        this.loans[i].products[j].letter = 0
+                        this.loans[i].products[j].message = this.loans[i].products[j].user_description
                         if(this.loans[i].products[j].user_description == null){
-                            this.letter = 0;
-                            this.edit = false;
+                            this.loans[i].products[j].letter = 0;
+                            this.loans[i].products[j].edit = false;
                             this.clickable = true;
                         } else {
-                            this.edit = true;
-                            this.letter = this.loans[i].products[j].user_description.length
+                            this.loans[i].products[j].edit = true;
+                            this.loans[i].products[j].letter = this.loans[i].products[j].user_description.length
                             this.clickable = false;
                         }
                     }
@@ -739,9 +806,65 @@
             },
             urlAddress(){
                 localStorage.setItem('url', this.$router.history.current.path);
+            },
+                        getUser () {
+                this.$axios.post('/auth/me')
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        console.log($response)
+                    } else {
+                        this.iin = $response.data.iin
+                        this.loader = false
+                    }
+                })
+                .catch((e) => {
+                    this.errorLog = e.response.status;
+                    if(this.errorLog == 401){
+                        localStorage.clear()
+                        window.location.reload()
+                    }
+                    console.log(e)
+                })
+            },
+            checkContract(loan){
+                console.log(loan)
+          this.$axios.get('/contract-check?iin=' + this.iin + '&code=' + loan.loan_id, {timeout: 30000})
+          .then((response) => {
+            let $response = response.data
+            if ($response.code === 0) {
+              this.cont = 2
+              this.errors = $response.error
+              $('#contract').modal('show')
+              console.log($response);
+            } else {
+              console.log($response.data.status);
+              if($response.data.status == 'checked'){
+                window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+              }
+              if($response.data.status == 'not checked'){
+                $('#contract').modal('show')
+                this.cont = 1
+              }
+            }
+            this.loader = false
+          })
+          .catch((e) => {
+            $('#contract').modal('show')
+            this.cont = 2
+            this.loader = false
+            if(e.toString().includes("timeout")) {
+              this.cont = 2
+              this.timeout = true
+            }
+            console.log(e)
+          })
+        },
+              openPdf(loan){
+        window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+      }
             }
         }
-    }
 </script>
 
 <style scoped>

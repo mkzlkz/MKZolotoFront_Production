@@ -22,6 +22,7 @@
           </div>
         </div>
       </div>
+
       <div class="auth">
         <a href="#tab1" data-toggle="modal" data-target="#modalAuth">{{$t('login')}}</a>
         <span>|</span>
@@ -34,6 +35,7 @@
       </div>
       <div class="express-extension">
         <button data-toggle="modal" data-target="#modalExtension" class="button-yellow button-ex">{{ $t('expressExtension') }}</button>
+        <button data-toggle="modal" data-target="#contract" class="button-yellow button-ex">{{ $t('check_contract2') }}</button>
       </div>
       <div class="menu">
         <ul class="nav nav-pills nav-stacked">
@@ -51,9 +53,9 @@
                 <a v-if="banner.link" :href="banner.link" target="_blank" class="banner-flex">
                   <div class="text">
                     <div class="text1" v-if="banner.text1">{{banner.text1}}</div>
-            <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
-            <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
-            <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
+                    <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
+                    <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
+                    <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
                   </div>
                   <div class="img">
                     <img :src="banner.desktop" alt="" class="img-deck_i">
@@ -63,9 +65,9 @@
                 <div v-else class="banner-flex">
                   <div class="text">
                     <div class="text1" v-if="banner.text1">{{banner.text1}}</div>
-            <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
-            <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
-            <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
+                    <div class="text2" v-if="banner.text2">{{banner.text2}}</div>
+                    <div class="text3" v-if="banner.text3">{{banner.text3}}</div>
+                    <div class="text4" v-if="banner.text4">{{banner.text4}}</div>
                   </div>
                   <div class="img">
                     <img :src="banner.desktop" alt="" class="img-deck_i">
@@ -88,6 +90,7 @@
           </div>
           <div class="express-extension" v-if="this.$route.path !== '/animation'" >
             <button data-toggle="modal" data-target="#modalExtension" class="button-yellow button-ex">{{ $t('expressExtension') }}</button>
+            <button data-toggle="modal" data-target="#contract" class="button-yellow button-ex">{{ $t('check_contract2') }}</button>
           </div>
           <div class="dflex-lang">
             <div v-if="langList.qaz === true" :class="{activeLng : this.$auth.getLanguage() === 'qaz', dnone : langList.qaz === false }" @click="selectLang('qaz')">QAZ</div>
@@ -111,16 +114,21 @@
             </ul>
           </div>
         </div>
+
+<modalContract></modalContract>
+
       </div>
     </template>
 
     <script>
+      import modalContract from '@/components/modalContract.vue'
       import Slick from 'vue-slick'
       import ClickOutside from 'vue-click-outside'
       export default {
         name: 'aside-component',
         components: {
-          Slick
+          Slick,
+          modalContract
         },
         data () {
           return {
@@ -139,7 +147,8 @@
               autoplaySpeed: 5000
             },
             banners: {},
-            keycon: ''
+            keycon: '',
+            loader: false
           }
         },
         metaInfo() {
@@ -169,101 +178,99 @@
         },
         methods: {
           selectLang(lng) {
-// console.log(lng);
-if (lng === 'ru') {
-  this.$auth.setLanguage(lng);
-  location.reload();
-} else if (lng === 'kz') {
-  this.$auth.setLanguage(lng)
-  location.reload();
-} else if (lng === 'qaz') {
-  this.$auth.setLanguage(lng)
-  location.reload();
-}
-},
-GetLangWeb() {
-  if(this.$route.query.from === 'app'){
-    if (localStorage.app_lang !== this.$route.query.lang){
-      location.reload();
-    }
-  }
-  if (this.$route.query.from === 'app' & this.$route.query.lang === 'ru') {
-    this.$auth.setLanguage('ru');
-  } else if (this.$route.query.from === 'app' & this.$route.query.lang === 'kz') {
-    this.$auth.setLanguage('kz');
-  } else if (this.$route.query.from === 'app' & this.$route.query.lang === 'qaz') {
-    this.$auth.setLanguage('qaz');
-  }
-},
-setLanguage() {
-  this.$auth.setLanguage(this.selected);
-  location.reload();
-},
-getLangList () {
-  this.$axios.get('/languages')
-  .then((response) => {
-    let $response = response.data
-    if ($response.code === 0) {
-      console.log($response)
-    } else {
-      this.langList = $response.data
-    }
-  })
-  .catch((e) => console.log(e))
-},
-getLayout () {
-  this.$axios.get('/layout-data')
-  .then((response) => {
-    let $response = response.data
-    if ($response.code === 0) {
-      console.log($response)
-    } else {
-      this.menus = $response.data.menus
-      this.menul = $response.data.second_menus
-      this.banners = $response.data.banners
-      this.scroll = $response.data.autoscrolling
-      this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
-      this.keycon = $response.data.keywords.keywords
-    }
-  })
-  .catch((e) => console.log(e))
-},
-open() {
-  this.showPopover = true
-},
-close() {
-  this.showPopover = false
-}
-}
-}
-</script>
+            if (lng === 'ru') {
+              this.$auth.setLanguage(lng);
+              location.reload();
+            } else if (lng === 'kz') {
+              this.$auth.setLanguage(lng)
+              location.reload();
+            } else if (lng === 'qaz') {
+              this.$auth.setLanguage(lng)
+              location.reload();
+            }
+          },
+          GetLangWeb() {
+            if(this.$route.query.from === 'app'){
+              if (localStorage.app_lang !== this.$route.query.lang){
+                location.reload();
+              }
+            }
+            if (this.$route.query.from === 'app' & this.$route.query.lang === 'ru') {
+              this.$auth.setLanguage('ru');
+            } else if (this.$route.query.from === 'app' & this.$route.query.lang === 'kz') {
+              this.$auth.setLanguage('kz');
+            } else if (this.$route.query.from === 'app' & this.$route.query.lang === 'qaz') {
+              this.$auth.setLanguage('qaz');
+            }
+          },
+          setLanguage() {
+            this.$auth.setLanguage(this.selected);
+            location.reload();
+          },
+          getLangList () {
+            this.$axios.get('/languages')
+            .then((response) => {
+              let $response = response.data
+              if ($response.code === 0) {
+                console.log($response)
+              } else {
+                this.langList = $response.data
+              }
+            })
+            .catch((e) => console.log(e))
+          },
+          getLayout () {
+            this.$axios.get('/layout-data')
+            .then((response) => {
+              let $response = response.data
+              if ($response.code === 0) {
+                console.log($response)
+              } else {
+                this.menus = $response.data.menus
+                this.menul = $response.data.second_menus
+                this.banners = $response.data.banners
+                this.scroll = $response.data.autoscrolling
+                this.slickOptions.autoplaySpeed = $response.data.autoscrolling.value
+                this.keycon = $response.data.keywords.keywords
+              }
+            })
+            .catch((e) => console.log(e))
+          },
+          open() {
+            this.showPopover = true
+          },
+          close() {
+            this.showPopover = false
+          }
+        }
+      }
+    </script>
 
-<style scoped>
-.disable{
-  pointer-events: none!important;
-  font-size: 20px !important;
-  margin: 0px 0 0 0;
-  padding: 12px 15px 12px 85px;
-  font-family: "stroke-medium";
-  color: #000;
-}
-.slide-fade-enter-active {
-  transition: all .3s ease;
-}
-.slide-fade-leave-active {
-  transition: all .3s ease;
-}
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(10px);
-  opacity: 0;
-}
-.ddflex{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.ds{
-  width: 50px;
-}
-</style>
+    <style scoped>
+    .disable{
+      pointer-events: none!important;
+      font-size: 20px !important;
+      margin: 0px 0 0 0;
+      padding: 12px 15px 12px 85px;
+      font-family: "stroke-medium";
+      color: #000;
+    }
+    .slide-fade-enter-active {
+      transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+      transition: all .3s ease;
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+    .ddflex{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ds{
+      width: 50px;
+    }
+  </style>
