@@ -80,7 +80,7 @@
                                                 <h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
                                             </div>
                                             <div class="text">{{ $t('super') }}</div>
-                                            <a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
+                                            <a :href="`https://mk-zoloto-lombard.kz/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
                                             <div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
                                         </div>
                                         <div v-if="!check_status">

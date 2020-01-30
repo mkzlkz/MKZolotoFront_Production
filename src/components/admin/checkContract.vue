@@ -15,7 +15,7 @@
           </div>
           <div class="form-1">
             <p>{{ $t('number_zb') }}</p>
-            <input type="text" name="input_ez" :placeholder="$t('enter_zb')" maxlength="16" v-model="code" >
+            <input type="text" name="input_ez" :placeholder="$t('enter_zb')" v-mask="'XXXXXXXXXXXXXXXX'" v-model="code" class="text-up">
           </div>
           <button :class="(this.iin!='' && this.code!='' && this.iin.length==12) ? 'button-orange':'button-orange disabled'" @click="contractCheck()" >{{ $t('verify') }}</button>
         </div>
@@ -99,7 +99,7 @@
             } else {
               console.log($response.data.status);
               if($response.data.status == 'checked'){
-                window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+                window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
               }
               if($response.data.status == 'not checked'){
                 $('#contract').modal('show')
@@ -120,7 +120,7 @@
           })
       },
       openPdf(){
-        window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+        window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
       }
     }
   }

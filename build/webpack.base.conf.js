@@ -91,13 +91,13 @@ module.exports = {
     child_process: 'empty'
   },
   plugins: [
-    // new PrerenderSPAPlugin(
-    //   // (REQUIRED) Absolute path to static root
-    //   path.join(__dirname, '../dist'),
-    //   // (REQUIRED) List of routes to prerender
-    //   // [ '/', '/rules']
-    //   [ '/location/almaty', '/location/aktau', '/location/aktobe']
-    //   )
+    new PrerenderSPAPlugin(
+      path.join(__dirname, '../dist'),
+      [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form',
+      '/location/almaty', '/location/aktau', '/location/aktobe', '/location/atyrau', '/location/burunday', '/location/esik', '/location/zhanaozen', '/location/kandyagash', '/location/kapchagay',
+      '/location/kaskelen', '/location/kosshy', '/location/kulsary', '/location/kyzylorda', '/location/merke', '/location/nur-sultan', '/location/otegen-batyr', '/location/semey',
+      '/location/talgar', '/location/taraz', '/location/uzynagash', '/location/uralsk', '/location/ust-kamenogorsk', '/location/shymkent']
+      )
   ]
 }
 

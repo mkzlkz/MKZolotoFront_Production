@@ -15,7 +15,7 @@
 
 /*'FranklinGothicDemiCond'*/
 .banner-flex .text .text3, .dflex-faq .panel-heading .panel-title a, .block3 .block3-1 li,
-.marker-modal .mm-1 h4, .contract-link span, .mobb-menu .dropdown-menu li a.logout{
+.marker-modal .mm-1 h4, .contract-link span, .mobb-menu .dropdown-menu li a.logout, .modal-edit .button-yellow{
   font-family:'Roboto-Bold' !important;
 }
 .contract-link span{
@@ -2086,6 +2086,21 @@ opacity: 0.6;
 }
 .img-check{
   display: none;
+}
+.text-up{
+  text-transform: uppercase;
+}
+.text-up::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  text-transform: initial;
+}
+.text-up::-moz-placeholder { /* Firefox 19+ */
+ text-transform: initial;
+}
+.text-up:-ms-input-placeholder { /* IE 10+ */
+text-transform: initial;
+}
+.text-up:-moz-placeholder { /* Firefox 18- */
+ text-transform: initial;
 }
 
   @media (max-height: 750px) {

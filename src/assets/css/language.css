@@ -23,8 +23,8 @@
   .lg-qaz .avatarChange .av-change .img-button label, .lg-qaz .avatarChange .av2-change .title {
     font-family: 'PTSans-Bold' !important; }
   .lg-kz .banner-flex .text .text3, .lg-kz .dflex-faq .panel-heading .panel-title a, .lg-kz .block3 .block3-1 li,
-  .lg-kz .marker-modal .mm-1 h4, .lg-kz .contract-link span, .lg-kz .mobb-menu .dropdown-menu li a.logout, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
-  .lg-qaz .marker-modal .mm-1 h4, .lg-qaz .contract-link span, .lg-qaz .mobb-menu .dropdown-menu li a.logout {
+  .lg-kz .marker-modal .mm-1 h4, .lg-kz .contract-link span, .lg-kz .mobb-menu .dropdown-menu li a.logout, .lg-kz .modal-edit .button-yellow, .lg-qaz .banner-flex .text .text3, .lg-qaz .dflex-faq .panel-heading .panel-title a, .lg-qaz .block3 .block3-1 li,
+  .lg-qaz .marker-modal .mm-1 h4, .lg-qaz .contract-link span, .lg-qaz .mobb-menu .dropdown-menu li a.logout, .lg-qaz .modal-edit .button-yellow {
     font-family: 'Roboto-Bold' !important; }
   .lg-kz .contract-link span, .lg-qaz .contract-link span {
     font-size: 11px; }
@@ -1945,6 +1945,25 @@ input:-webkit-autofill {
 
 .img-check {
   display: none; }
+
+.text-up {
+  text-transform: uppercase; }
+
+.text-up::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  text-transform: initial; }
+
+.text-up::-moz-placeholder {
+  /* Firefox 19+ */
+  text-transform: initial; }
+
+.text-up:-ms-input-placeholder {
+  /* IE 10+ */
+  text-transform: initial; }
+
+.text-up:-moz-placeholder {
+  /* Firefox 18- */
+  text-transform: initial; }
 
 @media (max-height: 750px) {
   .modal-auth .forgot-password, .modal-auth .text_modal {

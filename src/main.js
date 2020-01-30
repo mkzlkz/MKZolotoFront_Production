@@ -48,10 +48,9 @@ const AppLang = () => {
     return AuthFunction().getLanguage()
 }
 
-// register directive v-money and component <money>
 Vue.use(money, {precision: 4})
-// axios.defaults.baseURL = 'https://mk-zoloto-lombard.kz/api/' + AppLang()
-axios.defaults.baseURL = 'https://mk-backend.mars.studio/api/' + AppLang()
+axios.defaults.baseURL = 'https://mk-zoloto-lombard.kz/api/' + AppLang()
+// axios.defaults.baseURL = 'https://mk-backend.mars.studio/api/' + AppLang()
 if (AuthFunction().getToken()) {
   axios.defaults.headers.common['Authorization'] = AuthFunction().getToken()
 }
