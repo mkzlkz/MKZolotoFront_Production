@@ -92,12 +92,20 @@ module.exports = {
   },
   plugins: [
     new PrerenderSPAPlugin(
-      path.join(__dirname, '../dist'),
-      [ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form',
+     {
+      staticDir: path.join(__dirname, '../dist'),
+      routes:[ '/', '/animation', '/smartscales', '/noscratches', '/presents', '/qiwi', '/vipclub', '/percent', '/rules', '/online-rules', '/form',
       '/location/almaty', '/location/aktau', '/location/aktobe', '/location/atyrau', '/location/burunday', '/location/esik', '/location/zhanaozen', '/location/kandyagash', '/location/kapchagay',
       '/location/kaskelen', '/location/kosshy', '/location/kulsary', '/location/kyzylorda', '/location/merke', '/location/nur-sultan', '/location/otegen-batyr', '/location/semey',
-      '/location/talgar', '/location/taraz', '/location/uzynagash', '/location/uralsk', '/location/ust-kamenogorsk', '/location/shymkent']
-      )
+      '/location/talgar', '/location/taraz', '/location/uzynagash', '/location/uralsk', '/location/ust-kamenogorsk', '/location/shymkent'],
+    	headless: false,
+        renderer: new PrerenderSPAPlugin.PuppeteerRenderer({
+        timeout: 60000,
+        renderAfterTime: 10000,
+        maxConcurrentRoutes: 1
+      })
+
+      })
   ]
 }
 
