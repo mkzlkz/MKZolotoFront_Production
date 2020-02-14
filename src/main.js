@@ -44,6 +44,7 @@ Vue.use(VueMaskedInput)
 Vue.use(malihu)
 import money from 'v-money'
 
+
 const AppLang = () => {
     return AuthFunction().getLanguage()
 }
