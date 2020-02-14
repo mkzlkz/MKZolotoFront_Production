@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <banner-component></banner-component>
     <div class="tab-pane1">
 <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
@@ -104,6 +103,7 @@
 
 <script>
   import BannerComponent from '@/components/BannerComponent.vue'
+
   export default {
     name: 'map-component',
     components: {
@@ -165,8 +165,9 @@
         ]
       }
     },
+
     mounted() {
-      if (this.$route.path === '/location/' + this.$route.params.city_name) {
+      if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
         this.getTitle();
         this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
         this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
@@ -186,7 +187,7 @@
       },
       $route: function () {
 // console.log(this.$route);
-if (this.$route.path === '/location/' + this.$route.params.city_name) {
+if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
     //alert(this.$route.params.city_name);
 this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
         this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
@@ -379,7 +380,7 @@ getCity(error) {
   this.$axios.post('/getCityByCoordinates', body)
   .then(response => {
 // console.log(response);
-if (this.$route.path === '/location') {
+if (this.$route.path === '/location' || this.$route.path === '/location/') {
 
   this.myCity = response.data.data
   this.selectedCity = response.data.data
@@ -403,7 +404,7 @@ if (this.selected != 'all') {
 }
 
 }
-} else if (this.$route.path === '/location/' + this.$route.params.city_name) {
+} else if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
   let params = this.$route.params.city_name
   if (this.allCity) {
     for (let i = 0; i < this.allCity.length; i++) {

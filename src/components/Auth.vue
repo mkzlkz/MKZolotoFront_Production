@@ -265,10 +265,13 @@
             $("#modalAuth").on('shown.bs.modal', function(e) {
                 var tab = e.relatedTarget.hash;
                 var tab1 = "#tab1"
+                var tab2 = "#tab2"
                 if(tab == tab1){
                     obj.step = 1
-                }else{
+                }
+                if(tab == tab2){
                     obj.step = 2
+                    obj.iin = ""
                 }
             })
         },

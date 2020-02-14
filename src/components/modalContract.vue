@@ -21,7 +21,8 @@
                         </div>
                         <div class="form-1">
                           <p>{{ $t('contract_code') }}</p>
-                          <input type="text" :placeholder="$t('enter_contract_code')" maxlength="16" v-model="code" >
+                          <!-- <input type="text" :placeholder="$t('enter_contract_code')" maxlength="16" v-model="code" > -->
+                          <input type="text" :placeholder="$t('enter_contract_code')" v-mask="'XXXXXXXXXXXXXXXX'" v-model="code" class="text-up">
                         </div>
                         <div class="text mt-30">{{$t('contract_text')}}</div>
                         <button :class="(this.iin!='' && this.code!='' && this.iin.length==12) ? 'button-orange':'button-orange disabled'">{{ $t('verify') }}</button>
@@ -99,7 +100,7 @@
                   this.errors = $response.error
                 } else {
                   if($response.data.status == 'checked'){
-                    window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+                    window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
                   }
                   if($response.data.status == 'not checked'){
                     this.cont = 2
@@ -118,7 +119,7 @@
               })
           },
           openPdf(){
-            window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+            window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
           },
           clickSteps(index){
             if (index == 1){

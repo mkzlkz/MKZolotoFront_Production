@@ -840,7 +840,7 @@
             } else {
               console.log($response.data.status);
               if($response.data.status == 'checked'){
-                window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+                window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
               }
               if($response.data.status == 'not checked'){
                 $('#contract').modal('show')
@@ -861,7 +861,7 @@
           })
         },
               openPdf(loan){
-        window.open('http://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+        window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
       }
             }
         }
