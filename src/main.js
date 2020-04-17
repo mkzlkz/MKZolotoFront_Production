@@ -73,6 +73,7 @@ Vue.use(VueGoogleMaps, {
 })
 
 
+
 /* eslint-disable no-new */
 new Vue({
     i18n,

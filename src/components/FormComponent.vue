@@ -221,6 +221,13 @@
                     obj.email = this.email
                     this.error = ''
                 }
+                if (this.email) {
+                    obj.email = this.email
+                    this.error = ''
+                } else {
+                    this.error = this.$t('modal_error3_1')
+                    return
+                }
                 this.modalText = ''
                 if (obj.name && (obj.phone || (obj.email && obj.text))) {
                     if (this.email) {

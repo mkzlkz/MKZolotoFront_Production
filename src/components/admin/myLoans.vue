@@ -93,7 +93,7 @@
                                             <span v-if="partial_repayment">{{$t('partial_repayment')}}</span>
                                             <span class="bg"><span class="caret"></span></span></button>
                                             <ul class="dropdown-menu">
-                                                <li v-if="operations.length > 1">
+                                                <li v-if="operations.length > 1 && loan.partial_pay_option">
                                                     <a v-on:click="openPay">
                                                         <span v-if="!partial_repayment">{{$t('partial_repayment')}}</span>
                                                         <span v-if="!renewal">{{$t('renewal')}}</span>
