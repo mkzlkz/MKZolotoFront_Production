@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <div v-if="loader" class="loader loader-admin">
