@@ -13,7 +13,7 @@ export default {
   amount_on_hand: 'Қолға берілетін сома:',
   refund_amount: 'Қайтарылатын сома:',
   // Экспресс-продление
-  expressExtension: 'Экспресс-ұзарту',
+  expressExtension: 'Экспресс-төлем',
   iin: 'ЖСН',
   enter_iin: 'ЖСН Енгізіңіз',
   number_zb: 'Кепілзаттық билетінің нөмірі',
@@ -86,7 +86,7 @@ export default {
   back: 'Артқа',
   // админ меню
   my_loans: 'Менің қарыздарым',
-  express_renewal: 'Жылдам ұзарту',
+  express_renewal: 'Жылдам төлем',
   my_last_operations: 'Менің соңғы операцияларым',
   valuation_capital: 'Менің капиталымды бағалау',
   notification_history: 'Хабарламаның тарихы',
@@ -108,8 +108,8 @@ export default {
   for_partial_repayment:'Ішінара төлем ақысы',
   change_operation_parameters: 'Операция параметрлерін өзгерту',
   hide: 'Жасыру',
-  partial_repayment: 'Ішінара төлем',
-  renewal: 'Несиені ұзарту',
+  partial_repayment: 'Ішінара төлем үшін',
+  renewal: 'Үзарту қызметтері ушін',
   new_loan_term:'Несиенің жаңа мерзімі:',
   remuneration_amount: 'Сыйақының сомасы:',
   partial_redemption_amount: 'Ішінара өтеу сомасы, <br> төлеу:',
@@ -120,6 +120,7 @@ export default {
   how_many_days: 'Қанша күн төлеймін:',
   new_term:'Жаңа мерзім:',
   pay_loan_extension: 'Ұзарту мерзімінің ақысы:',
+  pay_loan_partial_repayment: 'Ішінара төлем ақысы',
   branch: 'Бөлімше',
   loan_term: 'Қарыз мерзімі',
   guaranteed_term: 'Кепілдік мерзімі',
@@ -195,7 +196,12 @@ export default {
   verify: 'Алу',
   confirmation: 'Растау',
   contract_text2: 'Келісім шарттарымен және кепілдемемен',
-  read_and_agree: 'Таныстым және келістім'
+  read_and_agree: 'Таныстым және келістім',
+  conservation_receipt: 'Сақталған түбіртек',
+  shelf_life: 'Сақтау мерзімі',
+  keep_price: 'Сақтау ақысы',
+  loan_expired: 'Мерзімі бітті',
+  message_text_loan: 'Назар аударыңыз! <br> Таңдалған несие үшін кез-келген филиалда сақтау туралы келісім жасау керек.'
 }
 
 

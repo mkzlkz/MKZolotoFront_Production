@@ -1,5 +1,5 @@
 @media (max-height: 1000px) {
-    .tab-pane1 .tab-text {
+    .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 40px;
     }
     .new-cont{
@@ -72,7 +72,7 @@
         font-size: 16px;
         margin-bottom: 10px;
     }
-    .tab-pane1 .tab-text {
+    .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 25px;
     }
     .calculate .content_block {
@@ -107,7 +107,7 @@
     .block3 .block3-1 li {
         margin-bottom: 0;
     }
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 30px;
     }
     .new-cont{
@@ -215,7 +215,7 @@
 }
 
 @media (max-height: 730px) {
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 25px;
     }
     .new-cont{
@@ -299,7 +299,7 @@
     .modal-extension .modal-dialog {
         margin: 3% auto 0;
     }
-    .text-social .block-right .tab-pane1 .tab-text {
+    .text-social .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 20px;
         padding-bottom: 20px;
     }
@@ -397,7 +397,7 @@
     .bg-calc .title {
         font-size: 30px !important;
     }
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 20px;
     }
     .calculate .content_block {
@@ -464,7 +464,7 @@
 }
 }
 @media (max-height: 610px) {
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 20px;
     }
     .new-cont{
@@ -755,6 +755,12 @@ width: 180px;
     .slider_banner{
         height: 230px;
     }
+    .new-map {
+    height: calc(100vh - 230px);
+}
+.map {
+    height: calc(100vh - 425px);
+    }
     .banner-flex .img{
         height: 230px;
         width: 680px;
@@ -837,7 +843,7 @@ width: 160px;
     .block-left .menu .disable{
         font-size: 18px !important;
     }
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-right: 25px;
         padding-left: 25px;
     }
@@ -900,6 +906,12 @@ width: 160px;
     }
     .slider_banner{
         height: 215px;
+    }
+        .new-map {
+    height: calc(100vh - 215px);
+}
+.map {
+    height: calc(100vh - 360px);
     }
     .banner-flex .img{
         height: 215px;
@@ -1010,6 +1022,12 @@ width: 160px;
     .slider_banner{
         height: 200px;
     }
+        .new-map {
+    height: calc(100vh - 200px);
+}
+.map {
+    height: calc(100vh - 350px);
+    }
     .banner-flex .img{
         height: 200px;
         width: 586px;
@@ -1082,6 +1100,12 @@ width: 140px;
     }
     .slider_banner{
         height: 180px;
+    }
+        .new-map {
+    height: calc(100vh - 180px);
+}
+.map {
+    height: calc(100vh - 315px);
     }
     .banner-flex .img{
         height: 180px;
@@ -1198,7 +1222,7 @@ width: 140px;
     .block-left .menu-2 a span{
         display: none;
     }
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-right: 15px;
         padding-left: 15px;
     }
@@ -1281,6 +1305,12 @@ width: 140px;
     }
     .slider_banner{
         height: 167px;
+    }
+        .new-map {
+    height: calc(100vh - 167px);
+}
+.map {
+    height: calc(100vh - 350px);
     }
     .banner-flex .img{
         height: 167px;
@@ -1466,6 +1496,12 @@ width: 210px;
 .slider_banner{
     height: 147px;
 }
+        .new-map {
+    height: calc(100vh - 147px);
+}
+.map {
+    height: calc(100vh - 330px);
+    }
 .banner-flex .img{
     height: 147px;
     width: 430px;
@@ -1489,6 +1525,12 @@ width: 210px;
     }
     .slider_banner{
         height: 99px;
+    }
+            .new-map {
+    height: calc(100vh - 99px);
+}
+.map {
+    height: calc(100vh - 278px);
     }
     .banner-flex .img{
         height: 99px;
@@ -1624,7 +1666,7 @@ background-position: bottom center;
 .block-right .tab-pane1 .closes{
     display: none;
 }
-.block-right .tab-pane1 .tab-text {
+.block-right .tab-pane1 .tab-text, .tab-text_new {
     padding-top: 20px;
     height: auto;
     padding-bottom: 80px !important;
@@ -1990,6 +2032,12 @@ height: calc(100vh - 90%) !important;
 .slider_banner{
     height: 85px;
 }
+.new-map {
+    height: auto;
+}
+.map {
+    height: 320px;
+    }
 .banner-flex .img{
     height: 85px;
     width: 100%;
@@ -2333,7 +2381,7 @@ display: none;
     .calc_block .df2, .calc_block .df1 {
         font-size: 12px !important;
     }
-    .block-right .tab-pane1 .tab-text {
+    .block-right .tab-pane1 .tab-text, .tab-text_new {
         padding-top: 15px;
     }
     .new-cont{

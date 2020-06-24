@@ -4,9 +4,9 @@
     <div class="tab-pane1">
 <!-- <router-link class="closes" :to="{ name: 'Home' }"><img :src="require('@/assets/img/close.svg')" alt="">
 </router-link> -->
-<div class="dflex-cont">
+<div class="dflex-cont new-map">
   <div class="map-wrapper">
-    <div class="tab-text">
+    <div class="tab-text_new">
       <div class="title-flex">
         <h1 class="title">{{ $t('location_title') }}</h1>
         <div class="map-select">
@@ -25,54 +25,68 @@
             <option value="all">{{$t('all')}}</option>
           </select>
           <!-- <div class="nen"> -->
-            <!-- <select v-if="show" disabled name="" id="">
-              <option value="all">Все</option>
-            </select> -->
-            <!-- </div> -->
-          </div>
-        </div>
-        <div class="content_block content-block1">
-          <div class="map">
-            <gmap-map :options="{
-            streetViewControl: false,
-            fullscreenControl: false}" :center="center" :zoom="10.5" style="width:100%;  height: 100%;"
-            ref="gmap" class="map">
-            <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
-            @closeclick="infoWinOpen=false">
+<!-- <select v-if="show" disabled name="" id="">
+<option value="all">Все</option>
+</select> -->
+<!-- </div> -->
+</div>
+</div>
+<div class="content_block content-block1">
+  <div class="map">
+    <gmap-map :options="{
+    streetViewControl: false,
+    fullscreenControl: false}" :center="center" :zoom="10.5" style="width:100%;  height: 100%;"
+    ref="gmap" class="map">
+    <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
+    @closeclick="infoWinOpen=false">
 
-            <div class="marker-modal">
-              <div class="mm-1">
-                <h4 v-if="infoContent.text">{{infoContent.text}}</h4>
-                <h4>{{ infoContent.alias }}</h4>
-                <p>{{ infoContent.address }}</p>
-                <p class="tel-m">{{ infoContent.phone }}</p>
-                <p v-if="infoContent.RezhimRaboty">{{infoContent.RezhimRaboty}}, <br> {{infoContent.Vyhodnye}}</p>
-                <!--<p style="margin-bottom: 0; max-width: 115px;">{{infoContent.Uslugi}}</p>-->
-              </div>
-              <div class="mm-2" v-if="infoContent.image">
-                <img v-img :src="infoContent.image" alt="">
-              </div>
-            </div>
-          </gmap-info-window>
-          <gmap-marker v-for="(my, index) in myMarkers" :icon="{ url: require('@/assets/img/Artboard.png')}"
-          :position="my.position" :key="index" :clickable="true" @click="toggleInfoWindow(my, index)">
-        </gmap-marker>
-        <div>
-          <gmap-marker v-for="( closest, index) in closestPoint"
-          :icon="{ url: require('@/assets/img/circle.png')}" :position=" closest.position" :key="index"
-          :clickable="true" @click="toggleInfoWindow(closest, index)"></gmap-marker>
-        </div>
-
-        <div v-for="(m, index) in markers" class="oki" :key="m.id">
-          <gmap-marker v-if="m.infoText.VIP == true" :icon="{ url: require('@/assets/img/icon/loc-vip.png')}"
-          :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
-        </gmap-marker>
-        <gmap-marker v-if="m.infoText.VIP == false" :icon="{ url: require('@/assets/img/icon/loc.png')}"
-        :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
-      </gmap-marker>
-
+    <div class="marker-modal">
+      <div class="mm-1">
+        <h4 v-if="infoContent.text">{{infoContent.text}}</h4>
+        <h4>{{ infoContent.alias }}</h4>
+        <p>{{ infoContent.address }}</p>
+        <p class="tel-m">{{ infoContent.phone }}</p>
+        <p v-if="infoContent.RezhimRaboty">{{infoContent.RezhimRaboty}}, <br> {{infoContent.Vyhodnye}}</p>
+        <!--<p style="margin-bottom: 0; max-width: 115px;">{{infoContent.Uslugi}}</p>-->
+      </div>
+      <div class="mm-2" v-if="infoContent.image">
+        <img v-img :src="infoContent.image" alt="">
+      </div>
     </div>
-  </gmap-map>
+  </gmap-info-window>
+  <gmap-marker v-for="(my, index) in myMarkers" :icon="{ url: require('@/assets/img/Artboard.png')}"
+  :position="my.position" :key="index" :clickable="true" @click="toggleInfoWindow(my, index)">
+</gmap-marker>
+<div>
+  <gmap-marker v-for="( closest, index) in closestPoint"
+  :icon="{ url: require('@/assets/img/circle.png')}" :position=" closest.position" :key="index"
+  :clickable="true" @click="toggleInfoWindow(closest, index)"></gmap-marker>
+</div>
+
+<div v-for="(m, index) in markers" class="oki" :key="m.id">
+  <gmap-marker v-if="m.infoText.VIP == true" :icon="{ url: require('@/assets/img/icon/loc-vip.png')}"
+  :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
+</gmap-marker>
+<gmap-marker v-if="m.infoText.VIP == false" :icon="{ url: require('@/assets/img/icon/loc.png')}"
+:position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
+</gmap-marker>
+
+</div>
+</gmap-map>
+</div>
+<div class="map-text">
+  <div class="map-text_title">Сдать золото в ломбард в Алматы <span><img src="@/assets/img/icon/exit.svg" alt=""></span></div>
+  <div class="map-text_content">
+    <p>Знайте, если у Вас есть золото, значит, у Вас есть деньги!</p>
+    <p>Драгоценный металл – самая твердая мировая валюта. С золотом Вы всегда при деньгах! Срочно нужны наличные? Сдайте золото в ломбард в Алматы и получи заем, обратившись в МК-Золото Ломбард.</p>
+    <p>МК-Золото Ломбард предлагает выдачу займов под ювелирные и иные изделия из золота стандартным сроком в 60 дней.  А если погашение займа по какой-то причине невозможно в срок, Вы всегда можете его продлить на выгодных условиях.</p>
+    <p>Наши специалисты честно и прозрачно рассчитают стоимость ювелирных изделий, основываясь на содержании чистого золота в сплаве, текущей биржевой стоимости золота и кредитной истории Заемщика. Наличие бриллиантов станет дополнительной гарантией повышения стоимости Вашего изделия. В каждом филиале есть монитор клиента, в котором видны все действия, которые делает специалист.</p>
+    <p>Что необходимо для того, чтобы получить заем от МК-Золото Ломбард? Всего лишь документ, удостоверяющий Вашу личность, паспорт или вид на жительство Республики Казахстан и украшение из золота.</p>
+    <p>Выплату процентов по займу можно произвести в любом городе Казахстана, где имеется офис МК-Золото Ломбард, так и с помощью QIWI-терминала, сайта или мобильного приложения.</p>
+    <p>МК-Золото Ломбард гарантирует полную сохранность изделий, если Вы решите сдать золото в ломбард в Алматы именно у нас. Каждый офис оснащен специальными сейфами с сигнализацией, что гарантирует предельную безопасность хранения драгоценностей.</p>
+    <p>Нашим клиентам совершенно бесплатно предоставляется услуга «УльтраЧистка», которая поможет вернуть первоначальный блеск ювелирных изделий, избавив от грязи, пыли и ворсинок.</p>
+    <p>На главной странице Вы можете ознакомиться с онлайн-калькулятором и посчитать сумму, которую можно получить в качестве займа, сдав изделие из золота в МК-Золото Ломбард.</p>
+  </div>
 </div>
 </div>
 </div>
@@ -80,8 +94,8 @@
   <div class="closes_box closes_box10" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
     alt=""></div>
     <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/10.png')" alt="" class="img">
-          <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/10k.png')" alt="" class="img">
-          <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/10q.png')" alt="" class="img">
+    <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/10k.png')" alt="" class="img">
+    <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/10q.png')" alt="" class="img">
   </div>
 </div>
 <div class="new-cont">
@@ -148,51 +162,51 @@
         infoWindowPos: null,
         currentPlace: null,
         visible: true,
-        // show: false,
-        closestPoint: [],
-        mapDisable: ''
-      }
-    },
-    metaInfo() {
-      return {
-        title: this.title_page,
-        meta: [
-        { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
-        { name: 'description', content: this.description_page },
-        { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
-        { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
-        { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
-        ]
-      }
-    },
+// show: false,
+closestPoint: [],
+mapDisable: ''
+}
+},
+metaInfo() {
+  return {
+    title: this.title_page,
+    meta: [
+    { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
+    { name: 'description', content: this.description_page },
+    { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+    { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+    { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
+    ]
+  }
+},
 
-    mounted() {
-      if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
-        this.getTitle();
-        this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-      }
-      this.getAllCities()
+mounted() {
+  if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
+    this.getTitle();
+    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+  }
+  this.getAllCities()
+  this.getMyLocation()
+  this.reloadPage()
+  this.getMenus()
+},
+watch: {
+  selected: function () {
+    if (this.selected == 'all') {
       this.getMyLocation()
-      this.reloadPage()
-      this.getMenus()
-    },
-    watch: {
-      selected: function () {
-        if (this.selected == 'all') {
-          this.getMyLocation()
-        } else {
-          this.getCurrentLocations()
-        }
-      },
-      $route: function () {
+    } else {
+      this.getCurrentLocations()
+    }
+  },
+  $route: function () {
 // console.log(this.$route);
 if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
-    //alert(this.$route.params.city_name);
+//alert(this.$route.params.city_name);
 this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-  this.getTitle();
-  //this.title_page = this.title_page.replace("[CITY]", this.title_city);
+this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+this.getTitle();
+//this.title_page = this.title_page.replace("[CITY]", this.title_city);
 }
 },
 selectedCity: function () {
@@ -201,8 +215,8 @@ selectedCity: function () {
     this.selected = 'all'
     this.getSelectedCity()
     this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-    // this.show = true
+    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+// this.show = true
 } else {
   if (!this.mapDisable) {
     this.selected = '10'
@@ -210,16 +224,16 @@ selectedCity: function () {
     this.disableSelect = false
     this.getSelectedCity()
     this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-    // this.show = false
-  } else {
-    // this.show = false
-    this.markers = []
-    this.disableSelect = true
-    this.selected = 'all'
-    this.getSelectedCity()
-    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+// this.show = false
+} else {
+// this.show = false
+this.markers = []
+this.disableSelect = true
+this.selected = 'all'
+this.getSelectedCity()
+this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
 }
 }
 },
@@ -267,7 +281,7 @@ if (markers.length === 0) {
 created() {
   this.getContacts();
   this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-        this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+  this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
 },
 methods: {
   getMenus () {
@@ -337,31 +351,31 @@ methods: {
     })
     let obj = {}
     obj.city = this.selectedCity.city
-  this.$axios.post('/getPointsByCity', obj)
-  .then(response => {
-    let selCit = response.data.data
-    this.markers = []
-    this.addMarker(selCit)
-  }).catch((err) => {
-    console.log(err)
-  })
-},
-getAllCities() {
-  this.$axios.get('/cities')
-  .then(response => {
-    this.allCity = response.data.data
+    this.$axios.post('/getPointsByCity', obj)
+    .then(response => {
+      let selCit = response.data.data
+      this.markers = []
+      this.addMarker(selCit)
+    }).catch((err) => {
+      console.log(err)
+    })
+  },
+  getAllCities() {
+    this.$axios.get('/cities')
+    .then(response => {
+      this.allCity = response.data.data
 
-  })
-},
-getCurrentLocations() {
-  let body = {}
-  body.lat = this.myLocation.lat
-  body.lng = this.myLocation.lng
-  body.limit = this.selected
-  this.$axios.post('/closestPoints', body)
-  .then(response => {
-    this.markers = []
-    let $response = response.data.data
+    })
+  },
+  getCurrentLocations() {
+    let body = {}
+    body.lat = this.myLocation.lat
+    body.lng = this.myLocation.lng
+    body.limit = this.selected
+    this.$axios.post('/closestPoints', body)
+    .then(response => {
+      this.markers = []
+      let $response = response.data.data
 // console.log($response)
 this.addMarker($response)
 }).catch((err) => {

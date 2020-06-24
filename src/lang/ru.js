@@ -13,7 +13,7 @@ export default {
   amount_on_hand: 'Сумма на руки:',
   refund_amount: 'Сумма к возврату:',
   // Экспресс-продление
-  expressExtension: 'Экспресс-продление',
+  expressExtension: 'Экспресс-оплата',
   iin: 'ИИН',
   enter_iin: 'Введите ваш ИИН',
   number_zb: 'Номер залогового билета',
@@ -86,7 +86,7 @@ export default {
   back: 'Назад',
   // админ меню
   my_loans: 'Мои займы',
-  express_renewal: 'Экспресс продление',
+  express_renewal: 'Экспресс оплата',
   my_last_operations: 'Мои последние операции',
   valuation_capital: 'Оценка моего капитала',
   notification_history: 'История уведомлений',
@@ -104,12 +104,12 @@ export default {
   for_delay:'% за просрочку',
   interest_payable: 'Проценты к оплате',
   in_detail: 'Подробно',
-  pay_for_renewal:'Оплачиваю за  продление',
-  for_partial_repayment:'Оплачиваю за  частичное погашение',
+  pay_for_renewal:'Оплачиваю за услуги продления',
+  for_partial_repayment:'Оплачиваю за услуги частичного погашения',
   change_operation_parameters: 'Изменить параметры операции',
   hide: 'Скрыть',
-  partial_repayment: 'Частичное погашение',
-  renewal: 'Продление',
+  partial_repayment: 'Услуги частичного погашения',
+  renewal: 'Услуги продления',
   new_loan_term:'Новый срок займа:',
   remuneration_amount: 'Сумма вознаграждения:',
   partial_redemption_amount: 'Сумма частичного <br> погашения, к оплате:',
@@ -119,7 +119,8 @@ export default {
   to_apply: 'Применить',
   how_many_days: 'Сколько дней оплачиваю:',
   new_term:'Новый срок:',
-  pay_loan_extension: 'Оплачиваю за продление займа:',
+  pay_loan_extension: 'Оплачиваю за услуги продления:',
+  pay_loan_partial_repayment: 'Оплачиваю за услуги частичного погашения займа',
   branch: 'Филиал',
   loan_term: 'Срок займа',
   guaranteed_term: 'Гарантированный срок',
@@ -195,7 +196,15 @@ export default {
   verify: 'Получить',
   confirmation: 'Подтверждение',
   contract_text2: 'С условиями договора и сохранной квитанции',
-  read_and_agree: 'Ознакомлен и согласен'
+  read_and_agree: 'Ознакомлен и согласен',
+  conservation_receipt: 'Сохранная квитанция',
+  shelf_life: 'Срок хранения',
+  keep_price: 'Плата за хранение',
+  loan_expired: 'Просрочен',
+  message_text_loan: 'Внимание! <br> Для выбранного займа необходимо заключить договор хранения в любом филиале.',
+  login_t: 'Логин',
+  login_placeholder: 'Введите ваш логин',
+  login_text: 'Логин и код выдаются в офисе компании на бумажном носителе'
 }
 
 

@@ -16,15 +16,15 @@
                       </div>
                       <form @submit.prevent="contractCheck">
                         <div class="form-1">
-                          <p>{{ $t('iin') }}</p>
-                          <input type="tel" :placeholder="$t('enter_iin')" v-mask="'############'" v-model="iin">
+                          <p>{{ $t('login_t') }}</p>
+                          <input type="tel" :placeholder="$t('login_placeholder')" v-mask="'############'" v-model="iin">
                         </div>
                         <div class="form-1">
                           <p>{{ $t('contract_code') }}</p>
                           <!-- <input type="text" :placeholder="$t('enter_contract_code')" maxlength="16" v-model="code" > -->
                           <input type="text" :placeholder="$t('enter_contract_code')" v-mask="'XXXXXXXXXXXXXXXX'" v-model="code" class="text-up">
                         </div>
-                        <div class="text mt-30">{{$t('contract_text')}}</div>
+                        <div class="text mt-30">{{$t('login_text')}}</div>
                         <button :class="(this.iin!='' && this.code!='' && this.iin.length==12) ? 'button-orange':'button-orange disabled'">{{ $t('verify') }}</button>
                       </form>
                       <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>

@@ -165,7 +165,8 @@
           box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
   background-color: #ffffff;
   margin-bottom: 10px;
-  margin-right: 10px; }
+  margin-right: 10px;
+  position: relative; }
   .loan .loan-title {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -206,10 +207,13 @@
     position: relative;
     padding-bottom: 8px; }
   .loan .button-gray {
-    position: absolute;
-    right: 16px;
-    bottom: 8px; }
+    margin: -10px 24px 10px auto;
+    display: block;
+    position: relative;
+    z-index: 1; }
     .loan .button-gray button {
+      display: block;
+      margin: 0 0 0 auto;
       width: 80px;
       height: 24px;
       border-radius: 12px;
@@ -221,6 +225,11 @@
               box-shadow: inset 0 0 0 1px #fff; }
       .loan .button-gray button img {
         margin-left: 20px; }
+  .loan .red-text {
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #ff3b30;
+    font-family: 'FranklinGothicMedium'; }
   .loan .dflex {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -690,10 +699,16 @@
     padding: 0;
     margin: 0 16px 0 auto;
     display: block; }
+  .loan-2 .loan-save {
+    border-bottom: 1px dashed #dedede;
+    margin-bottom: 6px; }
+    .loan-2 .loan-save .dflex2 {
+      white-space: nowrap;
+      margin-top: 6px; }
   .loan-2 .loan2-1 {
     width: 45%;
     padding: 24px 20px 16px;
-    height: 280px;
+    height: auto;
     overflow-y: auto; }
     .loan-2 .loan2-1 .dflex2 {
       display: -webkit-box;
@@ -736,7 +751,7 @@
     width: 55%;
     padding: 24px 0 16px;
     border-left: 1px dashed #DEDEDE;
-    height: 293px;
+    height: auto;
     overflow-y: auto; }
     .loan-2 .loan2-2 .table-1 {
       height: 200px;
@@ -2050,7 +2065,7 @@ input:-webkit-autofill {
   .loan-2 .loan2-2 {
     width: 50%;
     padding: 20px 0 16px;
-    height: 289px; }
+    height: auto; }
 
   .ExpressExtensionPage .img img {
     width: 300px;
@@ -2322,7 +2337,7 @@ input:-webkit-autofill {
   .loan .switch {
     margin-top: 8px; }
 
-  .loan .loan-content .button-gray {
+  .loan .button-gray.db {
     display: none; }
 
   .button-yellow-loan {
@@ -2335,7 +2350,8 @@ input:-webkit-autofill {
     display: flex;
     position: relative;
     bottom: auto;
-    right: auto; }
+    right: auto;
+    margin: 0; }
 
   .loan .loan-down .button-gray button {
     height: 32px;
@@ -2372,9 +2388,9 @@ input:-webkit-autofill {
     min-height: calc(100vh - 237px); }
 
   /*.ex-margin .extension {
-      padding: 5px 7px;
-      height: 100%;
-      min-height: 100%;
+  padding: 5px 7px;
+  height: 100%;
+  min-height: 100%;
   }*/
   .ExpressExtensionPage .text {
     padding-top: 30px; }
@@ -2565,7 +2581,13 @@ input:-webkit-autofill {
     bottom: auto;
     padding: 0 15px;
     margin-top: 30px;
-    text-align: center; } }
+    text-align: center; }
+
+  .loan .red-text {
+    font-size: 10px;
+    position: absolute;
+    right: 15px;
+    top: 10px; } }
 .modal-backdrop {
   display: none !important; }
 
@@ -2589,8 +2611,10 @@ input:-webkit-autofill {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 20px;
-  cursor: pointer; }
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-bottom: 1px dashed #DEDEDE;
+  padding-bottom: 10px; }
   .contract-link span {
     text-decoration: underline;
     font-size: 12px;
@@ -2598,5 +2622,63 @@ input:-webkit-autofill {
     font-family: 'FranklinGothicDemi';
     display: block;
     margin-right: 10px; }
+
+.modal-message {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 90%;
+  background: #fff;
+  -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2; }
+  .modal-message .message p {
+    padding: 50px 30px 30px;
+    color: #000;
+    font-family: 'FranklinGothicDemi';
+    font-size: 14px;
+    text-align: center;
+    margin: 0; }
+  .modal-message .message a {
+    display: block;
+    text-align: center;
+    padding: 0 30px;
+    color: #4840c6;
+    font-family: 'FranklinGothicDemi';
+    margin-bottom: 30px;
+    font-size: 14px;
+    text-decoration: underline; }
+  .modal-message .message-bottom {
+    background: #f7f7f7;
+    height: 46px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center; }
+    .modal-message .message-bottom .button-yellow {
+      width: 100px;
+      height: 26px;
+      margin: 0;
+      font-size: 14px;
+      color: #000;
+      border: 2px solid #000;
+      -webkit-box-shadow: inset 0 0 0 2px #fff;
+              box-shadow: inset 0 0 0 2px #fff; }
+  .modal-message .close1 {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background: none;
+    border: none;
+    padding: 0; }
 
 /*# sourceMappingURL=language.css.map */

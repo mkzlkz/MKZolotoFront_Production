@@ -67,7 +67,7 @@ const i18n = new VueI18n({
 
 Vue.use(VueGoogleMaps, {
     load: {
-        key: 'AIzaSyDv5d2b-p7QbxQtM7kYETzdBte3mogtPOY'
+        key: 'AIzaSyBJru0N9z4lHuv1zYtWkMucVAvH8G_0bxI'
     }
 })
 

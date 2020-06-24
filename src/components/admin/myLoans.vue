@@ -18,10 +18,33 @@
                             <div class="loan">
                                 <div class="loan-title">
                                     <div class="zb"><span>{{$t('security_ticket')}}</span> <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
+                                    <div class="red-text" v-if="loan.keep_price>0">{{$t('loan_expired')}}</div>
                                     <div class="switch" @click="toggleSwitch(index)" v-bind:class="{disabledSwitch : loan.default_pay === 0}">
                                         <switches v-model="loan.switch" type-bold="true" ></switches>
                                     </div>
                                 </div>
+
+                                <transition name="fade">
+                                    <div v-if="loan.showModal" class="modal-message">
+                                        <div v-if="message===1" class="message">
+                                            <p>{{loan.message.text}}</p>
+                                            <a :href="loan.message.link" target="_blank">{{loan.message.link_text}}</a>
+                                            <div class="message-bottom">
+                                                <button class="button-yellow" @click="closeModal(loan)">ок</button>
+                                            </div>
+                                        </div>
+                                        <div v-if="message===2" class="message">
+                                            <button class="close1" @click="closeModal(loan)"><img src="@/assets/img/icon/close-ad.svg" alt=""></button>
+                                            <p>{{loan.message.text}}</p>
+                                            <a :href="loan.message.link" target="_blank">{{loan.message.link_text}}</a>
+                                            <div class="message-bottom">
+                                                <button class="button-yellow" @click="consentModal(loan)">OK</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </transition>
+
                                 <div class="p-24">
                                     <div class="prog-bar">
                                         <div class="green"></div>
@@ -66,10 +89,23 @@
                                         <div class="l1 bold">{{$t('interest_payable')}}</div>
                                         <div class="l2 bold">{{nicePrice(loan.percent_pay)}} ₸ </div>
                                     </div>
-                                    <div class="button-gray">
-                                        <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
-                                        <button v-on:click="closeDetail(index)" v-if="detail.includes(index)"><img :src="require('@/assets/img/icon/right-arrow.svg')" alt=""></button>
+                                </div>
+                                <div class="loan-save p-24" v-if="loan.keep_price>0">
+                                    <div class="loan-title">
+                                        <div class="zb"><span>{{$t('conservation_receipt')}}</span> <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
                                     </div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('shelf_life')}}</div>
+                                        <div class="l2">{{ moment(loan.keep_date).format('DD.MM.YYYY') }}</div>
+                                    </div>
+                                    <div class="dflex">
+                                        <div class="l1">{{$t('keep_price')}}</div>
+                                        <div class="l2">{{loan.keep_price}} ₸ </div>
+                                    </div>
+                                </div>
+                                <div class="button-gray db">
+                                    <button v-on:click="openDetail(index)" v-if="!detail.includes(index)"><span>{{$t('in_detail')}}</span></button>
+                                    <button v-on:click="closeDetail(index)" v-if="detail.includes(index)"><img :src="require('@/assets/img/icon/right-arrow.svg')" alt=""></button>
                                 </div>
                                 <div class="loan-down" v-if="!loan.amountHide">
                                     <div class="dflex">
@@ -126,8 +162,8 @@
                                         <div class="l2"> {{nicePrice(loan.total_osz)}} ₸</div>
                                     </div>
                                     <div class="loan-down">
-                                        <div class="dflex">
-                                            <div class="l1 bold">{{$t('total_payment')}}</div>
+                                        <div class="dflex p-0">
+                                            <div class="l1 bold">{{$t('pay_loan_partial_repayment')}}</div>
                                             <div class="l2 bold"> {{nicePrice(loan.total_iko)}} ₸</div>
                                         </div>
                                         <button class="button-yellow" v-on:click="changeDataLoans(loan);
@@ -169,13 +205,13 @@
                             </div>
                             <div class="loan-2" v-if="detail.includes(index)">
                                 <div class="loan2-1" v-if="description.length==0">
-                                    <div class="dflex2">{{$t('security_ticket')}} <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
                                     <div class="contract-link" @click="checkContract(loan)"><span>{{$t('check_contract3')}}</span> <img src="@/assets/img/icon/contract.svg" alt=""></div>
+                                    <div class="dflex2">{{$t('security_ticket')}} <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
                                     <div class="dflex">
                                         <div class="l1">{{$t('branch')}}</div>
                                         <div class="l2">
                                             <span >
-                                                <router-link v-for="(branch, index) in loan" :key="branch.id" :to="`/cabinet/map?branch=${branch.id}`">{{branch.alias}}</router-link>
+                                                <router-link :to="`/cabinet/map?branch=${loan.branch.id}`">{{loan.branch.alias}}</router-link>
                                             </span>
                                         </div>
                                     </div>
@@ -185,6 +221,17 @@
                                     <div class="dflex"><div class="l1">{{$t('interest_payable')}}</div><div class="l2">{{nicePrice(loan.percent_pay)}} ₸</div></div>
                                     <div class="dflex"><div class="l1">{{$t('which_loan')}}</div><div class="l2">{{nicePrice(loan.loan_percent)}} ₸</div></div>
                                     <div class="dflex"><div class="l1">{{$t('for_delay')}}</div><div class="l2">{{nicePrice(loan.percent_delay_loan)}} ₸</div></div>
+                                    <div class="loan-save" v-if="loan.keep_price>0">
+                                        <div class="dflex2">{{$t('conservation_receipt')}} <div class="num">№ <p v-html="$options.filters.subStr(loan.loan_id)"></p></div></div>
+                                        <div class="dflex">
+                                            <div class="l1">{{$t('shelf_life')}}</div>
+                                            <div class="l2">{{ moment(loan.keep_date).format('DD.MM.YYYY') }}</div>
+                                        </div>
+                                        <div class="dflex">
+                                            <div class="l1">{{$t('keep_price')}}</div>
+                                            <div class="l2">{{loan.keep_price}} ₸ </div>
+                                        </div>
+                                    </div>
                                     <div class="dflex"><div class="l1 bold">{{$t('total_return')}}</div><div class="l2 bold">{{nicePrice(loan.return_total)}} ₸</div></div>
                                 </div>
 
@@ -243,44 +290,44 @@
                                     </div>
                                 </div>
                             </div>
-                                        <div class="modal-extension modal-contract">
-      <div id="contract" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body">
-              <div class="slider-extension">
-                <div class="extension" v-if="cont === 1">
-                  <div v-if="loader" class="loader">
-                    <img :src="require('@/assets/img/loader1.gif')" alt="">
-                  </div>
-                  <div class="modal-header modal-header-contract">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                    <div class="modal-title">{{ $t('confirmation') }}</div>
-                  </div>
-                  <div class="text text-c">{{$t('contract_text2')}}</div>
-                  <button class="button-orange button-orange-ex" @click="openPdf(loan)" >{{ $t('read_and_agree') }}</button>
-                  <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
-                </div>
+                            <div class="modal-extension modal-contract">
+                                <div id="contract" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="slider-extension">
+                                                    <div class="extension" v-if="cont === 1">
+                                                        <div v-if="loader" class="loader">
+                                                            <img :src="require('@/assets/img/loader1.gif')" alt="">
+                                                        </div>
+                                                        <div class="modal-header modal-header-contract">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                                                            <div class="modal-title">{{ $t('confirmation') }}</div>
+                                                        </div>
+                                                        <div class="text text-c">{{$t('contract_text2')}}</div>
+                                                        <button class="button-orange button-orange-ex" @click="openPdf(loan)" >{{ $t('read_and_agree') }}</button>
+                                                        <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
+                                                    </div>
 
-                <div class="extension" v-if="cont === 2">
-                  <div v-if="loader" class="loader">
-                    <img :src="require('@/assets/img/loader1.gif')" alt="">
-                  </div>
-                  <div class="modal-header modal-header-contract">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
-                    <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
-                  </div>
-                  <div class="text" v-if="errors">{{errors}}</div>
-                  <div v-if="timeout" class="text">{{ $t('service_unavailable') }}</div>
-                  <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
-                </div>
+                                                    <div class="extension" v-if="cont === 2">
+                                                        <div v-if="loader" class="loader">
+                                                            <img :src="require('@/assets/img/loader1.gif')" alt="">
+                                                        </div>
+                                                        <div class="modal-header modal-header-contract">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
+                                                            <h1 class="modal-title">{{ $t('something_went_wrong') }}</h1>
+                                                        </div>
+                                                        <div class="text" v-if="errors">{{errors}}</div>
+                                                        <div v-if="timeout" class="text">{{ $t('service_unavailable') }}</div>
+                                                        <div class="img"><img :src="require('@/assets/img/ex.png')" alt=""></div>
+                                                    </div>
 
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -343,7 +390,9 @@
                 op_type2: false,
                 cont: 1,
                 timeout: false,
-                iin: ''
+                iin: '',
+                message: 1,
+                mess: ''
             }
         },
         mounted() {
@@ -353,12 +402,12 @@
                 obj.hasError = false;
                 obj.clickable = false;
             });
-                  $('#contract').on('hidden.bs.modal', function () {
-        obj.cont = 1;
-        obj.errors = '';
-        obj.timeout = false;
-        obj.loader = false;
-      });
+            $('#contract').on('hidden.bs.modal', function () {
+                obj.cont = 1;
+                obj.errors = '';
+                obj.timeout = false;
+                obj.loader = false;
+            });
             if(window.screen.width > 767) {
                 $(".loan-list").mCustomScrollbar({
                     autoHideScrollbar:false,
@@ -394,7 +443,6 @@
         },
         methods: {
             toggleSwitch: function(i) {
-                var tempLoans = this.loans;
                 this.loans[i].switch = !this.loans[i].switch
                 if (this.loans[i].switch == false) {
                     this.loans[i].amountHide = true
@@ -402,8 +450,57 @@
                 if (this.loans[i].switch == true) {
                     this.loans[i].amountHide = false
                 }
+                if(this.loans[i].pay_restricted == true && this.loans[i].message == null){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                }
+                if(this.loans[i].message != null && this.loans[i].pay_restricted == false){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                    this.loans[i].showModal = true
+                    this.message = 2
+                }
+                if(this.loans[i].message != null && this.loans[i].pay_restricted == true){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                    this.loans[i].showModal = true
+                    this.message = 1
+                }
+
+                if(this.loans[i].consent == true){
+                    this.loans[i].showModal = false
+                    this.loans[i].message = null
+                    this.loans[i].pay_restricted = false
+                }
+                if(this.loans[i].switch == true && this.loans[i].message==null && this.loans[i].pay_restricted == false && this.loans[i].consent == true){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                    this.loans[i].message = this.loans[i].message_null
+                    this.loans[i].showModal = true
+                    this.message = 2
+                    this.loans[i].consent = false
+                }
+                var tempLoans = this.loans;
                 this.loans = [];
                 this.loans = tempLoans;
+                this.payAmount();
+            },
+            closeModal(loan){
+                loan.showModal = false
+                loan.switch = false
+                loan.amountHide = true
+                var tempLoans = this.loans
+                this.loans=[];
+                this.loans=tempLoans
+            },
+            consentModal(loan){
+                loan.showModal = false
+                loan.switch = true
+                loan.amountHide = false
+                loan.consent = true
+                var tempLoans = this.loans
+                this.loans=[];
+                this.loans=tempLoans
                 this.payAmount();
             },
             changeDate: function(data,i,x){
@@ -485,6 +582,7 @@
             openDetail(index){
                 const inx = this.detail.indexOf(index);
                 const ins = this.payments.indexOf(index);
+                console.log(index);
                 if (inx > -1) {
                     this.detail.splice(inx, 1)
                 } else {
@@ -552,6 +650,9 @@
                     this.loans[i].payment_sum = this.loans[i].max_amount_pay
                     this.loans[i].amount = percent_pay
                     this.loans[i].switch = true
+                    this.loans[i].showModal = false
+                    this.loans[i].consent = false
+                    this.loans[i].message_null = this.loans[i].message
                     this.loans[i].amountHide = false
                     this.loans[i].count_days = max_days
                     this.loans[i].days=this.todays.diff(startDate, 'days')
@@ -576,6 +677,10 @@
                     if(this.op_type1 == false && this.op_type2 == true){
                         this.loans[i].operation_type_1 = false
                         this.loans[i].operation_type_2 = true
+                    }
+                    if(this.loans[i].message || this.loans[i].pay_restricted == true){
+                        this.loans[i].switch = false
+                        this.loans[i].amountHide = true
                     }
                 }
             },
@@ -604,7 +709,6 @@
                     if ($response.code === 0) {
                         console.log($response.error)
                         this.errorsServer = $response.error
-                        this.loader = false
                     } else {
                         loan.total = $response.data
                     }
@@ -687,7 +791,6 @@
                     if ($response.code === 0) {
                         console.log($response.error)
                         this.errorsServer = $response.error
-                        this.loader = false
                     } else {
                         var orderId=$response.data[0].order;
                         console.log($response.data[0])
@@ -722,7 +825,6 @@
                     if ($response.code === 0) {
                         console.log($response)
                         this.errorsServer = $response.error
-                        this.loader = false
                     } else {
                         this.operations = $response.data
                         for(var i=0; i<this.operations.length;i++){
@@ -765,7 +867,6 @@
                     if ($response.code === 0) {
                         console.log($response.error)
                         this.errorsServer = $response.error
-                        this.loader = false
                     } else {
                         product.user_description = product.message
                         product.letter = this.letter
@@ -807,7 +908,7 @@
             urlAddress(){
                 localStorage.setItem('url', this.$router.history.current.path);
             },
-                        getUser () {
+            getUser () {
                 this.$axios.post('/auth/me')
                 .then((response) => {
                     let $response = response.data
@@ -815,7 +916,6 @@
                         console.log($response)
                     } else {
                         this.iin = $response.data.iin
-                        this.loader = false
                     }
                 })
                 .catch((e) => {
@@ -829,44 +929,50 @@
             },
             checkContract(loan){
                 console.log(loan)
-          this.$axios.get('/contract-check?iin=' + this.iin + '&code=' + loan.loan_id, {timeout: 30000})
-          .then((response) => {
-            let $response = response.data
-            if ($response.code === 0) {
-              this.cont = 2
-              this.errors = $response.error
-              $('#contract').modal('show')
-              console.log($response);
-            } else {
-              console.log($response.data.status);
-              if($response.data.status == 'checked'){
+                this.$axios.get('/contract-check?iin=' + this.iin + '&code=' + loan.loan_id, {timeout: 30000})
+                .then((response) => {
+                    let $response = response.data
+                    if ($response.code === 0) {
+                        this.cont = 2
+                        this.errors = $response.error
+                        $('#contract').modal('show')
+                        console.log($response);
+                    } else {
+                        console.log($response.data.status);
+                        if($response.data.status == 'checked'){
+                            window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+                        }
+                        if($response.data.status == 'not checked'){
+                            $('#contract').modal('show')
+                            this.cont = 1
+                        }
+                    }
+                })
+                .catch((e) => {
+                    $('#contract').modal('show')
+                    this.cont = 2
+                    if(e.toString().includes("timeout")) {
+                        this.cont = 2
+                        this.timeout = true
+                    }
+                    console.log(e)
+                })
+            },
+            openPdf(loan){
                 window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
-              }
-              if($response.data.status == 'not checked'){
-                $('#contract').modal('show')
-                this.cont = 1
-              }
-            }
-            this.loader = false
-          })
-          .catch((e) => {
-            $('#contract').modal('show')
-            this.cont = 2
-            this.loader = false
-            if(e.toString().includes("timeout")) {
-              this.cont = 2
-              this.timeout = true
-            }
-            console.log(e)
-          })
-        },
-              openPdf(loan){
-        window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
-      }
-            }
+            },
         }
+    }
 </script>
 
 <style scoped>
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.4s
+    }
 
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0
+    }
 </style>

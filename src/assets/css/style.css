@@ -527,7 +527,8 @@ textarea:hover, textarea:focus, textarea:active {
 
 .map {
   width: 100%;
-  height: 100%; }
+  height: calc(100vh - 485px);
+  margin-bottom: 20px; }
 
 .map-wrapper {
   max-width: 1100px;
@@ -1906,5 +1907,38 @@ input[type='number'] {
 
 .ex-margin {
   margin: -10px -22px; }
+
+.p-0 {
+  padding: 0 !important; }
+
+.loan-save {
+  position: relative;
+  border-top: 1px dashed #dedede; }
+  .loan-save .loan-title {
+    padding: 6px 0 !important; }
+
+.new-map {
+  height: calc(100vh - 290px);
+  overflow-y: auto; }
+  .new-map .map-text_title {
+    font-size: 18px;
+    font-family: FranklinGothicDemi;
+    margin-bottom: 8px;
+    color: #000;
+    position: relative; }
+    .new-map .map-text_title span {
+      position: absolute;
+      bottom: 4px;
+      margin-left: 10px; }
+      .new-map .map-text_title span img {
+        -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg); }
+  .new-map .map-text_content {
+    font-size: 16px;
+    color: #000; }
+
+.tab-text_new {
+  padding: 80px 40px 30px;
+  position: relative; }
 
 /*# sourceMappingURL=style.css.map */

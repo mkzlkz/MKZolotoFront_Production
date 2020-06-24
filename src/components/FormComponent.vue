@@ -188,6 +188,7 @@
                     return
                 }
 
+
                 if (this.phone && this.phone.length == 18 && (/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){11,14}(\s*)?$/.test(this.phone))) {
                     obj.phone = this.phone
                     this.error = ''

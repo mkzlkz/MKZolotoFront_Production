@@ -309,6 +309,7 @@
                     vc = this
                     formData.append('iin', this.iin);
                     formData.append('password', this.password)
+                    formData.append('platform', 'web')
                     axios.post('/auth/login', formData, {timeout: 30000})
                     .then((response) => {
                         console.log(response.data)

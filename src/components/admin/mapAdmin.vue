@@ -21,10 +21,7 @@
             </div>
         </gmap-info-window>
         <div v-for="(m, index) in markers" class="oki" :key="m.id">
-            <gmap-marker v-if="m.VIP == true" :icon="{ url: require('@/assets/img/icon/loc-vip.png')}"
-            :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
-        </gmap-marker>
-        <gmap-marker v-if="m.VIP == false" :icon="{ url: require('@/assets/img/icon/loc.png')}"
+        <gmap-marker  :icon="{ url: require('@/assets/img/icon/loc.png')}"
         :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
     </gmap-marker>
 </div>

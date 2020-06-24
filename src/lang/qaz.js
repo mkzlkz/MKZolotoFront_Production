@@ -13,7 +13,7 @@ export default {
   amount_on_hand: 'Qolǵa berіletіn soma:',
   refund_amount: 'Qaıtarylatyn soma:',
   // Экспресс-продление
-  expressExtension: 'Ekspress-uzartý',
+  expressExtension: 'Ekspress-tólem',
   iin: 'JSN',
   enter_iin: 'JSN Engіzіńіz',
   number_zb: 'Kepіlzattyq bıletіnіń nómіrі',
@@ -86,7 +86,7 @@ export default {
   back: 'Artqa',
   // админ меню
   my_loans: 'Menіń qaryzdarym',
-  express_renewal: 'Jyldam uzartý',
+  express_renewal: 'Jyldam tólem',
   my_last_operations: 'Menіń sońǵy operatsııalarym',
   valuation_capital: 'Menіń kapıtalymdy baǵalaý',
   notification_history: 'Habarlamanyń tarıhy',
@@ -108,8 +108,8 @@ export default {
   for_partial_repayment:'Ishіnara tólem aqysy',
   change_operation_parameters: 'Operatsııa parametrlerіn ózgertý',
   hide: 'Jasyrý',
-  partial_repayment: 'Ishіnara tólem',
-  renewal: 'Nesıenі uzartý',
+  partial_repayment: 'Ishіnara tólem úshіn',
+  renewal: 'Úzartý qyzmetterі ýshіn',
   new_loan_term:'Nesıenіń jańa merzіmі:',
   remuneration_amount: 'Syıaqynyń somasy:',
   partial_redemption_amount: 'Ishіnara óteý somasy, <br> tóleý:',
@@ -120,6 +120,7 @@ export default {
   how_many_days: 'Qansha kún tóleımіn:',
   new_term:'Jańa merzіm:',
   pay_loan_extension: 'Uzartý merzіmіnіń aqysy:',
+    pay_loan_partial_repayment: 'Ishіnara tólem úshіn',
   branch: 'Bólіmshe',
   loan_term: 'Qaryz merzіmі',
   guaranteed_term: 'Kepіldіk merzіmі',
@@ -195,7 +196,12 @@ export default {
   verify: 'Alý',
   confirmation: 'Rastaý',
   contract_text2: 'Kelіsіm sharttarymen jáne kepіldememen',
-  read_and_agree: 'Tanystym jáne kelіstіm'
+  read_and_agree: 'Tanystym jáne kelіstіm',
+  conservation_receipt: 'Saqtalǵan túbіrtek',
+  shelf_life: 'Saqtaý merzіmі',
+  keep_price: 'Saqtaý aqysy',
+  loan_expired: 'Merzіmі bіttі',
+  message_text_loan: 'Nazar aýdaryńyz! <br> Tańdalǵan nesıe úshіn kez-kelgen fılıalda saqtaý týraly kelіsіm jasaý kerek.'
 }
 
 
