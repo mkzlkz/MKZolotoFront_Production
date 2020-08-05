@@ -527,8 +527,7 @@ textarea:hover, textarea:focus, textarea:active {
 
 .map {
   width: 100%;
-  /*height: calc(100vh - 485px);*/
-  height: 100%;
+  height: calc(100vh - 485px);
   margin-bottom: 20px; }
 
 .map-wrapper {
@@ -1930,10 +1929,8 @@ input[type='number'] {
     .new-map .map-text_title span {
       position: absolute;
       bottom: 4px;
-      margin-left: 10px;
-      /*img{
-      	transform: rotate(-90deg);
-      }*/ }
+      margin-left: 10px; }
+
   .new-map .map-text_content {
     font-size: 16px;
     color: #000; }
