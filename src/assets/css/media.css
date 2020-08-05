@@ -758,9 +758,9 @@ width: 180px;
     .new-map {
     height: calc(100vh - 230px);
 }
-.map {
+/*.map {
     height: calc(100vh - 425px);
-    }
+    }*/
     .banner-flex .img{
         height: 230px;
         width: 680px;
@@ -910,9 +910,9 @@ width: 160px;
         .new-map {
     height: calc(100vh - 215px);
 }
-.map {
+/*.map {
     height: calc(100vh - 360px);
-    }
+    }*/
     .banner-flex .img{
         height: 215px;
         width: 636px;
@@ -1025,9 +1025,9 @@ width: 160px;
         .new-map {
     height: calc(100vh - 200px);
 }
-.map {
+/*.map {
     height: calc(100vh - 350px);
-    }
+    }*/
     .banner-flex .img{
         height: 200px;
         width: 586px;
@@ -1104,9 +1104,9 @@ width: 140px;
         .new-map {
     height: calc(100vh - 180px);
 }
-.map {
+/*.map {
     height: calc(100vh - 315px);
-    }
+    }*/
     .banner-flex .img{
         height: 180px;
         width: 528px;
@@ -1309,9 +1309,9 @@ width: 140px;
         .new-map {
     height: calc(100vh - 167px);
 }
-.map {
+/*.map {
     height: calc(100vh - 350px);
-    }
+    }*/
     .banner-flex .img{
         height: 167px;
         width: 490px;
@@ -1499,9 +1499,9 @@ width: 210px;
         .new-map {
     height: calc(100vh - 147px);
 }
-.map {
+/*.map {
     height: calc(100vh - 330px);
-    }
+    }*/
 .banner-flex .img{
     height: 147px;
     width: 430px;
@@ -1529,9 +1529,9 @@ width: 210px;
             .new-map {
     height: calc(100vh - 99px);
 }
-.map {
+/*.map {
     height: calc(100vh - 278px);
-    }
+    }*/
     .banner-flex .img{
         height: 99px;
         width: 290px;
@@ -2035,9 +2035,9 @@ height: calc(100vh - 90%) !important;
 .new-map {
     height: auto;
 }
-.map {
+/*.map {
     height: 320px;
-    }
+    }*/
 .banner-flex .img{
     height: 85px;
     width: 100%;

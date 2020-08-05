@@ -46,7 +46,8 @@ export default {
   send: 'Jіberý',
   modal_error1: 'Atty toltyryńyz nemese ataý generatoryn paıdalanyńyz.',
   modal_error2: 'Nómіr durys emes sııaqty.. Qate nómіr engіzіldі.',
-  modal_error3: 'Elektrondyq poshtany nemese baılanys nómirin engizińiz.',
+  modal_error3: 'Elektrondyq poshtany jáne baılanys nómirin engizińiz.',
+  modal_error3_1: 'Elektrondyq poshtany engizińiz.',
   modal_error4: 'Elektrondyq poshta qate engizildi.',
   modal_error5: 'Elektrondyq poshtany engizgen kezde habarlamanyń mátinin toltyrý qajet.',
   modal_error6: 'Baılanysta bolamyz! Jaqyn arada qońyraý shalamyz!',
@@ -201,7 +202,11 @@ export default {
   shelf_life: 'Saqtaý merzіmі',
   keep_price: 'Saqtaý aqysy',
   loan_expired: 'Merzіmі bіttі',
-  message_text_loan: 'Nazar aýdaryńyz! <br> Tańdalǵan nesıe úshіn kez-kelgen fılıalda saqtaý týraly kelіsіm jasaý kerek.'
+  message_text_loan: 'Nazar aýdaryńyz! <br> Tańdalǵan nesıe úshіn kez-kelgen fılıalda saqtaý týraly kelіsіm jasaý kerek.',
+  login_t: 'Logın',
+  login_placeholder: 'Logınińizdi engizińiz',
+  login_text: 'Logın men Kod kompanıanyń keńsesinde qaǵaz tasymaldaǵyshta beriledi',
+  message_no_text: 'Operatsııany jalǵastyrý múmkin emes. <br> Fılıalǵa habarlasýyńyzdy suraımyz',
 }
 
 

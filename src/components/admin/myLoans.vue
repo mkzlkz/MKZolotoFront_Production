@@ -27,10 +27,15 @@
                                 <transition name="fade">
                                     <div v-if="loan.showModal" class="modal-message">
                                         <div v-if="message===1" class="message">
-                                            <p>{{loan.message.text}}</p>
+                                            <div v-if="loan.message">
+                                                <p>{{loan.message.text}}</p>
                                             <a :href="loan.message.link" target="_blank">{{loan.message.link_text}}</a>
                                             <div class="message-bottom">
                                                 <button class="button-yellow" @click="closeModal(loan)">ок</button>
+                                            </div>
+                                            </div>
+                                            <div v-else>
+                                             <p>{{$t('message_no_text')}}</p>
                                             </div>
                                         </div>
                                         <div v-if="message===2" class="message">
@@ -129,7 +134,7 @@
                                             <span v-if="partial_repayment">{{$t('partial_repayment')}}</span>
                                             <span class="bg"><span class="caret"></span></span></button>
                                             <ul class="dropdown-menu">
-                                                <li v-if="operations.length > 1">
+                                                <li v-if="operations.length > 1 && loan.partial_pay_option">
                                                     <a v-on:click="openPay">
                                                         <span v-if="!partial_repayment">{{$t('partial_repayment')}}</span>
                                                         <span v-if="!renewal">{{$t('renewal')}}</span>
@@ -466,7 +471,12 @@
                     this.loans[i].showModal = true
                     this.message = 1
                 }
-
+                if(this.loans[i].message==null && this.loans[i].pay_restricted == true){
+                    this.loans[i].switch = false
+                    this.loans[i].amountHide = true
+                    this.loans[i].showModal = true
+                    this.message = 1
+                }
                 if(this.loans[i].consent == true){
                     this.loans[i].showModal = false
                     this.loans[i].message = null
@@ -678,7 +688,11 @@
                         this.loans[i].operation_type_1 = false
                         this.loans[i].operation_type_2 = true
                     }
-                    if(this.loans[i].message || this.loans[i].pay_restricted == true){
+                    if(this.loans[i].message!=null || this.loans[i].pay_restricted == true){
+                        this.loans[i].switch = false
+                        this.loans[i].amountHide = true
+                    }
+                    if(this.loans[i].message==null && this.loans[i].pay_restricted == true){
                         this.loans[i].switch = false
                         this.loans[i].amountHide = true
                     }
@@ -940,7 +954,7 @@
                     } else {
                         console.log($response.data.status);
                         if($response.data.status == 'checked'){
-                            window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+                            window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
                         }
                         if($response.data.status == 'not checked'){
                             $('#contract').modal('show')
@@ -959,7 +973,7 @@
                 })
             },
             openPdf(loan){
-                window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
+                window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + loan.loan_id, '_blank');
             },
         }
     }

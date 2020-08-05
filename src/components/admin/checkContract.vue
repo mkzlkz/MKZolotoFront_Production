@@ -99,7 +99,7 @@
             } else {
               console.log($response.data.status);
               if($response.data.status == 'checked'){
-                window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+                window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
               }
               if($response.data.status == 'not checked'){
                 $('#contract').modal('show')
@@ -120,7 +120,7 @@
           })
       },
       openPdf(){
-        window.open('https://mk-backend.mars.studio/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
+        window.open('https://mk-zoloto-lombard.kz/api/contract-info?iin=' + this.iin + '&code=' + this.code, '_blank');
       }
     }
   }

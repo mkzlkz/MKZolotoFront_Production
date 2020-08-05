@@ -45,27 +45,45 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><img :src="require('@/assets/img/icon/close-mb.svg')" alt=""></button>
                                             <h1 class="modal-title">{{ $t('expressExtension') }}</h1>
                                         </div>
-                                        <div class="form-2 mb-0">
-                                            <span>{{ $t('number_zb') }}:</span>
-                                            <div class="number-ex"><the-mask :mask="['#### #### #### ####']" v-model="loan_id" /></div>
-                                        </div>
-                                        <div class="exten-slider" :class="(this.prolong.max_renewal==this.prolong.min_renewal) ? 'left-100':''">
-                                            <div class="ex-flex">
-                                                <div class="min-ex">{{prolong.min_renewal}}</div>
-                                                <div class="max-ex">{{prolong.max_renewal}}</div>
+                                        <div v-if="mes===1">
+                                            <div class="text" v-if="prolong.message">
+                                                <p v-if="prolong.message.text">{{prolong.message.text}}</p>
+                                                <a :href="prolong.message.link" class="a_by-2" target="_blank" v-if="prolong.message.link_text">{{prolong.message.link_text}}</a>
                                             </div>
-                                            <vue-slider v-model="count_days" :min='prolong.min_renewal' :max='prolong.max_renewal' :tooltip="'always'" @change="calculationForm" />
-                                            <div class="border"></div>
+                                            <div class="text" v-else>{{$t('message_no_text')}}</div>
                                         </div>
-                                        <div class="form-1">
-                                            <input type="text"  :placeholder="$t('enter_term')" v-model="count_days" @change="calculationForm(); defaultValue();" @input="calculationForm()" @keyUp="calculationForm()" @keydown="keyDays">
+                                        <div v-if="mes===2">
+                                            <div class="text" v-if="prolong.message">
+                                                <p v-if="prolong.message.text">{{prolong.message.text}}</p>
+                                                <a :href="prolong.message.link" class="a_by-2" target="_blank" v-if="prolong.message.link_text">{{prolong.message.link_text}}</a>
+                                                <div class="message-bottom">
+                                                    <button class="button-yellow by-2" @click="prolongCheck()">ок</button>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="total">
-                                            <p>{{ $t('total_payment') }}</p>
-                                            <div class="price" :class="(this.count_days < this.minTerm) ? 'price transparent':'price'">{{amount}} ₸</div>
+                                        <div v-if="mes===3">
+                                            <div class="form-2 mb-0">
+                                                <span>{{ $t('number_zb') }}:</span>
+                                                <div class="number-ex"><the-mask :mask="['#### #### #### ####']" v-model="loan_id" /></div>
+                                            </div>
+                                            <div class="exten-slider" :class="(this.prolong.max_renewal==this.prolong.min_renewal) ? 'left-100':''">
+                                                <div class="ex-flex">
+                                                    <div class="min-ex">{{prolong.min_renewal}}</div>
+                                                    <div class="max-ex">{{prolong.max_renewal}}</div>
+                                                </div>
+                                                <vue-slider v-model="count_days" :min='prolong.min_renewal' :max='prolong.max_renewal' :tooltip="'always'" @change="calculationForm" />
+                                                <div class="border"></div>
+                                            </div>
+                                            <div class="form-1">
+                                                <input type="text"  :placeholder="$t('enter_term')" v-model="count_days" @change="calculationForm(); defaultValue();" @input="calculationForm()" @keyUp="calculationForm()" @keydown="keyDays">
+                                            </div>
+                                            <div class="total">
+                                                <p>{{ $t('total_payment') }}</p>
+                                                <div class="price" :class="(this.count_days < this.minTerm) ? 'price transparent':'price'">{{amount}} ₸</div>
+                                            </div>
+                                            <button :class="(this.count_days < this.minTerm) ? 'button-orange disabled':'button-orange'" @click="countDaysForm()">{{ $t('pay') }}</button>
+                                            <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                                         </div>
-                                        <button :class="(this.count_days < this.minTerm) ? 'button-orange disabled':'button-orange'" @click="countDaysForm()">{{ $t('pay') }}</button>
-                                        <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                                     </div>
                                 </div>
 
@@ -80,7 +98,7 @@
                                                 <h1 class="modal-title">{{ $t('loan_successfully_extended') }}</h1>
                                             </div>
                                             <div class="text">{{ $t('super') }}</div>
-                                            <a :href="`https://mk-backend.mars.studio/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
+                                            <a :href="`https://mk-zoloto-lombard.kz/api/pdf_generate?id=${this.Idreceipt}`" target="_blank" class="link">{{ $t('view_receipt') }}</a>
                                             <div class="img pr-20"><img :src="require('@/assets/img/ex3.png')" alt=""></div>
                                         </div>
                                         <div v-if="!check_status">
@@ -149,7 +167,8 @@
                 timeout: false,
                 Idreceipt: '',
                 max_renewal: 0,
-                check_status: null
+                check_status: null,
+                mes:3
             }
         },
         mounted () {
@@ -236,6 +255,7 @@ if ($response.code === 0) {
     this.amount = $response.data.max
     this.maxTerm = $response.data.max_renewal
     this.minTerm = $response.data.min_renewal
+    this.checkFunc();
 }
 this.loader = false
 this.expAmount();
@@ -353,11 +373,39 @@ checkStatus() {
         this.loader = false
     })
     .catch((e) => console.log(e))
+},
+checkFunc(){
+    if(this.prolong.message!= null && this.prolong.pay_restricted == true){
+        this.mes = 1
+    }
+    if(this.prolong.message!= null && this.prolong.pay_restricted == false){
+        this.mes = 2
+    }
+    if(this.prolong.message == null && this.prolong.pay_restricted == true){
+        this.mes = 1
+    }
+    if(this.prolong.message == null && this.prolong.pay_restricted == false){
+        this.mes = 3
+    }
+},
+prolongCheck(){
+    this.mes = 3
 }
 }
 }
 </script>
 
 <style scoped>
-
+    .by-2{
+        margin: 25px 0;
+        height: 44px;
+    }
+    .a_by-2{
+        display: block;
+        color: #4840c6;
+        font-family: 'FranklinGothicDemi';
+        margin-bottom: 30px;
+        font-size: 14px;
+        text-decoration: underline;
+    }
 </style>

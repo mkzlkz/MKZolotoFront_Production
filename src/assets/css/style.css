@@ -223,9 +223,9 @@ textarea:hover, textarea:focus, textarea:active {
 
 .bg-calc {
   /*	background: url(../img/bg-calc.png);
-  	background-size: contain;
-  	background-position: top right;
-  	background-repeat: no-repeat;*/
+  background-size: contain;
+  background-position: top right;
+  background-repeat: no-repeat;*/
   height: 100%; }
   .bg-calc .title {
     color: #fff !important;
@@ -527,7 +527,8 @@ textarea:hover, textarea:focus, textarea:active {
 
 .map {
   width: 100%;
-  height: calc(100vh - 485px);
+  /*height: calc(100vh - 485px);*/
+  height: 100%;
   margin-bottom: 20px; }
 
 .map-wrapper {
@@ -721,10 +722,10 @@ textarea:hover, textarea:focus, textarea:active {
   right: 74%; }
 
 /*.hint2{
-	left: -20%;
+left: -20%;
 }
 .hint3{
-	margin-top: 15px;
+margin-top: 15px;
 }*/
 .hint:before {
   border: 12px solid transparent;
@@ -735,7 +736,7 @@ textarea:hover, textarea:focus, textarea:active {
   content: ''; }
 
 /*.hint2:before {
-	right: 74%;
+right: 74%;
 }*/
 .point {
   margin: -5px 0 0 -2px; }
@@ -1155,9 +1156,9 @@ input[type='number'] {
 .slider {
   /*.slick-dots .slick-active #slick-slide-control07{
   animation: play 3s infinite linear;
-  	transform: scale(1);
-  	top: 51px !important;
-  	animation-delay:5s;
+  transform: scale(1);
+  top: 51px !important;
+  animation-delay:5s;
   }*/ }
   .slider .slick-dots {
     display: -webkit-box;
@@ -1929,10 +1930,10 @@ input[type='number'] {
     .new-map .map-text_title span {
       position: absolute;
       bottom: 4px;
-      margin-left: 10px; }
-      .new-map .map-text_title span img {
-        -webkit-transform: rotate(-90deg);
-                transform: rotate(-90deg); }
+      margin-left: 10px;
+      /*img{
+      	transform: rotate(-90deg);
+      }*/ }
   .new-map .map-text_content {
     font-size: 16px;
     color: #000; }

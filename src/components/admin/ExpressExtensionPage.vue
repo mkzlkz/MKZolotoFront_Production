@@ -43,7 +43,24 @@
                     <div class="modal-header modal-header-ex">
                         <h1 class="modal-title">{{ $t('expressExtension') }}</h1>
                     </div>
-                    <div class="form-width1">
+                    <div class="form-width1" v-if="mes===1">
+                        <div class="text" v-if="prolong.message">
+                            <p v-if="prolong.message.text">{{prolong.message.text}}</p>
+                            <a :href="prolong.message.link" target="_blank" class="a_by-2" v-if="prolong.message.link_text">
+                            {{prolong.message.link_text}}</a>
+                        </div>
+                        <div class="text" v-else>{{$t('message_no_text')}}</div>
+                    </div>
+                    <div class="form-width1" v-if="mes===2">
+                        <div class="text" v-if="prolong.message">
+                            <p v-if="prolong.message.text">{{prolong.message.text}}</p>
+                            <a :href="prolong.message.link" target="_blank" class="a_by-2" v-if="prolong.message.link_text">{{prolong.message.link_text}}</a>
+                            <div class="message-bottom">
+                                <button class="button-yellow by-2" @click="prolongCheck()">ок</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-width1" v-if="mes===3">
                         <div class="form-2 mb-0">
                             <span>{{ $t('number_zb') }}:</span>
                             <div class="number-ex"><the-mask :mask="['#### #### #### ####']" v-model="loan_id" /></div>
@@ -68,8 +85,8 @@
                     <div class="img"><img :src="require('@/assets/img/ex1.png')" alt=""></div>
                 </div>
             </div>
-</div>
-</div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -101,7 +118,8 @@
                 timeout: false,
                 Idreceipt: '',
                 errorsServer: '',
-                max_renewal: 0
+                max_renewal: 0,
+                mes: 3
             }
         },
         mounted () {
@@ -159,6 +177,7 @@
                             this.amount = $response.data.max
                             this.maxTerm = $response.data.max_renewal
                             this.minTerm = $response.data.min_renewal
+                            this.checkFunc();
                         }
                         this.loader = false
                         this.expAmount();
@@ -269,10 +288,38 @@
             urlAddress(){
                 localStorage.setItem('url', this.$router.history.current.path);
             },
+            checkFunc(){
+                if(this.prolong.message!= null && this.prolong.pay_restricted == true){
+                    this.mes = 1
+                }
+                if(this.prolong.message!= null && this.prolong.pay_restricted == false){
+                    this.mes = 2
+                }
+                if(this.prolong.message == null && this.prolong.pay_restricted == true){
+                    this.mes = 1
+                }
+                if(this.prolong.message == null && this.prolong.pay_restricted == false){
+                    this.mes = 3
+                }
+            },
+            prolongCheck(){
+                 this.mes = 3
+            }
         }
     }
 </script>
 
 <style scoped>
-
+.by-2{
+        margin: 25px auto;
+    height: 44px;
+}
+.a_by-2{
+display: block;
+    color: #4840c6;
+    font-family: 'FranklinGothicDemi';
+    margin-bottom: 30px;
+    font-size: 14px;
+    text-decoration: underline;
+}
 </style>

@@ -75,17 +75,8 @@
 </gmap-map>
 </div>
 <div class="map-text">
-  <div class="map-text_title">Сдать золото в ломбард в Алматы <span><img src="@/assets/img/icon/exit.svg" alt=""></span></div>
-  <div class="map-text_content">
-    <p>Знайте, если у Вас есть золото, значит, у Вас есть деньги!</p>
-    <p>Драгоценный металл – самая твердая мировая валюта. С золотом Вы всегда при деньгах! Срочно нужны наличные? Сдайте золото в ломбард в Алматы и получи заем, обратившись в МК-Золото Ломбард.</p>
-    <p>МК-Золото Ломбард предлагает выдачу займов под ювелирные и иные изделия из золота стандартным сроком в 60 дней.  А если погашение займа по какой-то причине невозможно в срок, Вы всегда можете его продлить на выгодных условиях.</p>
-    <p>Наши специалисты честно и прозрачно рассчитают стоимость ювелирных изделий, основываясь на содержании чистого золота в сплаве, текущей биржевой стоимости золота и кредитной истории Заемщика. Наличие бриллиантов станет дополнительной гарантией повышения стоимости Вашего изделия. В каждом филиале есть монитор клиента, в котором видны все действия, которые делает специалист.</p>
-    <p>Что необходимо для того, чтобы получить заем от МК-Золото Ломбард? Всего лишь документ, удостоверяющий Вашу личность, паспорт или вид на жительство Республики Казахстан и украшение из золота.</p>
-    <p>Выплату процентов по займу можно произвести в любом городе Казахстана, где имеется офис МК-Золото Ломбард, так и с помощью QIWI-терминала, сайта или мобильного приложения.</p>
-    <p>МК-Золото Ломбард гарантирует полную сохранность изделий, если Вы решите сдать золото в ломбард в Алматы именно у нас. Каждый офис оснащен специальными сейфами с сигнализацией, что гарантирует предельную безопасность хранения драгоценностей.</p>
-    <p>Нашим клиентам совершенно бесплатно предоставляется услуга «УльтраЧистка», которая поможет вернуть первоначальный блеск ювелирных изделий, избавив от грязи, пыли и ворсинок.</p>
-    <p>На главной странице Вы можете ознакомиться с онлайн-калькулятором и посчитать сумму, которую можно получить в качестве займа, сдав изделие из золота в МК-Золото Ломбард.</p>
+  <div class="map-text_title">{{ promo_city_title }} <span v-if="promo_city_title"><img src="@/assets/img/icon/arrow_down.svg" alt=""></span></div>
+  <div class="map-text_content" v-html="promo_city_description">
   </div>
 </div>
 </div>
@@ -131,6 +122,8 @@
         description_page_default: '',
         opengraph_image: '',
         title_city: '',
+        promo_city_title: '',
+        promo_city_description: '',
         contacts: '',
         center: {
           lat: 43.231907,
@@ -190,6 +183,8 @@ mounted() {
   this.getMyLocation()
   this.reloadPage()
   this.getMenus()
+  this.selectedCity()
+  this.getCityPromo()
 },
 watch: {
   selected: function () {
@@ -236,6 +231,7 @@ this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
 this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
 }
 }
+    this.getCityPromo()
 },
 
 markers(markers) {
@@ -443,6 +439,27 @@ this.$axios.post('/getPointsByCity', obj)
 }).catch((err) => {
   console.log(err)
 })
+},
+getCityPromo(){
+    this.$router.push({
+        path: '/location/' + this.selectedCity.city_eng
+    })
+    let obj = {}
+    obj.city = this.selectedCity.city
+    this.$axios.post('/cityPromo', obj)
+        .then(response => {
+            if(response.data.data != null){
+                let promo = response.data.data
+                this.promo_city_title = promo.title
+                this.promo_city_description = promo.description
+            }else{
+                this.promo_city_title = ''
+                this.promo_city_description = ''
+            }
+
+        }).catch((err) => {
+        console.log(err)
+    })
 },
 getMyLocation() {
   if (navigator.geolocation) {
