@@ -25,51 +25,51 @@
             <option value="all">{{$t('all')}}</option>
           </select>
           <!-- <div class="nen"> -->
-<!-- <select v-if="show" disabled name="" id="">
-<option value="all">Все</option>
-</select> -->
-<!-- </div> -->
-</div>
-</div>
-<div class="content_block content-block1">
-  <div class="map">
-    <gmap-map :options="{
-    streetViewControl: false,
-    fullscreenControl: false}" :center="center" :zoom="10.5" style="width:100%;  height: 100%;"
-    ref="gmap" class="map">
-    <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
-    @closeclick="infoWinOpen=false">
+            <!-- <select v-if="show" disabled name="" id="">
+              <option value="all">Все</option>
+            </select> -->
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="content_block content-block1">
+          <div class="map" v-if="!isServer">
+            <gmap-map :options="{
+            streetViewControl: false,
+            fullscreenControl: false}" :center="center" :zoom="10.5" style="width:100%;  height: 100%;"
+            ref="gmap" class="map">
+            <gmap-info-window :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen"
+            @closeclick="infoWinOpen=false">
 
-    <div class="marker-modal">
-      <div class="mm-1">
-        <h4 v-if="infoContent.text">{{infoContent.text}}</h4>
-        <h4>{{ infoContent.alias }}</h4>
-        <p>{{ infoContent.address }}</p>
-        <p class="tel-m">{{ infoContent.phone }}</p>
-        <p v-if="infoContent.RezhimRaboty">{{infoContent.RezhimRaboty}}, <br> {{infoContent.Vyhodnye}}</p>
-        <!--<p style="margin-bottom: 0; max-width: 115px;">{{infoContent.Uslugi}}</p>-->
-      </div>
-      <div class="mm-2" v-if="infoContent.image">
-        <img v-img :src="infoContent.image" alt="">
-      </div>
-    </div>
-  </gmap-info-window>
-  <gmap-marker v-for="(my, index) in myMarkers" :icon="{ url: require('@/assets/img/Artboard.png')}"
-  :position="my.position" :key="index" :clickable="true" @click="toggleInfoWindow(my, index)">
-</gmap-marker>
-<div>
-  <gmap-marker v-for="( closest, index) in closestPoint"
-  :icon="{ url: require('@/assets/img/circle.png')}" :position=" closest.position" :key="index"
-  :clickable="true" @click="toggleInfoWindow(closest, index)"></gmap-marker>
-</div>
+            <div class="marker-modal">
+              <div class="mm-1">
+                <h4 v-if="infoContent.text">{{infoContent.text}}</h4>
+                <h4>{{ infoContent.alias }}</h4>
+                <p>{{ infoContent.address }}</p>
+                <p class="tel-m">{{ infoContent.phone }}</p>
+                <p v-if="infoContent.RezhimRaboty">{{infoContent.RezhimRaboty}}, <br> {{infoContent.Vyhodnye}}</p>
+                <!--<p style="margin-bottom: 0; max-width: 115px;">{{infoContent.Uslugi}}</p>-->
+              </div>
+              <div class="mm-2" v-if="infoContent.image">
+                <img v-img :src="infoContent.image" alt="">
+              </div>
+            </div>
+          </gmap-info-window>
+          <gmap-marker v-for="(my, index) in myMarkers" :icon="{ url: require('@/assets/img/Artboard.png')}"
+          :position="my.position" :key="index" :clickable="true" @click="toggleInfoWindow(my, index)">
+        </gmap-marker>
+        <div>
+          <gmap-marker v-for="( closest, index) in closestPoint"
+          :icon="{ url: require('@/assets/img/circle.png')}" :position=" closest.position" :key="index"
+          :clickable="true" @click="toggleInfoWindow(closest, index)"></gmap-marker>
+        </div>
 
-<div v-for="(m, index) in markers" class="oki" :key="m.id">
-  <gmap-marker v-if="m.infoText.VIP == true" :icon="{ url: require('@/assets/img/icon/loc-vip.png')}"
-  :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
-</gmap-marker>
-<gmap-marker v-if="m.infoText.VIP == false" :icon="{ url: require('@/assets/img/icon/loc.png')}"
-:position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
-</gmap-marker>
+        <div v-for="(m, index) in markers" class="oki" :key="m.id">
+          <gmap-marker v-if="m.infoText.VIP == true" :icon="{ url: require('@/assets/img/icon/loc-vip.png')}"
+          :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
+        </gmap-marker>
+        <gmap-marker v-if="m.infoText.VIP == false" :icon="{ url: require('@/assets/img/icon/loc.png')}"
+        :position="m.position" :key="index" :clickable="true" @click="toggleInfoWindow(m, index)">
+      </gmap-marker>
 
 </div>
 </gmap-map>
@@ -85,8 +85,8 @@
   <div class="closes_box closes_box10" @click="visible = !visible"><img :src="require('@/assets/img/close.svg')"
     alt=""></div>
     <img v-if="this.$auth.getLanguage() === 'ru'" :src="require('@/assets/img/10.png')" alt="" class="img">
-    <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/10k.png')" alt="" class="img">
-    <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/10q.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'kz'" :src="require('@/assets/img/10k.png')" alt="" class="img">
+          <img v-if="this.$auth.getLanguage() === 'qaz'" :src="require('@/assets/img/10q.png')" alt="" class="img">
   </div>
 </div>
 <div class="new-cont">
@@ -116,6 +116,8 @@
     },
     data() {
       return {
+        //
+        isServer: true,
         title_page: '',
         title_page_default: '',
         description_page: '',
@@ -174,6 +176,13 @@
     },
 
     mounted() {
+      //
+      const servTimer = setInterval(()=>{
+        if(window){
+          this.isServer = false
+          clearInterval(servTimer)
+        }
+      }, 100)
       if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
         this.getTitle();
         this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
