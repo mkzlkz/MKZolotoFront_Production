@@ -365,8 +365,6 @@
               let promo = response.data.data
               this.promo_city_title = promo.title
               this.promo_city_description = promo.description
-              console.log(this.promo_city_title)
-              console.log(this.promo_city_description)
             }else{
               this.promo_city_title = ''
               this.promo_city_description = ''
