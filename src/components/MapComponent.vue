@@ -122,9 +122,9 @@
         description_page_default: '',
         opengraph_image: '',
         title_city: '',
+        contacts: '',
         promo_city_title: '',
         promo_city_description: '',
-        contacts: '',
         center: {
           lat: 43.231907,
           lng: 76.951847
@@ -155,380 +155,376 @@
         infoWindowPos: null,
         currentPlace: null,
         visible: true,
-// show: false,
-closestPoint: [],
-mapDisable: ''
-}
-},
-metaInfo() {
-  return {
-    title: this.title_page,
-    meta: [
-    { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
-    { name: 'description', content: this.description_page },
-    { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
-    { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
-    { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
-    ]
-  }
-},
-
-mounted() {
-  if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
-    this.getTitle();
-    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-  }
-  this.getAllCities()
-  this.getMyLocation()
-  this.reloadPage()
-  this.getMenus()
-  this.selectedCity()
-  this.getCityPromo()
-},
-watch: {
-  selected: function () {
-    if (this.selected == 'all') {
-      this.getMyLocation()
-    } else {
-      this.getCurrentLocations()
-    }
-  },
-  $route: function () {
-// console.log(this.$route);
-if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
-//alert(this.$route.params.city_name);
-this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-this.getTitle();
-//this.title_page = this.title_page.replace("[CITY]", this.title_city);
-}
-},
-selectedCity: function () {
-  if (this.selectedCity.city != this.myCity.city) {
-    this.disableSelect = true
-    this.selected = 'all'
-    this.getSelectedCity()
-    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-// this.show = true
-} else {
-  if (!this.mapDisable) {
-    this.selected = '10'
-    this.getCurrentLocations()
-    this.disableSelect = false
-    this.getSelectedCity()
-    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-// this.show = false
-} else {
-// this.show = false
-this.markers = []
-this.disableSelect = true
-this.selected = 'all'
-this.getSelectedCity()
-this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-}
-}
-    this.getCityPromo()
-},
-
-markers(markers) {
-  const bounds = new google.maps.LatLngBounds()
-// console.log(bounds)
-if (markers.length === 0) {
-// for (let m of markers) {
-//   bounds.extend(m.position)
-// }
-} else if (markers.length == 1) {
-  for (let m of markers) {
-    bounds.extend(m.position)
-  }
-  this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
-  this.$refs.gmap.$mapObject.setZoom(15.5)
-} else if (markers.length == 2) {
-  for (let m of markers) {
-    bounds.extend(m.position)
-  }
-  this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
-  this.$refs.gmap.$mapObject.setZoom(13.5)
-} else if (markers.length <= 5) {
-  for (let m of markers) {
-    bounds.extend(m.position)
-  }
-  this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
-  this.$refs.gmap.$mapObject.setZoom(12.5)
-} else if (markers.length <= 8) {
-  for (let m of markers) {
-    bounds.extend(m.position)
-  }
-  this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
-  this.$refs.gmap.$mapObject.setZoom(12.5)
-} else if (markers.length > 8) {
-  for (let m of markers) {
-    bounds.extend(m.position)
-  }
-  this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
-  this.$refs.gmap.$mapObject.setZoom(10.5)
-}
-}
-},
-created() {
-  this.getContacts();
-  this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
-  this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
-},
-methods: {
-  getMenus () {
-    this.$axios.get('/menus')
-    .then((response) => {
-      let $response = response.data
-      if ($response.code === 0) {
-        console.log($response)
-      } else {
-        this.title_page_default = $response.data[12].title_page
-        this.description_page_default = $response.data[12].description
-        this.opengraph_image = $response.data[12].opengraph_image
+        // show: false,
+        closestPoint: [],
+        mapDisable: ''
       }
-    })
-    .catch((e) => console.log(e))
-  },
-  getTitle() {
-    let obj = {}
-    obj.city = this.$route.params.city_name
-    this.$axios.post('/title_city', obj)
-    .then((response) => {
-      let $response = response.data
-      if ($response.code === 0) {
-        console.log($response)
-      } else {
-        this.title_city = $response.data.city
+    },
+    metaInfo() {
+      return {
+        title: this.title_page,
+        meta: [
+          { 'property': 'og:title', 'content': this.title_page, 'vmid': 'og:title'},
+          { name: 'description', content: this.description_page },
+          { 'property': 'og:description', 'content': this.description_page, 'vmid': 'og:description'},
+          { 'property': 'og:image', 'content': this.opengraph_image, 'vmid': 'og:image'},
+          { 'property': 'og:image:secure_url', 'content': this.opengraph_image, 'vmid': 'og:image:secure_url'}
+        ]
+      }
+    },
+
+    mounted() {
+      if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
+        this.getTitle();
         this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
         this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
       }
-    })
-    .catch((e) => console.log(e))
-  },
-  getContacts () {
-    this.$axios.get('/contact_details')
-    .then((response) => {
-      let $response = response.data
-      if ($response.code === 0) {
-        console.log($response)
-      } else {
-        this.contacts = $response.data
+      this.getAllCities()
+      this.getMyLocation()
+      this.reloadPage()
+      this.getMenus()
+      this.getCityPromo()
+    },
+    watch: {
+      selected: function () {
+        if (this.selected == 'all') {
+          this.getMyLocation()
+        } else {
+          this.getCurrentLocations()
+        }
+      },
+      $route: function () {
+// console.log(this.$route);
+        if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
+          //alert(this.$route.params.city_name);
+          this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+          this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+          this.getTitle();
+          //this.title_page = this.title_page.replace("[CITY]", this.title_city);
+        }
+      },
+      selectedCity: function () {
+        if (this.selectedCity.city != this.myCity.city) {
+          this.disableSelect = true
+          this.selected = 'all'
+          this.getSelectedCity()
+          this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+          this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+          // this.show = true
+        } else {
+          if (!this.mapDisable) {
+            this.selected = '10'
+            this.getCurrentLocations()
+            this.disableSelect = false
+            this.getSelectedCity()
+            this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+            this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+            // this.show = false
+          } else {
+            // this.show = false
+            this.markers = []
+            this.disableSelect = true
+            this.selected = 'all'
+            this.getSelectedCity()
+            this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+            this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+          }
+        }
+        this.getCityPromo()
+      },
+
+      markers(markers) {
+        const bounds = new google.maps.LatLngBounds()
+// console.log(bounds)
+        if (markers.length === 0) {
+// for (let m of markers) {
+//   bounds.extend(m.position)
+// }
+        } else if (markers.length == 1) {
+          for (let m of markers) {
+            bounds.extend(m.position)
+          }
+          this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
+          this.$refs.gmap.$mapObject.setZoom(15.5)
+        } else if (markers.length == 2) {
+          for (let m of markers) {
+            bounds.extend(m.position)
+          }
+          this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
+          this.$refs.gmap.$mapObject.setZoom(13.5)
+        } else if (markers.length <= 5) {
+          for (let m of markers) {
+            bounds.extend(m.position)
+          }
+          this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
+          this.$refs.gmap.$mapObject.setZoom(12.5)
+        } else if (markers.length <= 8) {
+          for (let m of markers) {
+            bounds.extend(m.position)
+          }
+          this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
+          this.$refs.gmap.$mapObject.setZoom(12.5)
+        } else if (markers.length > 8) {
+          for (let m of markers) {
+            bounds.extend(m.position)
+          }
+          this.$refs.gmap.$mapObject.setCenter(bounds.getCenter())
+          this.$refs.gmap.$mapObject.setZoom(10.5)
+        }
       }
-    })
-    .catch((e) => console.log(e))
-  },
-  getclosestPoint() {
-    let obj = {}
-    obj.lat = this.myLocation.lat
-    obj.lng = this.myLocation.lng
-    this.$axios.post('/closestPoint', obj)
-    .then(response => {
-      let closest = response.data.data
-      let closestMarker = {}
-      closestMarker.position = {
-        lat: parseFloat(closest.lat),
-        lng: parseFloat(closest.lng)
-      }
-      closestMarker.text = closest
-      this.closestPoint.push({
-        position: closestMarker.position,
-        infoText: closestMarker.text
-      })
-    })
-  },
-  getSelectedCity() {
-    this.$router.push({
-      path: '/location/' + this.selectedCity.city_eng
-    })
-    let obj = {}
-    obj.city = this.selectedCity.city
-    this.$axios.post('/getPointsByCity', obj)
-    .then(response => {
-      let selCit = response.data.data
-      this.markers = []
-      this.addMarker(selCit)
-    }).catch((err) => {
-      console.log(err)
-    })
-  },
-  getAllCities() {
-    this.$axios.get('/cities')
-    .then(response => {
-      this.allCity = response.data.data
-
-    })
-  },
-  getCurrentLocations() {
-    let body = {}
-    body.lat = this.myLocation.lat
-    body.lng = this.myLocation.lng
-    body.limit = this.selected
-    this.$axios.post('/closestPoints', body)
-    .then(response => {
-      this.markers = []
-      let $response = response.data.data
-// console.log($response)
-this.addMarker($response)
-}).catch((err) => {
-  console.log(err)
-})
-},
-getCity(error) {
-  let body = {}
-  if (this.myLocation.lat && this.myLocation.lng) {
-    body.lat = this.myLocation.lat
-    body.lng = this.myLocation.lng
-  } else {
-    body.lat = 0
-    body.lng = 0
-  }
-  this.$axios.post('/getCityByCoordinates', body)
-  .then(response => {
-// console.log(response);
-if (this.$route.path === '/location' || this.$route.path === '/location/') {
-
-  this.myCity = response.data.data
-  this.selectedCity = response.data.data
-// console.log("selectedCity",this.selectedCity);
-
-if (this.myCity.city) {
-  if (this.selected == 'all') {
-    let obj = {}
-    obj.city = this.myCity.city
-    this.$axios.post('/getPointsByCity', obj)
-    .then(response => {
-      let $response = response.data.data
-      this.addMarker($response)
-// console.log($response)
-}).catch((err) => {
-  console.log(err)
-})
-}
-if (this.selected != 'all') {
-  this.getCurrentLocations()
-}
-
-}
-} else if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
-  let params = this.$route.params.city_name
-  if (this.allCity) {
-    for (let i = 0; i < this.allCity.length; i++) {
-      if (params === this.allCity[i].city_eng) {
-// console.log("city name", this.allCity[i].city_eng);
-this.selectedCity = this.allCity[i]
-break
-}
-}
-let obj = {}
-obj.city = this.selectedCity.city
-this.$axios.post('/getPointsByCity', obj)
-.then(response => {
-  let $response = response.data.data
-  this.addMarker($response)
-// console.log($response)
-}).catch((err) => {
-  console.log(err)
-})
-}
-}
-}).catch((err) => {
-  console.log(err)
-})
-},
-getCityPromo(){
-    this.$router.push({
-        path: '/location/' + this.selectedCity.city_eng
-    })
-    let obj = {}
-    obj.city = this.selectedCity.city
-    this.$axios.post('/cityPromo', obj)
-        .then(response => {
+    },
+    created() {
+      this.getContacts();
+      this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+      this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+    },
+    methods: {
+      getMenus () {
+        this.$axios.get('/menus')
+          .then((response) => {
+            let $response = response.data
+            if ($response.code === 0) {
+              console.log($response)
+            } else {
+              this.title_page_default = $response.data[12].title_page
+              this.description_page_default = $response.data[12].description
+              this.opengraph_image = $response.data[12].opengraph_image
+            }
+          })
+          .catch((e) => console.log(e))
+      },
+      getTitle() {
+        let obj = {}
+        obj.city = this.$route.params.city_name
+        this.$axios.post('/title_city', obj)
+          .then((response) => {
+            let $response = response.data
+            if ($response.code === 0) {
+              console.log($response)
+            } else {
+              this.title_city = $response.data.city
+              this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+              this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+            }
+          })
+          .catch((e) => console.log(e))
+      },
+      getContacts () {
+        this.$axios.get('/contact_details')
+          .then((response) => {
+            let $response = response.data
+            if ($response.code === 0) {
+              console.log($response)
+            } else {
+              this.contacts = $response.data
+            }
+          })
+          .catch((e) => console.log(e))
+      },
+      getclosestPoint() {
+        let obj = {}
+        obj.lat = this.myLocation.lat
+        obj.lng = this.myLocation.lng
+        this.$axios.post('/closestPoint', obj)
+          .then(response => {
+            let closest = response.data.data
+            let closestMarker = {}
+            closestMarker.position = {
+              lat: parseFloat(closest.lat),
+              lng: parseFloat(closest.lng)
+            }
+            closestMarker.text = closest
+            this.closestPoint.push({
+              position: closestMarker.position,
+              infoText: closestMarker.text
+            })
+          })
+      },
+      getSelectedCity() {
+        this.$router.push({
+          path: '/location/' + this.selectedCity.city_eng
+        })
+        let obj = {}
+        obj.city = this.selectedCity.city
+        this.$axios.post('/getPointsByCity', obj)
+          .then(response => {
+            let selCit = response.data.data
+            this.markers = []
+            this.addMarker(selCit)
+          }).catch((err) => {
+          console.log(err)
+        })
+      },
+      getCityPromo(){
+        let obj = {}
+        obj.city = this.selectedCity.city
+        this.$axios.post('/cityPromo', obj)
+          .then(response => {
             if(response.data.data != null){
-                let promo = response.data.data
-                this.promo_city_title = promo.title
-                this.promo_city_description = promo.description
+              let promo = response.data.data
+              this.promo_city_title = promo.title
+              this.promo_city_description = promo.description
             }else{
-                this.promo_city_title = ''
-                this.promo_city_description = ''
+              this.promo_city_title = ''
+              this.promo_city_description = ''
             }
 
-        }).catch((err) => {
-        console.log(err)
-    })
-},
-getMyLocation() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(this.showPosition, this.cannotShowPosition)
-  }
-},
-cannotShowPosition(error) {
+          }).catch((err) => {
+          console.log(err)
+        })
+      },
+      getAllCities() {
+        this.$axios.get('/cities')
+          .then(response => {
+            this.allCity = response.data.data
+
+          })
+      },
+      getCurrentLocations() {
+        let body = {}
+        body.lat = this.myLocation.lat
+        body.lng = this.myLocation.lng
+        body.limit = this.selected
+        this.$axios.post('/closestPoints', body)
+          .then(response => {
+            this.markers = []
+            let $response = response.data.data
+// console.log($response)
+            this.addMarker($response)
+          }).catch((err) => {
+          console.log(err)
+        })
+      },
+      getCity(error) {
+        let body = {}
+        if (this.myLocation.lat && this.myLocation.lng) {
+          body.lat = this.myLocation.lat
+          body.lng = this.myLocation.lng
+        } else {
+          body.lat = 0
+          body.lng = 0
+        }
+        this.$axios.post('/getCityByCoordinates', body)
+          .then(response => {
+// console.log(response);
+            if (this.$route.path === '/location' || this.$route.path === '/location/') {
+
+              this.myCity = response.data.data
+              this.selectedCity = response.data.data
+// console.log("selectedCity",this.selectedCity);
+
+              if (this.myCity.city) {
+                if (this.selected == 'all') {
+                  let obj = {}
+                  obj.city = this.myCity.city
+                  this.$axios.post('/getPointsByCity', obj)
+                    .then(response => {
+                      let $response = response.data.data
+                      this.addMarker($response)
+// console.log($response)
+                    }).catch((err) => {
+                    console.log(err)
+                  })
+                }
+                if (this.selected != 'all') {
+                  this.getCurrentLocations()
+                }
+
+              }
+            } else if (this.$route.path === '/location/' + this.$route.params.city_name || this.$route.path === '/location/' + this.$route.params.city_name + '/') {
+              let params = this.$route.params.city_name
+              if (this.allCity) {
+                for (let i = 0; i < this.allCity.length; i++) {
+                  if (params === this.allCity[i].city_eng) {
+// console.log("city name", this.allCity[i].city_eng);
+                    this.selectedCity = this.allCity[i]
+                    break
+                  }
+                }
+                let obj = {}
+                obj.city = this.selectedCity.city
+                this.$axios.post('/getPointsByCity', obj)
+                  .then(response => {
+                    let $response = response.data.data
+                    this.addMarker($response)
+// console.log($response)
+                  }).catch((err) => {
+                  console.log(err)
+                })
+              }
+            }
+          }).catch((err) => {
+          console.log(err)
+        })
+      },
+      getMyLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(this.showPosition, this.cannotShowPosition)
+        }
+      },
+      cannotShowPosition(error) {
 // console.log(error)
-this.getCity(error)
-this.mapDisable = true
+        this.getCity(error)
+        this.mapDisable = true
 
-},
-showPosition(position) {
-  this.mapDisable = false
-  this.myLocation.lat = position.coords.latitude
-  this.myLocation.lng = position.coords.longitude
-  let myMarker = {}
-  myMarker.position = {
-    lat: this.myLocation.lat,
-    lng: this.myLocation.lng
-  }
-  myMarker.text = this.$t('are_you_here')
-  this.myMarkers.push({
-    position: myMarker.position,
-    infoText: myMarker
-  })
-  setTimeout(this.getclosestPoint(), 1000)
-  this.getCity()
+      },
+      showPosition(position) {
+        this.mapDisable = false
+        this.myLocation.lat = position.coords.latitude
+        this.myLocation.lng = position.coords.longitude
+        let myMarker = {}
+        myMarker.position = {
+          lat: this.myLocation.lat,
+          lng: this.myLocation.lng
+        }
+        myMarker.text = this.$t('are_you_here')
+        this.myMarkers.push({
+          position: myMarker.position,
+          infoText: myMarker
+        })
+        setTimeout(this.getclosestPoint(), 1000)
+        this.getCity()
 
-},
-addMarker(locations) {
-  for (let i = 0; i < locations.length; i++) {
-    let marker = {}
-    marker = {
-      lat: parseFloat(locations[i].lat),
-      lng: parseFloat(locations[i].lng)
-    }
-    this.markers.push({
-      position: marker,
-      infoText: locations[i]
-    })
-  }
-  for (let i = 0; i < this.markers.length; i++) {
+      },
+      addMarker(locations) {
+        for (let i = 0; i < locations.length; i++) {
+          let marker = {}
+          marker = {
+            lat: parseFloat(locations[i].lat),
+            lng: parseFloat(locations[i].lng)
+          }
+          this.markers.push({
+            position: marker,
+            infoText: locations[i]
+          })
+        }
+        for (let i = 0; i < this.markers.length; i++) {
 
-    if (this.markers[i].infoText.id == this.closestPoint[0].infoText.id) {
+          if (this.markers[i].infoText.id == this.closestPoint[0].infoText.id) {
 
-      this.markers.splice(i, 1)
-      break
-    }
+            this.markers.splice(i, 1)
+            break
+          }
 
-  }
-},
-toggleInfoWindow: function (marker, index, txt) {
-  this.infoWindowPos = marker.position
-  this.infoContent = marker.infoText
-  if (this.currentMidx == index) {
-    this.infoWinOpen = !this.infoWinOpen
-  } else {
-    this.infoWinOpen = true
-    this.currentMidx = index
-  }
-},
-reloadPage() {
-  if (navigator.userAgent.search(/Safari/) > 0) {
+        }
+      },
+      toggleInfoWindow: function (marker, index, txt) {
+        this.infoWindowPos = marker.position
+        this.infoContent = marker.infoText
+        if (this.currentMidx == index) {
+          this.infoWinOpen = !this.infoWinOpen
+        } else {
+          this.infoWinOpen = true
+          this.currentMidx = index
+        }
+      },
+      reloadPage() {
+        if (navigator.userAgent.search(/Safari/) > 0) {
 // alert('safari')
-};
-}
-}
-}
+        };
+      }
+    }
+  }
 
 </script>
 
