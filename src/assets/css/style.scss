@@ -580,8 +580,9 @@ height: 100%;
 }
 .map{
 	width: 100%;
-	/*height: calc(100vh - 485px);*/
-	height: 100%;
+	height: calc(100vh - 485px);
+	/*height: 100%;*/
+
 	margin-bottom: 20px;
 }
 .map-wrapper{
@@ -2015,9 +2016,10 @@ animation-delay:5s;
 				margin-bottom: 8px;
 				color: #000;
 				position: relative;
+				padding-right: 28px
 				span{
 					position: absolute;
-					bottom: 4px;
+					bottom: 0px;
 					margin-left: 10px;
 					/*img{
 						transform: rotate(-90deg);

@@ -527,8 +527,8 @@ textarea:hover, textarea:focus, textarea:active {
 
 .map {
   width: 100%;
-  /*height: calc(100vh - 485px);*/
-  height: 100%;
+  height: calc(100vh - 485px);
+  /*height: 100%;*/
   margin-bottom: 20px; }
 
 .map-wrapper {
@@ -1926,14 +1926,14 @@ input[type='number'] {
     font-family: FranklinGothicDemi;
     margin-bottom: 8px;
     color: #000;
-    position: relative; }
-    .new-map .map-text_title span {
-      position: absolute;
-      bottom: 4px;
-      margin-left: 10px;
-      /*img{
-      	transform: rotate(-90deg);
-      }*/ }
+    position: relative;
+    padding-right: 28px span;
+      padding-right-position: absolute;
+      padding-right-bottom: 0px;
+      padding-right-margin-left: 10px;
+    /*img{
+    	transform: rotate(-90deg);
+    }*/ }
   .new-map .map-text_content {
     font-size: 16px;
     color: #000; }
