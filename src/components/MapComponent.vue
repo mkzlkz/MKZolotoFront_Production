@@ -131,7 +131,10 @@
         },
         markers: [],
         myMarkers: [],
-        selectedCity: '',
+        selectedCity: {
+          city: null,
+          city_eng: null
+        },
         allCity: '',
         myLocation: {
           lat: null,
@@ -179,11 +182,12 @@ mounted() {
     this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
     this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
   }
+  this.getCity()
   this.getAllCities()
   this.getMyLocation()
   this.reloadPage()
   this.getMenus()
-  this.selectedCity()
+  this.setSelectedCity()
   this.getCityPromo()
 },
 watch: {
@@ -378,6 +382,35 @@ this.addMarker($response)
   console.log(err)
 })
 },
+setSelectedCity() {
+  if (this.selectedCity.city != this.myCity.city) {
+    this.disableSelect = true
+    this.selected = 'all'
+    this.getSelectedCity()
+    this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+    this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+// this.show = true
+  } else {
+    if (!this.mapDisable) {
+      this.selected = '10'
+      this.getCurrentLocations()
+      this.disableSelect = false
+      this.getSelectedCity()
+      this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+      this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+// this.show = false
+    } else {
+// this.show = false
+      this.markers = []
+      this.disableSelect = true
+      this.selected = 'all'
+      this.getSelectedCity()
+      this.title_page = this.title_page_default.replace("[CITY]", this.title_city);
+      this.description_page = this.description_page_default.replace("[CITY]", this.title_city);
+    }
+  }
+  this.getCityPromo()
+},
 getCity(error) {
   let body = {}
   if (this.myLocation.lat && this.myLocation.lng) {
@@ -390,8 +423,8 @@ getCity(error) {
   this.$axios.post('/getCityByCoordinates', body)
   .then(response => {
 // console.log(response);
-if (this.$route.path === '/location' || this.$route.path === '/location/') {
-
+// Ставим город
+if (this.$route.path === '/location' || this.$route.path === '/location/' || this.$route.path === '/location/null') {
   this.myCity = response.data.data
   this.selectedCity = response.data.data
 // console.log("selectedCity",this.selectedCity);
