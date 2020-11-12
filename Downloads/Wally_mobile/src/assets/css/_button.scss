@@ -1,0 +1,247 @@
+.button-blue {
+  width: 100%;
+  background: $blue;
+  color: #fff;
+  height: 46px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: $font-medium;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $blue-hover;
+    transition: 0.2s;
+  }
+}
+
+.button-green {
+  width: 100%;
+  background: $green;
+  color: #fff;
+  height: 33px;
+  border-radius: 3px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $green-hover;
+    transition: 0.2s;
+  }
+}
+
+.button-pink {
+  width: 100%;
+  background: $pink;
+  color: #fff;
+  height: 33px;
+  border-radius: 3px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $pink-hover;
+    transition: 0.2s;
+  }
+}
+.button-blue-grey{
+    width: 100%;
+    background: $slate-two;
+    color: #fff;
+    height: 46px;
+  border-radius: 2px;
+  font-size: 14px;
+  font-family: $font-medium;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $slate-two-50;
+    transition: 0.2s;
+  }
+}
+.button-blue-line{
+  border:1px solid $blue;
+  background: #fff;
+  border-radius: 3px;
+  width: 88px;
+  height: 26px;
+  font-size: 12px;
+  color: $blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $blue;
+    transition: 0.2s;
+  }
+}
+.button-blue-purple{
+  border:1px solid $blue;
+  background: #fff;
+  height: 33px;
+  border-radius: 3px;
+  width: 120px;
+  font-size: 14px;
+  color: $blue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $blue;
+    transition: 0.2s;
+  }
+}
+
+.button-pink-line {
+  border: 1px solid $lipstick-two;
+  background: #fff;
+  height: 33px;
+  border-radius: 3px;
+  width: 120px;
+  font-size: 14px;
+  color: $lipstick-two;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $lipstick-two;
+    transition: 0.2s;
+  }
+}
+
+.button-green-line {
+  border: 1px solid $green;
+  background: #fff;
+  height: 33px;
+  border-radius: 3px;
+  width: 120px;
+  font-size: 14px;
+  color: $green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $green;
+    transition: 0.2s;
+  }
+}
+
+.button-gray-line {
+  width: 106px;
+  height: 42px;
+  border-radius: 3px;
+  border: solid 1px $light-blue-grey !important;
+  background-color: #ffffff;
+  font-size: 14px;
+  color: $slate-two;
+  line-height: 1;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    background: $light-blue-grey;
+    transition: 0.2s;
+  }
+}
+
+.button-blue-two {
+  width: 100%;
+  background: $blue;
+  color: #fff;
+  height: 50px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: $opensans-semibold;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  letter-spacing: 0.8px;
+  &:hover, &:focus, &:active {
+    text-decoration: none;
+    color: #fff;
+    background: $blue-hover;
+    transition: 0.2s;
+  }
+}
+
+.button-none-red {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: #FF768C;
+}
+
+.button-none-purple {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 20px 0 0;
+  font-size: 14px;
+  color: #8795DD;
+}
+
+.user-button {
+  width: 105px;
+  height: 18px;
+  border-radius: 9px;
+  border: solid 1px $blue;
+  background-color: #ffffff;
+  color: $blue;
+  font-size: 10px;
+}
+
+.button-pink2-line {
+  height: 42px;
+  border-radius: 4px;
+  border: solid 1px #ee2e6b;
+  width: 100%;
+  color: #ee2e6b;
+  background: none;
+  color: #D4D8E3;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 16px 0 0px;
+  font-family:'Rubik-Medium';
+}
+.width-9{
+.button-blue-line{
+  border:1px solid #0364ff;
+}
+}
+.admin-aside .button-pink2-line{
+margin-bottom: 16px;
+}
+
+
+
+
+
+

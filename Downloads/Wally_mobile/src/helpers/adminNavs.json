@@ -1,0 +1,26 @@
+{
+  "navs": [
+    {"title":"Статистика","routeName":"Statistics","access":["admin","teacher"],"active":true},
+    {"title":"Журнал посещений", "routeName":"visitorsLog", "access":["admin","teacher"], "active":true},
+    {"title":"Пользователи","routeName":"UsersAdmin","access":["admin"],"active":true},
+    {"title":"Курс", "routeName":"planEducationAdmin", "access":["admin"], "active":true},
+    {"title":"Темы","routeName":"Themes","access":["admin"],"active":true},
+    {"title":"Тесты", "routeName":"TestsAdmin", "access":["admin","teacher","examiner"], "active":true},
+    {"title":"Вопросы", "routeName":"Questions", "access":["admin","teacher","examiner"], "active":true},
+    {"title":"Пересдачи", "routeName":"Retake", "access":["admin","teacher","examiner"], "active":false},
+    {"title":"Экзамен", "routeName":"Exam", "access":["admin","teacher","examiner"], "active":false},
+    {"title":"Экзаменаторы","routeName":"Examiners","access":["admin"],"active":false},
+    {"title":"Табель", "routeName":"reportСard", "access":["admin","examiner"], "active":false},
+    {"title":"Табель администратора", "routeName":"reportСardAdministrator", "access":["admin"], "active":false},
+    {"title":"Вебинары", "routeName":"WebinarsAdmin", "access":["admin","teacher","examiner"], "active":true},
+    {"title":"Проводящие вебинар", "routeName":"ConductingWebinar", "access":["admin"], "active":true},
+    {"title":"Вебинар","routeName":"WebinarAdmin","access":["teacher"],"active":true},
+    {"title":"Вопросы по вебинару", "routeName":"QuestionsWebinars", "access":["teacher"], "active":true},
+    {"title":"Вопросы администратора", "routeName":"AdminQuestions", "access":["admin"], "active":false},
+    {"title":"Сертификаты", "routeName":"Certificates", "access":["admin"], "active":false},
+    {"title":"Роли","routeName":"Role","access":["admin"],"active":false},
+    {"title":"Scorm пакеты","routeName":"Scorms","access":["admin"],"active":false},
+    {"title":"Экзамен аудитории", "routeName":"audienceExam", "access":["admin"], "active":false},
+    {"title":"Аудитория","routeName":"audience","access":["region"],"active":false}
+  ]
+}

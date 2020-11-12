@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="170px" height="156px" viewBox="0 0 170 156" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 9</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="menu-1-info-copy" transform="translate(-247.000000, -71.000000)">
+            <g id="Group-9" transform="translate(247.000000, 71.000000)">
+                <rect id="Rectangle-Copy-4" fill="#E0E6F1" fill-rule="nonzero" x="0" y="0" width="170" height="156"></rect>
+                <path d="M73,76.138 C69.929,76.138 67.431,73.64 67.431,70.569 C67.431,67.498 69.929,65 73,65 C76.071,65 78.569,67.498 78.569,70.57 C78.569,73.64 76.071,76.138 73,76.138 Z M60,52 L110,52 L110,92 L110,104 L60,104 L60,92 L60,52 Z M62,54 L62,92 L62.621,92 L79.356,77.266 C79.752,76.918 80.35,76.937 80.724,77.31 L85.467,82.053 L89.293,85.707 C89.488,85.902 89.744,86 90,86 C90.256,86 90.512,85.902 90.707,85.706 C91.098,85.315 91.098,84.683 90.707,84.292 L86.899,80.484 L95.262,71.325 C95.441,71.129 95.691,71.012 95.956,71 C96.222,70.994 96.48,71.083 96.676,71.262 L108,81.643 L108,54 L62,54 Z M108,102 L108,94 L62,94 L62,102 L108,102 Z" id="Combined-Shape" fill="#90A2C2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

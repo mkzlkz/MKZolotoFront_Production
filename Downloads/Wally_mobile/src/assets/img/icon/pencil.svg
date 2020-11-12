@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Path</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Row/activity-10" transform="translate(-1027.000000, -22.000000)" fill="#2A4077" fill-rule="nonzero">
+            <g id="Row/activity">
+                <g id="Group" transform="translate(1020.000000, 14.000000)">
+                    <g id="pencil" transform="translate(7.000000, 8.000000)">
+                        <path d="M17.34322,3.87395 L15.77605,5.44112 L12.58594,2.25123 L11.37572,3.46145 L14.56583,6.65156 L6.74131,14.47542 L3.55142,11.28586 L2.3412,12.49608 L5.53109,15.68597 L4.75141,16.46565 L4.73656,16.4508 C4.6501,16.59314 4.50952,16.69698 4.34254,16.73405 L1.36781,17.39735 C1.32326,17.40736 1.27794,17.4122 1.23317,17.4122 C1.07081,17.4122 0.91307,17.34829 0.79614,17.23103 C0.6461,17.08154 0.58362,16.86561 0.62982,16.6587 L1.29279,13.68485 C1.33019,13.51798 1.43425,13.37707 1.57637,13.29083 L1.5613,13.27576 L14.153,0.68351 C14.33758,0.49926 14.63744,0.49926 14.82202,0.68406 L17.34344,3.20493 C17.52802,3.38951 17.52802,3.68937 17.34322,3.87395 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

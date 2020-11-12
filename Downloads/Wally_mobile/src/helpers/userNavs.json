@@ -1,0 +1,11 @@
+{
+  "navs": [
+    {"title":"Главная","routeName":"UserMain","img":"main", "active": false},
+    {"title":"Курс","routeName":"EducationPlan","img":"plan", "active": false},
+    {"title":"Тесты","routeName":"UserTests","img":"exam", "active": true},
+    {"title":"Вебинары","routeName":"UserWebinars","img":"vebinar", "active": true},
+    {"title":"Scorm пакеты","routeName":"ScormPackage","img":"scorm", "active": false},
+    {"title":"VR","routeName":"UserVR","img":"vr", "active": false},
+    {"title":"Медиафайлы","routeName":"MediaFiles","img":"media", "active": false}
+  ]
+}

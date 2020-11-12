@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon/send</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="03-03_Вебинар-просмотр" transform="translate(-1365.000000, -775.000000)" stroke="#2A4077" stroke-width="2">
+            <g id="list-item-message" transform="translate(1110.000000, 353.000000)">
+                <g id="Group" transform="translate(8.000000, 413.000000)">
+                    <g id="icon/send" transform="translate(248.000000, 10.000000)">
+                        <path d="M20,0 L9,11" id="Path"></path>
+                        <polygon id="Path" points="20 0 13 20 9 11 0 7"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

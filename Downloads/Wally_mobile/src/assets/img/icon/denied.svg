@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="27px" viewBox="0 0 27 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard-Copy" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Status-round/red">
+            <circle id="Oval" fill="#EE2E6B" cx="13.5" cy="13.5" r="13.5"></circle>
+            <g id="Path-2" stroke-width="1" transform="translate(7.000000, 7.000000)" fill="#FFFFFF">
+                <path d="M12.278,10.1343929 L10.1305357,12.2789643 C10.1305357,12.2789643 6.73335714,8.63396429 6.47975,8.63396429 C6.23,8.63396429 2.83185714,12.2789643 2.83185714,12.2789643 L0.683428571,10.1343929 C0.683428571,10.1343929 4.33228571,6.78639286 4.33228571,6.48842857 C4.33228571,6.18564286 0.683428571,2.83667857 0.683428571,2.83667857 L2.83185714,0.687285714 C2.83185714,0.687285714 6.25796429,4.33421429 6.47975,4.33421429 C6.70346429,4.33421429 10.1305357,0.687285714 10.1305357,0.687285714 L12.278,2.83667857 C12.278,2.83667857 8.62817857,6.23385714 8.62817857,6.48842857 C8.62817857,6.73046429 12.278,10.1343929 12.278,10.1343929 Z" id="Path" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
