@@ -36,7 +36,7 @@
                     <div class="mo-content" v-for="loan in operation.loans">
                         <div class="dflex">
                             <div class="l1">{{$t('date_and_time')}}</div>
-                            <div class="l2">{{ moment(loan.date).format('DD.MM.YYYY  HH:mm') }}</div>
+                            <div class="l2">{{ moment(operation.date).format('DD.MM.YYYY  HH:mm') }}</div>
                         </div>
                         <div class="dflex">
                             <div class="l1">{{$t('place_operation')}}</div>
