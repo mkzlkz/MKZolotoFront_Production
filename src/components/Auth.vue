@@ -310,7 +310,7 @@
                     formData.append('iin', this.iin);
                     formData.append('password', this.password)
                     formData.append('platform', 'web')
-                    axios.post('/auth/login', formData, {timeout: 35000})
+                    axios.post('/auth/login', formData, {timeout: 60000})
                     .then((response) => {
                         console.log(response.data)
                         let $response = response.data
