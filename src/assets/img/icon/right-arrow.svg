@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="14px" viewBox="0 0 27 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>right-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="less" transform="translate(-37.000000, -5.000000)" fill="#FFFFFF">
+            <g id="Group-4">
+                <g id="right-arrow" transform="translate(37.000000, 5.000000)">
+                    <path d="M20.7782383,0.210550086 C20.518721,-0.0701833619 20.086797,-0.0701833619 19.8182057,0.210550086 C19.5586883,0.481799295 19.5586883,0.933249029 19.8182057,1.20386596 L24.6861217,6.29184356 L0.672083347,6.29184356 C0.297628269,6.29247584 0,6.60355885 0,6.99494174 C0,7.38632463 0.297628269,7.70752416 0.672083347,7.70752416 L24.6861217,7.70752416 L19.8182057,12.7860175 C19.5586883,13.066751 19.5586883,13.518833 19.8182057,13.7894499 C20.086797,14.0701834 20.5193259,14.0701834 20.7782383,13.7894499 L26.7985565,7.49697408 C27.0671478,7.22572487 27.0671478,6.77427513 26.7985565,6.50365821 L20.7782383,0.210550086 Z" id="Path" transform="translate(13.500000, 7.000000) scale(-1, 1) translate(-13.500000, -7.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

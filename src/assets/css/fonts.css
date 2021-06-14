@@ -1,0 +1,66 @@
+@font-face{
+    font-family:'FranklinGothicBook';
+     src:url('../fonts/FranklinGothicBook.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicMedium';
+     src:url('../fonts/FranklinGothicMedium.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicHeavy';
+     src:url('../fonts/FranklinGothicHeavy.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemiCond';
+     src:url('../fonts/FranklinGothicDemiCond.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicBook-Italic';
+     src:url('../fonts/FranklinGothicBook-Italic.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemi';
+     src:url('../fonts/FranklinGothicDemi.ttf');
+}
+@font-face{
+    font-family:'FranklinGothicDemiItalic';
+     src:url('../fonts/FranklinGothicDemiItalic.ttf');
+}
+@font-face{
+    font-family:'stroke-medium';
+     src:url('../fonts/11872.ttf');
+}
+@font-face{
+    font-family:'Roboto-Medium';
+     src:url('../fonts/Roboto-Medium.ttf');
+}
+@font-face{
+    font-family:'Roboto-Regular';
+     src:url('../fonts/Roboto-Regular.ttf');
+}
+@font-face{
+    font-family:'Roboto-BoldItalic';
+     src:url('../fonts/Roboto-BoldItalic.ttf');
+}
+@font-face{
+    font-family:'Roboto-Bold';
+     src:url('../fonts/Roboto-Bold.ttf');
+}
+@font-face{
+    font-family:'Roboto-RegularItalic';
+     src:url('../fonts/Roboto-RegularItalic.ttf');
+}
+@font-face{
+    font-family:'PTSans-Regular';
+     src:url('../fonts/PTSans-Regular.ttf');
+}
+@font-face{
+    font-family:'PTSans-Bold';
+     src:url('../fonts/PTSans-Bold.ttf');
+}
+@font-face{
+    font-family:'PTSans-RegularItalic';
+     src:url('../fonts/PTSans-RegularItalic.ttf');
+}
+
+
