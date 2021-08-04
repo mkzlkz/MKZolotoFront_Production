@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="143px" height="7px" viewBox="0 0 143 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Rectangle</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="49.0241222%" y1="49.8154167%" x2="100%" y2="49.8154167%" id="linearGradient-1">
+            <stop stop-color="#49D161" offset="0%"></stop>
+            <stop stop-color="#F8E71C" offset="19.3248834%"></stop>
+            <stop stop-color="#FFF200" offset="47.7544785%"></stop>
+            <stop stop-color="#F5A623" offset="64.8118034%"></stop>
+            <stop stop-color="#F5A623" offset="80.2919435%"></stop>
+            <stop stop-color="#FF3B30" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="03-01-Мои-займы" transform="translate(-969.000000, -287.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="Group" transform="translate(963.000000, 281.000000)">
+                <rect id="Rectangle" x="6" y="6" width="143" height="7" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
