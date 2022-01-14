@@ -49,7 +49,10 @@ const AppLang = () => {
 }
 
 Vue.use(money, {precision: 4})
-axios.defaults.baseURL = 'https://mk-zoloto-lombard.kz/api/' + AppLang()
+export const host = 'https://mk-zoloto-lombard.kz'
+// axios.defaults.baseURL = 'https://mk-zoloto-lombard.kz/api/' + AppLang()
+// axios.defaults.baseURL = 'http://localhost:8090/api/' + AppLang()
+axios.defaults.baseURL = `${host}/api/${AppLang()}`
 // axios.defaults.baseURL = 'https://mk-backend.mars.studio/api/' + AppLang()
 if (AuthFunction().getToken()) {
   axios.defaults.headers.common['Authorization'] = AuthFunction().getToken()
